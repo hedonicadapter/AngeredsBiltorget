@@ -1,0 +1,40 @@
+#navbar-logo {
+  width: calc(var(--golden-ratio) * 1.2em);
+  height: calc(var(--golden-ratio) * 1.2em);
+  max-width: calc(var(--golden-ratio) * 50px);
+  max-height: calc(var(--golden-ratio) * 50px);
+}
+
+.navbar-top {
+  font-size: min(
+    calc(var(--golden-ratio) * 2em),
+    calc(var(--golden-ratio) * 16px)
+  );
+  padding-inline: calc(var(--golden-ratio) * 4em);
+  padding-block: calc(var(--golden-ratio) * 1em);
+}
+
+#borger {
+  height: min-content;
+  width: min-content;
+}
+#borger-icon {
+  font-size: calc(var(--golden-ratio) * 1em);
+  margin: auto;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+}
+@media (min-width: 1024px) {
+  .navbar-top {
+    padding-block: calc(var(--golden-ratio) * 2em);
+  }
+  #borger {
+    display: none;
+  }
+}
+@media (min-width: 1280px) {
+}
+@media (min-width: 1536px) {
+}
