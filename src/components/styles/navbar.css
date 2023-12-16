@@ -6,11 +6,12 @@
 }
 
 .navbar-top {
+  position: fixed;
   font-size: min(
     calc(var(--golden-ratio) * 2em),
     calc(var(--golden-ratio) * 16px)
   );
-  padding-inline: calc(var(--golden-ratio) * 4em);
+  padding-inline: calc(var(--golden-ratio) * 1.2em);
   padding-block: calc(var(--golden-ratio) * 1em);
 }
 
@@ -29,6 +30,7 @@
 @media (min-width: 1024px) {
   .navbar-top {
     padding-block: calc(var(--golden-ratio) * 2em);
+    padding-inline: calc(var(--golden-ratio) * 4em);
   }
   #borger {
     display: none;
