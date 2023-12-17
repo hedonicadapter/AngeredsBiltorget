@@ -3,16 +3,18 @@ import { Lensflare, LensflareElement } from 'three/addons/objects/Lensflare.js';
 
 export class Headlights {
   static textureLoader = new TextureLoader();
-  static textureFlare0 = this.textureLoader.load('lens-flare.png');
+  static textureFlare0 = this.textureLoader.load('lens-flare.webp');
   static createdHeadlights = [];
 
-  createLensflare(x, y, z) {
+  createLensflare(z, left, visible = false) {
     const lensFlare = new Lensflare();
+    const x = left ? -0.68 : 0.68;
 
-    lensFlare.position.set(x, y, z);
+    lensFlare.position.set(x, 0.7, z);
     lensFlare.addElement(
       new LensflareElement(Headlights.textureFlare0, 700, 0)
     );
+    lensFlare.visible = visible;
 
     return lensFlare;
   }
