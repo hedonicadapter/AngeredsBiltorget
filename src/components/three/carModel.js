@@ -15,6 +15,8 @@ import { cloneGltf } from './threeUtils';
 
 const isntMobile = mediaQuery('(min-width: 1024px)');
 const sizeMultiplier = isntMobile ? 1 : 0.4;
+const { availWidth, availHeight } = window.screen;
+const maxAspect = availWidth / availHeight;
 
 const scene = new THREE.Scene();
 const renderer = new Renderer(sizeMultiplier, true);
@@ -43,13 +45,14 @@ const turnOnEngines = () => {
 
   setTimeout(() => {
     document
-      .getElementsByClassName('hero-header')[0]
-      ?.classList.add('start-engine');
+      .querySelectorAll('#background-overlay, .hero-header')
+      .forEach((div) => div.classList.add('start-engine'));
 
     navigator.vibrate(100);
   }, 2500);
 };
 
+let firstModel;
 const modelLoaderCallback = (gltf) => {
   const modelScene = gltf.scene;
   modelScene.rotation.y = -0.6;
@@ -70,6 +73,10 @@ const modelLoaderCallback = (gltf) => {
     clonedModel.position.x = i * -1;
 
     scene.add(clonedModel);
+    if (i === 0) {
+      firstModel = clonedModel;
+      camera.lookAt(firstModel.position);
+    }
   }
 
   turnOnEngines();
@@ -95,28 +102,26 @@ modelLoader.load(
 );
 
 const handleResize = () => {
-  const isntMobile = mediaQuery('(min-width: 1024px)');
-
   const newWidth = window.innerWidth;
-  const newHeight = isntMobile
-    ? window.innerHeight
-    : window.innerHeight * sizeMultiplier;
+  const newHeight = window.innerHeight;
+  const newAspect = newWidth / newHeight;
+  const scale = reverseInterpolateClamped(0, maxAspect, newAspect);
 
-  camera.aspect = newWidth / newHeight;
+  camera.aspect = newAspect;
   camera.updateProjectionMatrix();
 
   renderer.setSize(newWidth, newHeight);
+  scene.scale.set(scale, scale, scale);
 };
 
 const handleScroll = () => {
   const scrollPercent =
-    (window.scrollY / (document.body.scrollHeight - window.innerHeight)) * 0.1;
+    window.scrollY / (document.body.scrollHeight - window.innerHeight);
 
-  camera.position.y = 1 - reverseInterpolateClamped(0, 1, scrollPercent * 2);
-  camera.position.x = scrollPercent * (8 - -0.6) + -0.6;
+  camera.position.y = interpolate(1, 0, scrollPercent * 10);
   camera.position.z = interpolate(12, 20, scrollPercent * 0.3);
-  camera.rotation.y =
-    (reverseInterpolateClamped(0, 1, scrollPercent) * (6 - -0.1) + -0.1) * 0.1;
+
+  camera.lookAt(firstModel.position);
 
   scene.position.y = interpolate(-1.4, -4, scrollPercent);
 };

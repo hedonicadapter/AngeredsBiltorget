@@ -10,10 +10,7 @@ export class Renderer {
 
     this.instance.setClearColor(0x000000, 0);
     this.instance.setPixelRatio(window.devicePixelRatio);
-    this.instance.setSize(
-      window.innerWidth,
-      window.innerHeight * sizeMultiplier
-    );
+    this.instance.setSize(window.innerWidth, window.innerHeight);
     this.instance.outputColorSpace = SRGBColorSpace;
     this.instance.toneMapping = ACESFilmicToneMapping;
     this.instance.toneMappingExposure = 0.2;
