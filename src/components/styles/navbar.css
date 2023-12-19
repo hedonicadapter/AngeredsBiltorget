@@ -66,14 +66,14 @@
   --anchor-left: 0;
   --anchor-width: 0;
   /* make the width of the highlighter slightly larger than the anchor element, simulating padding */
-  --highlighterWidth: calc(var(--golden-ratio) * var(--anchor-width));
-  /* calc difference between the anchor element's width and highlighterWidth,
+  --highlighter-width: 0;
+  /* calc difference between the anchor element's width and highlighter-width,
   and divide by 2 to get half of the difference */
-  --difference: calc((var(--anchor-width) - var(--highlighterWidth)) / 2);
+  --difference: calc((var(--anchor-width) - var(--highlighter-width)) / 2);
 
   /* anchor-left - difference gives us the offset to anchor-left needed to position the highlighter at the center of the anchor element */
   left: calc(var(--anchor-left) + var(--difference));
-  width: var(--highlighterWidth);
+  width: var(--highlighter-width);
 
   content: ' ';
   z-index: -1;

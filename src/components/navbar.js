@@ -18,7 +18,17 @@ class Navbar extends HTMLElement {
     anchorHighlighter.className = 'nav-anchor-highlighter';
     document.addEventListener('nav-anchor-mouseover', (evt) => {
       const { top, left, width, paddingInline } = evt.anchorInfo;
+      const ratio = window
+        .getComputedStyle(document.documentElement)
+        .getPropertyValue('--golden-ratio');
+      const widthInEm =
+        width /
+        parseFloat(getComputedStyle(anchorHighlighter.parentElement).fontSize);
 
+      anchorHighlighter.style.setProperty(
+        '--highlighter-width',
+        `${ratio * widthInEm}em`
+      );
       anchorHighlighter.style.setProperty('--anchor-left', `${left}px`);
       anchorHighlighter.style.setProperty('--anchor-width', `${width}px`);
     });
