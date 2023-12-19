@@ -17,12 +17,10 @@ class Navbar extends HTMLElement {
     const anchorHighlighter = document.createElement('div');
     anchorHighlighter.className = 'nav-anchor-highlighter';
     document.addEventListener('nav-anchor-mouseover', (evt) => {
-      const { top, left, width, padding } = evt.anchorInfo;
-      const paddingWithoutUnit = parseInt(padding, 10);
-      console.log({ paddingWithoutUnit, left, width, padding });
-      anchorHighlighter.style.left = left - (width + paddingWithoutUnit / 2);
-      // anchorHighlighter.style.top = top + 'px';
-      anchorHighlighter.style.width = width + 'px';
+      const { top, left, width, paddingInline } = evt.anchorInfo;
+
+      anchorHighlighter.style.setProperty('--anchor-left', `${left}px`);
+      anchorHighlighter.style.setProperty('--anchor-width', `${width}px`);
     });
     rightContainer.appendChild(anchorHighlighter);
 
@@ -81,13 +79,15 @@ class Navbar extends HTMLElement {
 
     anchor.onmouseover = (evt) => {
       const hoverEvent = new Event('nav-anchor-mouseover');
-      const { padding } = window.getComputedStyle(anchor);
+
+      const { paddingLeft, paddingRight } =
+        anchor.currentStyle || window.getComputedStyle(anchor);
 
       hoverEvent.anchorInfo = {
         left: evt.target.offsetLeft,
         top: evt.target.offsetTop,
         width: evt.target.offsetWidth,
-        padding: evt.target.style.get; fixa
+        paddingInline: parseFloat(paddingLeft) + parseFloat(paddingRight),
       };
 
       document.dispatchEvent(hoverEvent);

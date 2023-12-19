@@ -51,22 +51,41 @@
 
 .nav-container-right {
   position: relative;
-  outline: 1px solid red;
   padding: calc(var(--golden-ratio) * 0.3em);
   padding-bottom: calc(var(--golden-ratio) * 0.26em);
   display: none;
 }
+
+.nav-container-right:hover .nav-anchor-highlighter {
+  opacity: 1;
+}
+
 .nav-anchor-highlighter {
+  /* Center and place the highlighter element relative to the text */
+
+  --anchor-left: 0;
+  --anchor-width: 0;
+  /* make the width of the highlighter slightly larger than the anchor element, simulating padding */
+  --highlighterWidth: calc(var(--golden-ratio) * var(--anchor-width));
+  /* calc difference between the anchor element's width and highlighterWidth,
+  and divide by 2 to get half of the difference */
+  --difference: calc((var(--anchor-width) - var(--highlighterWidth)) / 2);
+
+  /* anchor-left - difference gives us the offset to anchor-left needed to position the highlighter at the center of the anchor element */
+  left: calc(var(--anchor-left) + var(--difference));
+  width: var(--highlighterWidth);
+
   content: ' ';
   z-index: -1;
-  width: 120px;
   height: 100%;
   background-color: var(--beaver);
   position: absolute;
   top: 0;
-  left: 0;
   pointer-events: none;
   border-radius: calc(var(--golden-ratio) * 0.1em);
+
+  opacity: 0;
+  transition: all 0.1s ease-in-out;
 }
 
 #borger {
