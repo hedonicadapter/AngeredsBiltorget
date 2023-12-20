@@ -4,12 +4,18 @@
 :root {
   --golden-ratio: 1.618;
 
-  --bg: #0f0f0f;
+  --bg: #070505;
   --on-bg: rgba(255, 255, 255, 0.9);
   --on-bg-medium: rgba(255, 255, 255, 0.84);
-  --on-bg-small: rgba(255, 255, 255, 0.76);
-  --surface: #17191b;
-  --beaver: #76949f;
+  --on-bg-light: rgba(255, 255, 255, 0.74);
+  --surface: #1c1212;
+  --surface-variant: #3a2525;
+
+  --primary: #8b4513;
+  --secondary: #a0522d;
+  --tertiary: #cd853f;
+  --accent: #ff4500;
+  --luxury-red: #b22222;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -31,7 +37,8 @@ body {
   overflow-x: hidden;
   height: 100vh;
 
-  background: radial-gradient(at center top, var(--surface) 10%, var(--bg) 40%);
+  background: radial-gradient(at center top, var(--surface) 0%, var(--bg) 100%);
+  background-size: cover;
 
   color: var(--on-bg);
 }
@@ -62,6 +69,7 @@ h6 {
 
 h1 {
   font-family: 'Fjalla One', sans-serif;
+  color: var(--on-bg);
   text-transform: uppercase;
   font-size: calc(var(--golden-ratio) * 3.3em);
 }
@@ -69,6 +77,24 @@ h1 {
 h3 {
   color: var(--on-bg-medium);
   font-size: calc(var(--golden-ratio) * 1.3em);
+}
+
+h4 {
+  color: var(--on-bg-medium);
+  font-size: calc(var(--golden-ratio) * 1em);
+  font-weight: bold;
+  letter-spacing: calc(var(--golden-ratio) * 0.15em);
+}
+
+h5 {
+  color: var(--on-bg-medium);
+  font-size: calc(var(--golden-ratio) * 0.5em);
+  letter-spacing: calc(var(--golden-ratio) * 0.01em);
+  font-weight: 300;
+}
+
+p {
+  margin: 0;
 }
 
 #background-overlay:after {
@@ -148,6 +174,11 @@ h3 {
 }
 @media (min-width: 1024px) {
   body {
+    background: radial-gradient(
+      at center top,
+      var(--surface) 40%,
+      var(--bg) 70%
+    );
     background-attachment: fixed;
     overscroll-behavior: none;
   }

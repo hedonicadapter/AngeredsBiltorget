@@ -9,28 +9,30 @@ class Router {
   routes: { path: string; templates: string[] }[] = [
     {
       path: '/404',
-      templates: [`${commonPath}404/404.ts`],
+      templates: [`${commonPath}404/404.html`],
     },
     {
-      path: '/home',
+      path: '/',
       templates: [
-        `${commonPath}home/home.ts`,
+        `${commonPath}home/home.html`,
         `${commonPath}home/hero.css`,
         `${commonPath}home/hero.html`,
-        resolvePath('components/three/carModel.js'),
+        // resolvePath('components/three/carModel.js'),
+        resolvePath('components/styles/cards.css'),
+        resolvePath('components/cards.js'),
       ],
     },
     {
       path: '/about',
-      templates: [`${commonPath}about/about.ts`],
+      templates: [`${commonPath}about/about.html`],
     },
     {
       path: '/contact',
-      templates: [`${commonPath}contact/contact.ts`],
+      templates: [`${commonPath}contact/contact.html`],
     },
     {
       path: '/bilar',
-      templates: [`${commonPath}bilar/bilar.ts`],
+      templates: [`${commonPath}bilar/bilar.html`],
     },
   ];
 
@@ -61,9 +63,6 @@ class Router {
         if (!response.ok)
           throw new Error(`Failed to fetch template file: ${filePath}`);
 
-        // if (!filePath.endsWith('.js') && !filePath.endsWith('.ts')) {
-        //   console.log(await response.text());
-        // }
         if (filePath.endsWith('.js') || filePath.endsWith('.ts')) {
           const script = document.createElement('script');
           script.type = 'module';

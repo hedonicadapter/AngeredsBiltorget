@@ -21,7 +21,7 @@
 .nav-anchor {
   all: unset;
   cursor: pointer;
-  color: var(--on-bg-medium);
+  color: var(--on-bg-light);
   font-size: max(calc(var(--golden-ratio) * 0.4em), 14px);
 
   font-family: 'Fjalla One';
@@ -81,7 +81,7 @@
   content: ' ';
   z-index: -1;
   height: 100%;
-  background-color: var(--beaver);
+  background-color: var(--primary);
   position: absolute;
   top: 0;
   pointer-events: none;

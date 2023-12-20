@@ -1,0 +1,19 @@
+.card {
+  /* gap: calc(var(--golden-ratio) * 0.6em); */
+  margin-block: calc(var(--golden-ratio) * 2.8em);
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.card img {
+  margin-bottom: calc(var(--golden-ratio) * 0.4em);
+}
+
+.card h4 {
+  color: var(--on-bg);
+  margin-bottom: calc(var(--golden-ratio) * 0.1em);
+}
+
+.card p {
+  color: var(--on-bg-light);
+}

@@ -16,9 +16,10 @@ header {
   font-family: 'Fjalla One', sans-serif;
   font-style: normal;
   font-weight: 400;
-  font-size: calc(var(--golden-ratio) * 4em);
+  font-size: calc(var(--golden-ratio) * 1.8em);
   letter-spacing: 0.07em;
   text-transform: uppercase;
+  padding-inline: calc(var(--golden-ratio) * 0.5em);
 }
 
 .subtitle {
@@ -27,6 +28,7 @@ header {
   font-style: normal;
   font-weight: 300;
   line-height: 20px;
+  padding-inline: calc(var(--golden-ratio) * 0.9em);
 
   /* letter-spacing: 0.11em; */
   text-transform: capitalize;
@@ -189,17 +191,30 @@ header {
 
 .idk-yet {
   height: 100vh;
-  background-color: var(--beaver);
+  width: 100vw;
+  background-color: var(--luxury-red);
   padding-top: calc(var(--golden-ratio) * 6em);
   text-align: center;
   text-transform: uppercase;
 }
 .idk-yet > div {
-  position: fixed;
-  top: 0;
+  /* position: fixed; */
+  /* top: 0; */
+}
+
+.card-container {
+  gap: calc(var(--golden-ratio) * 1em);
+  flex-wrap: wrap;
 }
 
 @media (min-width: 768px) {
+  .title {
+    font-size: calc(var(--golden-ratio) * 3.4em);
+  }
+  .subtitle {
+    font-size: calc(var(--golden-ratio) * 1em);
+    padding-inline: calc(var(--golden-ratio) * 1.8em);
+  }
 }
 @media (min-width: 1024px) {
   .title,

@@ -45,8 +45,7 @@ class Navbar extends HTMLElement {
     logo.alt = 'Logo/link to home';
     homeAnchor.appendChild(logo);
 
-    // Title if wanted
-    const title = document.createElement('h4');
+    const title = document.createElement('h5');
     title.innerText = 'Angered biltorget';
     homeAnchor.appendChild(title);
 
@@ -65,8 +64,8 @@ class Navbar extends HTMLElement {
     nav.appendChild(borgerAnchor);
 
     const carsAnchor = Navbar.anchorCreator('Bilar', 'bilar');
-    const aboutAnchor = Navbar.anchorCreator('Om oss', 'omoss');
-    const kontaktAnchor = Navbar.anchorCreator('Kontakt', 'kontakt');
+    const aboutAnchor = Navbar.anchorCreator('Om oss', 'about');
+    const kontaktAnchor = Navbar.anchorCreator('Kontakt', 'contact');
     rightContainer.appendChild(carsAnchor);
     rightContainer.appendChild(aboutAnchor);
     rightContainer.appendChild(kontaktAnchor);
