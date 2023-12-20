@@ -32,8 +32,11 @@
   align-items: center;
   letter-spacing: 0.11em;
   text-transform: uppercase;
+
+  transition: color 0.1s ease-out;
 }
 .nav-anchor:hover {
+  color: var(--on-bg);
 }
 
 #navbar-home {
@@ -85,7 +88,7 @@
   border-radius: calc(var(--golden-ratio) * 0.1em);
 
   opacity: 0;
-  transition: all 0.1s ease-in-out;
+  transition: opacity 0.1s ease-in-out, left 0.1s ease-in-out;
 }
 
 #borger {

@@ -2,12 +2,8 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link
-      rel="stylesheet"
-      type="text/css"
-      href="./src/components/styles/global.css"
-    />
-    <script type="module" src="./src/components/three/carModel.js"></script>
+    <link rel="stylesheet" type="text/css" href="./src/global.css" />
+    <script type="module" src="./main.ts"></script>
     <link
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
@@ -16,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"
       rel="stylesheet"
     />
     <link
@@ -32,25 +28,6 @@
   <body>
     <!-- <div id="background-overlay-bottom">&nbsp;</div> -->
     <navbar-top></navbar-top>
-    <main>
-      <div id="background-overlay"></div>
-      <div class="hero-container flex flex-col items-center">
-        <header class="hero-header">
-          <div>
-            <h1 class="title">
-              Era bilar,<br />
-              er marknadsplats
-            </h1>
-            <h3 class="subtitle">Köp - Sälj - Byt</h3>
-          </div>
-        </header>
-        <div id="model-container-container">
-          <div id="model-container"></div>
-          <section class="idk-yet">
-            <h3>Inne just nu</h3>
-          </section>
-        </div>
-      </div>
-    </main>
+    <main id="app"></main>
   </body>
 </html>
