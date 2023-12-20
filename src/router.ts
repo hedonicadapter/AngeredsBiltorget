@@ -17,7 +17,7 @@ class Router {
         `${commonPath}home/home.html`,
         `${commonPath}home/hero.css`,
         `${commonPath}home/hero.html`,
-        // resolvePath('components/three/carModel.js'),
+        resolvePath('components/three/carModel.js'),
         resolvePath('components/styles/cards.css'),
         resolvePath('components/cards.js'),
       ],

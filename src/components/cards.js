@@ -1,20 +1,8 @@
 class CardSM extends HTMLElement {
-  static get observedAttributes() {
-    return ['title', 'price'];
-  }
-
   constructor() {
     super();
     this.className = 'card-container';
-  }
 
-  attributeChangedCallback(name) {
-    if (name === 'title' || name === 'price') {
-      this.render();
-    }
-  }
-
-  render() {
     const card = document.createElement('div');
     card.className += 'card flex flex-col justify-evenly items-center';
 
@@ -29,7 +17,6 @@ class CardSM extends HTMLElement {
     text.innerText = this.getAttribute('price');
 
     card.append(img, header, text);
-    console.log(card);
     this.appendChild(card);
   }
 }

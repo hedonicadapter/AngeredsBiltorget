@@ -4,6 +4,19 @@
 :root {
   --golden-ratio: 1.618;
 
+  /* --bg:
+  --on-bg: 
+  --on-bg-medium:
+  --on-bg-light:
+  --surface: 
+  --surface-variant:
+
+  --luxury-red: 
+  --primary: 
+  --secondary:
+  --tertiary: 
+  --accent:  */
+
   --bg: #070505;
   --on-bg: rgba(255, 255, 255, 0.9);
   --on-bg-medium: rgba(255, 255, 255, 0.84);
@@ -163,6 +176,9 @@ p {
 }
 .justify-between {
   justify-content: space-between;
+}
+.justify-evenly {
+  justify-content: space-evenly;
 }
 .items-center {
   align-items: center;
