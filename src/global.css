@@ -1,5 +1,5 @@
 @import url(/src/components/styles/navbar.css);
-/* @import url(/components/styles/hero.css); */
+/* @import url(/src/components/pages/home/hero.css); */
 
 :root {
   --golden-ratio: 1.618;

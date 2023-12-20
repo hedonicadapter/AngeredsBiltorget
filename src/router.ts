@@ -1,43 +1,41 @@
-const templatePathGenerator = (path: string, ...extraPaths: string[]) => [
-  `src/pages/${path}/${path}.html`,
-  `src/pages/${path}/${path}.css`,
-  `src/pages/${path}/${path}.ts`,
-  `src/pages/${path}/${path}.js`,
-  ...extraPaths?.map((extraPath) => `src/pages/${path}/${extraPath}`),
-];
+const commonPath = 'src/pages/';
+
+const resolvePath = (relativePath: string) => {
+  const url = new URL(relativePath, import.meta.url);
+  return url.href;
+};
 
 class Router {
   routes: { path: string; templates: string[] }[] = [
     {
       path: '/404',
-      templates: templatePathGenerator('404'),
+      templates: [`${commonPath}404/404.ts`],
     },
     {
-      path: '/',
-      templates: templatePathGenerator(
-        'home',
-        'hero.html',
-        'hero.css',
-        '../../components/three/carModel.js'
-      ),
+      path: '/home',
+      templates: [
+        `${commonPath}home/home.ts`,
+        `${commonPath}home/hero.css`,
+        `${commonPath}home/hero.html`,
+        resolvePath('components/three/carModel.js'),
+      ],
     },
     {
       path: '/about',
-      templates: templatePathGenerator('about'),
+      templates: [`${commonPath}about/about.ts`],
     },
     {
       path: '/contact',
-      templates: templatePathGenerator('contact'),
+      templates: [`${commonPath}contact/contact.ts`],
     },
     {
       path: '/bilar',
-      templates: templatePathGenerator('bilar'),
+      templates: [`${commonPath}bilar/bilar.ts`],
     },
   ];
 
   constructor() {
-    window.onpopstate = () => this.loadRoute(location.pathname.slice(1));
-    this.navigate('/home');
+    window.onpopstate = () => this.loadRoute(location.pathname);
   }
 
   addRoute(path: string, templates: string[]) {
@@ -46,16 +44,16 @@ class Router {
 
   async loadRoute(path: string) {
     const matchedRoute = this.routes.find((route) => route.path === path);
-
-    if (!matchedRoute) return console.error(`No route found for path ${path}`);
+    if (!matchedRoute) {
+      await this.loadRoute('/404');
+      return console.error(`No route found for path: ${path}`);
+    }
 
     const outletContainerElement = document.querySelector('#app');
-
     if (!outletContainerElement)
       return console.error('No router outlet found.');
 
     outletContainerElement.innerHTML = '';
-
     for (const filePath of matchedRoute.templates) {
       try {
         const response = await fetch(filePath);
@@ -63,10 +61,14 @@ class Router {
         if (!response.ok)
           throw new Error(`Failed to fetch template file: ${filePath}`);
 
+        // if (!filePath.endsWith('.js') && !filePath.endsWith('.ts')) {
+        //   console.log(await response.text());
+        // }
         if (filePath.endsWith('.js') || filePath.endsWith('.ts')) {
-          const scriptEl = document.createElement('script');
-          scriptEl.src = filePath;
-          document.body.appendChild(scriptEl);
+          const script = document.createElement('script');
+          script.type = 'module';
+          script.src = filePath;
+          outletContainerElement.appendChild(script);
         } else if (filePath.endsWith('.css')) {
           const link = document.createElement('link');
           link.rel = 'stylesheet';
@@ -84,7 +86,7 @@ class Router {
 
   navigate(path: string) {
     history.pushState({}, '', path);
-    this.loadRoute(path.slice(1));
+    this.loadRoute(path);
   }
 }
 
