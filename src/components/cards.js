@@ -1,7 +1,7 @@
 class CardSM extends HTMLElement {
   constructor() {
     super();
-    this.className = 'card-container';
+    this.className = `card-container ${this.getAttribute('className')}`;
 
     const card = document.createElement('div');
     card.className += 'card flex flex-col justify-evenly items-center';

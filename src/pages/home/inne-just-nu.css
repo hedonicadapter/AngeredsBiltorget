@@ -1,0 +1,40 @@
+.inne-just-nu {
+  position: relative;
+  top: -200vh;
+  height: 300vh;
+  width: 100vw;
+  background-color: var(--surface-variant);
+  padding-top: calc(var(--golden-ratio) * 6em);
+  text-align: center;
+}
+
+.sticky-just-nu {
+  position: sticky;
+  top: 20vh;
+}
+
+.card-container {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--golden-ratio) * 0.1em);
+}
+
+.CTA {
+  margin-top: calc(var(--golden-ratio) * 0.5em);
+  padding: calc(var(--golden-ratio) * 0.2em) calc(var(--golden-ratio) * 0.6em);
+  border-radius: calc(var(--golden-ratio) * 0.05em);
+  background-color: var(--tertiary);
+  /* color: white; */
+  font-size: calc(var(--golden-ratio) * 1em);
+  /* font-weight: 600; */
+  text-decoration: none;
+  /* letter-spacing: 0.1em; */
+  transition: all 0.2s ease-in-out;
+}
+
+@media (min-width: 1460px) {
+  .card-container {
+    flex-direction: row;
+    gap: calc(var(--golden-ratio) * 1em);
+  }
+}

@@ -1,3 +1,7 @@
+.card-container {
+  transition: opacity 0.3s ease-in-out;
+}
+
 .card {
   /* gap: calc(var(--golden-ratio) * 0.6em); */
   margin-block: calc(var(--golden-ratio) * 2.8em);
