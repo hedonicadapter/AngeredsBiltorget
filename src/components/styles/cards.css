@@ -3,13 +3,16 @@
 }
 
 .card {
+  max-height: calc(var(--golden-ratio) * 14em);
+  overflow: visible;
   /* gap: calc(var(--golden-ratio) * 0.6em); */
-  margin-block: calc(var(--golden-ratio) * 2.8em);
   max-width: 100%;
-  overflow: hidden;
+
+  aspect-ratio: 1 / 1;
 }
 
 .card img {
+  width: 100%;
   margin-bottom: calc(var(--golden-ratio) * 0.4em);
 }
 

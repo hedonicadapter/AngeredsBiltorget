@@ -16,7 +16,7 @@ const setCardsVisible = () => {
     const timeout = setTimeout(() => {
       card.classList.add('visible');
       card.classList.remove('invisible');
-    }, index * 500);
+    }, (index + 1) * 500);
 
     timeouts.push(timeout);
   });

@@ -13,10 +13,15 @@
   top: 20vh;
 }
 
-.card-container {
+.cards-container {
+  margin-block: calc(var(--golden-ratio) * 2.8em);
+
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: calc(var(--golden-ratio) * 0.1em);
+  max-height: 100vh;
+  outline: 1px solid red;
 }
 
 .CTA {
@@ -33,7 +38,7 @@
 }
 
 @media (min-width: 1460px) {
-  .card-container {
+  .cards-container {
     flex-direction: row;
     gap: calc(var(--golden-ratio) * 1em);
   }
