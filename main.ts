@@ -11,4 +11,4 @@ document.addEventListener('click', (event) => {
   }
 });
 
-Router.navigate('/');
+Router.loadRoute(location.pathname);

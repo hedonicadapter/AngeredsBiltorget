@@ -3,7 +3,8 @@
 }
 
 .card {
-  max-height: calc(var(--golden-ratio) * 14em);
+  max-height: calc(var(--golden-ratio) * 12em);
+  max-width: calc(var(--golden-ratio) * 12em);
   overflow: visible;
   /* gap: calc(var(--golden-ratio) * 0.6em); */
   max-width: 100%;
@@ -12,6 +13,7 @@
 }
 
 .card img {
+  z-index: 50;
   width: 100%;
   margin-bottom: calc(var(--golden-ratio) * 0.4em);
 }

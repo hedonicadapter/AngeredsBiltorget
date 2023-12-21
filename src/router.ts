@@ -21,8 +21,6 @@ class Router {
         `${commonPath}home/inne-just-nu.css`,
         `${commonPath}home/inne-just-nu.ts`,
         resolvePath('components/three/carModel.js'),
-        resolvePath('components/styles/cards.css'),
-        resolvePath('components/cards.js'),
       ],
     },
     {
@@ -35,7 +33,10 @@ class Router {
     },
     {
       path: '/bilar',
-      templates: [`${commonPath}bilar/bilar.html`],
+      templates: [
+        `${commonPath}bilar/bilar.html`,
+        `${commonPath}bilar/bilar.css`,
+      ],
     },
   ];
 
