@@ -1,22 +1,19 @@
+import { clearTimeouts } from '../../util/helpers';
 import { whileInView } from '../../util/intersection-observer';
 
 let timeouts: NodeJS.Timeout[] = [];
-
-const clearTimeouts = () => {
-  if (timeouts) timeouts.forEach((timeout) => clearTimeout(timeout));
-};
 
 const setCardsVisible = () => {
   const cards = document.querySelectorAll('.inne-just-nu .card-container');
   if (!cards) return;
 
-  clearTimeouts();
+  clearTimeouts(timeouts);
 
   cards.forEach((card, index) => {
     const timeout = setTimeout(() => {
       card.classList.add('visible');
       card.classList.remove('invisible');
-    }, (index + 1) * 500);
+    }, (index + 1) * 650);
 
     timeouts.push(timeout);
   });
@@ -26,9 +23,9 @@ const setCardsInVisible = () => {
   const cards = document.querySelectorAll('.inne-just-nu .card-container');
   if (!cards) return;
 
-  clearTimeouts();
+  clearTimeouts(timeouts);
 
-  for (let i = cards.length; i > 0; i--) {
+  for (let i = cards.length; i >= 0; i--) {
     const timeout = setTimeout(() => {
       cards[i].classList.remove('visible');
       cards[i].classList.add('invisible');

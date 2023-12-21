@@ -36,6 +36,27 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+body::-webkit-scrollbar {
+  width: calc(
+    var(--golden-ratio) * 0.725em
+  ); /* Increase width to accommodate spacing */
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: var(--surface-variant);
+  border-radius: calc(var(--golden-ratio) * 0.5em);
+  border: calc(var(--golden-ratio) * 0.25em) solid transparent; /* Add spacing */
+  background-clip: content-box; /* Prevents background color from extending into the border */
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background-color: var(--on-bg-medium);
+}
+
+body::-webkit-scrollbar-track {
+  background-color: var(--surface);
+}
+
 html {
   scroll-behavior: smooth;
 }
