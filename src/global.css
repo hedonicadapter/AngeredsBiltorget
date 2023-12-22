@@ -62,7 +62,7 @@
   background-color: var(--surface);
 }
 body::-webkit-scrollbar-track {
-  background-color: gray;
+  background-color: var(--surface);
 }
 
 html {
@@ -172,7 +172,7 @@ p {
   bottom: calc(var(--golden-ratio) * -1.5em);
   left: calc(var(--golden-ratio) * -1.5em);
   right: calc(var(--golden-ratio) * -1.5em);
-  border: 52px solid gray;
+  border: 52px solid var(--surface);
   border-radius: calc((var(--golden-ratio) * 2.6em));
 }
 

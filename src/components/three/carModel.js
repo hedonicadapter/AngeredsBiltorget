@@ -118,7 +118,7 @@ const handleScroll = () => {
   const scrollPercent =
     window.scrollY / (document.body.scrollHeight - window.innerHeight);
 
-  camera.position.y = interpolate(1, 0, scrollPercent * 10);
+  camera.position.y = interpolate(1, 0, scrollPercent * 20);
   camera.position.z = interpolate(12, 20, scrollPercent * 0.3);
 
   camera.lookAt(firstModel.position);

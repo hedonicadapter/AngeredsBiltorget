@@ -176,7 +176,7 @@ header {
 }
 
 #model-container-container {
-  margin-top: -50vh;
+  margin-top: -65vh;
   /* left: 0; */
   /* position: sticky; */
   /* top: -100vh; */
@@ -207,11 +207,6 @@ header {
 }
 @media (min-width: 1024px) {
   body {
-    background: radial-gradient(
-      at center top,
-      var(--surface) 40%,
-      var(--bg) 70%
-    );
     background-attachment: fixed;
     overscroll-behavior: none;
   }

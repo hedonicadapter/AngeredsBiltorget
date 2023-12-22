@@ -73,10 +73,10 @@ class Navbar extends HTMLElement {
     this.appendChild(nav);
 
     // can't control z-index for border-bottom
-    const borderBottom = document.createElement('div');
-    borderBottom.className = 'navbar-top-border';
-    borderBottom.style.setProperty('--top', nav.offsetHeight + 'px');
-    this.appendChild(borderBottom);
+    // const borderBottom = document.createElement('div');
+    // borderBottom.className = 'navbar-top-border';
+    // borderBottom.style.setProperty('--top', nav.offsetHeight + 'px');
+    // this.appendChild(borderBottom);
 
     document.addEventListener('scroll', this.expandAndContract.bind(this));
   }

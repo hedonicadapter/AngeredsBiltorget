@@ -20,7 +20,7 @@ class Router {
         `${commonPath}home/inne-just-nu.html`,
         `${commonPath}home/inne-just-nu.css`,
         `${commonPath}home/inne-just-nu.ts`,
-        // resolvePath('components/three/carModel.js'),
+        resolvePath('components/three/carModel.js'),
       ],
     },
     {
