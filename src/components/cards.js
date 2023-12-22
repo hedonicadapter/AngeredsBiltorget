@@ -4,7 +4,7 @@ class CardSM extends HTMLElement {
     this.className = `card-container ${this.getAttribute('className')}`;
 
     const card = document.createElement('div');
-    card.className += 'card flex flex-col justify-evenly items-center';
+    card.className += 'card flex flex-col items-center';
 
     const img = document.createElement('img');
     img.src = this.getAttribute('src') ?? '/images/placeholder-car.webp';

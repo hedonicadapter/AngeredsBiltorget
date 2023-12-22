@@ -1,45 +1,33 @@
 <section class="container flex flex-col justify-center items-center">
-  <div class="cars-container flex flex-row justify-center items-center">
+  <search class="filter-container flex flex-col">
     <div class="buttons-container flex flex-row items-center justify-between">
-      <div class="dropdown">
-        <div>Årtal</div>
-        <div class="drop-down-input-label-container">
-          <input type="checkbox" id="year-2019" value="2019" />
-          <label for="year-2019">2019</label>
-        </div>
-        <div class="drop-down-input-label-container">
-          <input type="checkbox" id="year-2020" value="2020" />
-          <label for="year-2020">2020</label>
-        </div>
-        <div class="drop-down-input-label-container">
-          <input type="checkbox" id="year-2021" value="2021" />
-          <label for="year-2021">2021</label>
-        </div>
-        <div class="drop-down-input-label-container">
-          <input type="checkbox" id="year-2022" value="2022" />
-          <label for="year-2022">2022</label>
-        </div>
-      </div>
-      <div class="dropdown">
-        <div>Märke</div>
-        <div class="drop-down-input-label-container">
-          <input type="checkbox" id="volvo" value="volvo" />
-          <label for="volvo">Volvo</label>
-        </div>
-        <div class="drop-down-input-label-container">
-          <input type="checkbox" id="saab" value="saab" />
-          <label for="saab">Saab</label>
-        </div>
-        <div class="drop-down-input-label-container">
-          <input type="checkbox" id="mercedes" value="mercedes" />
-          <label for="mercedes">Mercedes</label>
-        </div>
-        <div class="drop-down-input-label-container">
-          <input type="checkbox" id="audi" value="audi" />
-          <label for="audi">Audi</label>
-        </div>
-      </div>
+      <custom-dropdown
+        title="Märke"
+        options='["2019", "2020", "2021", "2022"]'
+      ></custom-dropdown>
+      <custom-dropdown
+        title="Märke"
+        options='["Volvo", "Saab", "Mercedes", "Audi"]'
+      ></custom-dropdown>
+
+      <input
+        class="btn"
+        placeholder="Sök..."
+        type="search"
+        name="search-bilar"
+      />
     </div>
+    <hr />
+    <div
+      class="tags-and-result-count-container flex flex-row justify-between items-start"
+    >
+      <div class="tags-container flex flex-row">
+        <custom-tag text="bla"></custom-tag>
+      </div>
+      <div class="results-count">Resultat</div>
+    </div>
+  </search>
+  <div class="cars-container flex flex-row items-center">
     <card-sm title="hi" price="2.99"></card-sm>
     <card-sm title="hib" price="2.89"></card-sm>
     <card-sm title="hi" price="2.99"></card-sm>

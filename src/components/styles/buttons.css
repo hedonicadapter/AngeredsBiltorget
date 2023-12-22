@@ -1,25 +1,49 @@
 .btn {
+  user-select: none;
+
   background: var(--bg);
   border: 2px solid #1a1c1e;
   border-radius: 4px;
 
-  /* padding-inline: calc(var(--golden-ratio) * 1em);
-  padding-top: calc(var(--golden-ratio) * 0.4em);
-  padding-bottom: calc(var(--golden-ratio) * 0.5em); */
+  /* padding-inline: calc(var(--golden-ratio) * 1em); */
+  padding-top: 0;
+  padding-bottom: 0;
   color: var(--on-bg-light);
   outline: none;
+  /* min-height: calc(var(--golden-ratio) * 1.2em); */
+  line-height: calc(var(--golden-ratio) * 1.2em);
+  padding-inline: calc(var(--golden-ratio) * 0.3em);
+  color: var(--on-bg-light);
+
+  font-size: 1em;
+
+  transition: color 0.15s ease-out, border-color 0.1s ease-out;
 }
 
-.dropdown {
+.btn:hover {
+  color: var(--on-bg-medium);
+  border-color: var(--outline-hovered);
+}
+.btn:focus {
+  color: var(--on-bg);
+  border-color: var(--outline-hovered);
+}
+
+input[type='search'] {
+  flex: 1;
+  width: 100%;
+  min-width: calc(var(--golden-ratio) * 5em);
+}
+
+.dropdown-container {
   position: relative;
-  background: var(--bg);
-  border: 2px solid var(--outline);
-  border-radius: 4px;
+}
+.dropdown {
+  z-index: 100;
+  position: absolute;
+
   padding-left: calc(var(--golden-ratio) * 0.3em);
   padding-right: calc(var(--golden-ratio) * 1em);
-
-  color: var(--on-bg-light);
-  line-height: calc(var(--golden-ratio) * 1.2em);
 
   max-height: calc(var(--golden-ratio) * 1.2em);
   overflow: hidden;
@@ -43,7 +67,6 @@
 }
 
 .dropdown:hover {
-  border-color: var(--outline-hovered);
   color: var(--on-bg);
   max-height: 1000px; /* Set an appropriate value to allow for expansion */
 }
@@ -65,4 +88,32 @@
 .drop-down-input-label-container label,
 .drop-down-input-label-container input {
   cursor: pointer;
+}
+
+.tag {
+  --full-width: 200px;
+  --max-width: 0;
+  max-width: var(--max-width);
+
+  cursor: pointer;
+
+  overflow: hidden;
+  transition: max-width 0.15s ease-out; /*broken transition?*/
+}
+
+.tag-text {
+  padding-right: calc(var(--golden-ratio) * 1em);
+
+  color: var(--on-bg-light);
+}
+.tag-cross {
+  transition: color 0.35s ease-in-out;
+  color: var(--on-bg-light);
+  /* padding-left: calc(var(--golden-ratio) * 1em); */
+}
+.tag:hover {
+  max-width: var(--full-width);
+}
+.tag:hover .tag-cross {
+  color: var(--error);
 }

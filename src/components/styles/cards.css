@@ -1,13 +1,12 @@
 .card-container {
   transition: opacity 0.75s ease-in-out;
+  width: 100%;
 }
 
 .card {
-  max-height: calc(var(--golden-ratio) * 12em);
-  max-width: calc(var(--golden-ratio) * 12em);
+  /* max-width: calc(var(--golden-ratio) * 12em); */
   overflow: visible;
   /* gap: calc(var(--golden-ratio) * 0.6em); */
-  max-width: 100%;
 
   aspect-ratio: 1 / 1;
 }

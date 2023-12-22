@@ -23,7 +23,8 @@
   --on-bg: rgba(255, 255, 255, 0.9);
   --on-bg-medium: rgba(255, 255, 255, 0.84);
   --on-bg-light: rgba(255, 255, 255, 0.74);
-  --surface: #1c1212;
+  --surface: #17191b;
+  /* --surface: #1c1212; */
   --surface-variant: #3a2525;
 
   --primary: #660c09;
@@ -32,6 +33,7 @@
   --accent: #935e5e;
   --outline: #1a1c1e;
   --outline-hovered: #393d41;
+  --error: #b00020;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -214,6 +216,9 @@ p {
 }
 .items-center {
   align-items: center;
+}
+.items-start {
+  align-items: flex-start;
 }
 
 .visible {
