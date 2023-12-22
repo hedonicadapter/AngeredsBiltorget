@@ -16,7 +16,7 @@ class Navbar extends HTMLElement {
     const anchorHighlighter = document.createElement('div');
     anchorHighlighter.className = 'nav-anchor-highlighter';
     document.addEventListener('nav-anchor-mouseover', (evt) => {
-      const { top, left, width, paddingInline } = evt.anchorInfo;
+      const { left, width } = evt.anchorInfo;
       const ratio = window
         .getComputedStyle(document.documentElement)
         .getPropertyValue('--golden-ratio');
@@ -31,6 +31,17 @@ class Navbar extends HTMLElement {
       anchorHighlighter.style.setProperty('--anchor-left', `${left}px`);
       anchorHighlighter.style.setProperty('--anchor-width', `${width}px`);
     });
+    anchorHighlighter.addEventListener('transitionend', (evt) => {
+      if (evt.propertyName !== 'left') return;
+
+      anchorHighlighter.classList.remove('motion-blur');
+    });
+    anchorHighlighter.addEventListener('transitionstart', (evt) => {
+      if (evt.propertyName !== 'left') return;
+
+      anchorHighlighter.classList.add('motion-blur');
+    });
+
     rightContainer.appendChild(anchorHighlighter);
 
     const homeAnchor = document.createElement('a');

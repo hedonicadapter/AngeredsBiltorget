@@ -8,6 +8,7 @@ section.container {
   /* max-height: calc(100vh - (var(--navbar-height) + var(--golden-ratio) * 3em)); */
   padding: calc(var(--golden-ratio) * 1.5em);
   padding-top: calc(var(--navbar-height) + var(--golden-ratio) * 4em);
+  max-height: calc(100vh - (var(--navbar-height) + var(--golden-ratio) * 3em));
   /* width: 100%; */
   /* padding-inline: calc(var(--golden-ratio) * 1em); */
 }
@@ -51,6 +52,10 @@ hr {
   padding-block: calc(var(--golden-ratio) * 1em);
   overflow-y: auto;
   overflow-x: visible;
+  z-index: 0;
+}
+.cars-container::-webkit-scrollbar {
+  display: none;
 }
 
 @media (min-width: 768px) {
@@ -70,5 +75,7 @@ hr {
   .card-container {
     /* 1/4 minus .cars-container gap */
     width: calc(25% - (var(--golden-ratio) * 1.2em));
+  }
+  .cars-container {
   }
 }
