@@ -20,19 +20,34 @@
   transition: color 0.15s ease-out, border-color 0.1s ease-out;
 }
 
-.btn:hover {
+.btn:hover,
+.btn:hover ~ #search-bar-symbol {
   color: var(--on-bg-medium);
   border-color: var(--outline-hovered);
 }
-.btn:focus {
+.btn:focus,
+.btn:focus ~ #search-bar-symbol {
   color: var(--on-bg);
   border-color: var(--outline-hovered);
 }
 
-input[type='search'] {
+.search-bar {
   flex: 1;
-  width: 100%;
+
   min-width: calc(var(--golden-ratio) * 5em);
+  position: relative;
+  height: fit-content;
+}
+input[type='search'] {
+  width: 100%;
+}
+#search-bar-symbol {
+  position: absolute;
+  top: calc(var(--golden-ratio) * 0.15em);
+  right: calc(var(--golden-ratio) * 0.3em);
+  color: var(--on-bg-light);
+
+  transition: color 0.15s ease-out;
 }
 
 .dropdown-container {

@@ -23,8 +23,11 @@ hr {
 }
 
 .tags-and-result-count-container {
+  gap: calc(var(--golden-ratio) * 0.5em);
 }
 .tags-container {
+  gap: calc(var(--golden-ratio) * 0.3em);
+  flex-wrap: wrap;
 }
 .results-count {
   text-transform: uppercase;

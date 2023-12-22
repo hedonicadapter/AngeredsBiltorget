@@ -19,6 +19,7 @@ class Dropdown extends HTMLElement {
         inputContainer.className = 'drop-down-input-label-container';
 
         const input = document.createElement('input');
+        input.className = 'custom-dropdown-checkbox';
         input.type = 'checkbox';
         input.id = option;
         input.value = option;
@@ -40,8 +41,7 @@ class Dropdown extends HTMLElement {
 }
 
 class Tag extends HTMLElement {
-  constructor() {
-    super();
+  connectedCallback() {
     this.className = `tag-container ${this.getAttribute('className')}`;
 
     const tag = document.createElement('div');
@@ -70,6 +70,10 @@ class Tag extends HTMLElement {
     this.onclick = () => {
       this.remove();
     };
+  }
+
+  constructor() {
+    super();
   }
 }
 

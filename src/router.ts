@@ -36,6 +36,7 @@ class Router {
       templates: [
         `${commonPath}bilar/bilar.html`,
         `${commonPath}bilar/bilar.css`,
+        `${commonPath}bilar/bilar.ts`,
       ],
     },
   ];
