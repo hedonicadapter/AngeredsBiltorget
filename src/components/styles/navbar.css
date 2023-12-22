@@ -31,14 +31,6 @@
   transition: transform 0.1s ease-out;
 }
 
-.navbar-contracted {
-  max-height: 80px;
-  opacity: 0.8;
-  transform: scale(0.94);
-}
-.navbar-contracted .nav-anchor {
-  /* margin-inline: calc(var(--golden-ratio) * 0.5em); */
-}
 .navbar-contracted #navbar-home h5 {
   opacity: 0;
 }
@@ -52,14 +44,13 @@
   color: var(--on-bg-light);
   font-size: max(calc(var(--golden-ratio) * 0.4em), 14px);
 
-  font-family: 'Fjalla One';
   font-style: normal;
-  font-weight: 400;
+  font-weight: 300;
   line-height: 18px;
   display: flex;
   align-items: center;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  /* text-transform: uppercase; */
   margin-inline: calc(var(--golden-ratio) * 0.8em);
 
   transition: margin 0.1s ease-in, color 0.1s ease-out;
@@ -75,6 +66,8 @@
 #navbar-home h5 {
   font-size: calc(var(--golden-ratio) * 0.45em);
   letter-spacing: unset;
+
+  transition: opacity 0.15s ease-out;
 }
 
 .nav-container {
@@ -133,10 +126,10 @@
 @media (min-width: 768px) {
 }
 @media (min-width: 1024px) {
-  .navbar-top {
-    /* padding-inline: calc(var(--golden-ratio) * 4em);
-    padding-top: calc(var(--golden-ratio) * 2em);
-    padding-bottom: calc(var(--golden-ratio) * 0.8em); */
+  .navbar-contracted {
+    max-height: 80px;
+    opacity: 0.9;
+    transform: scale(0.94);
   }
   .navbar-top-border {
     position: fixed;

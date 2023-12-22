@@ -168,10 +168,10 @@ p {
   z-index: 10;
   max-height: 100vh;
   /* calc(var(--golden-ratio) * 1em) */
-  top: calc(var(--golden-ratio) * -1em);
-  bottom: calc(var(--golden-ratio) * -1em);
-  left: calc(var(--golden-ratio) * -1em);
-  right: calc(var(--golden-ratio) * -1em);
+  top: calc(var(--golden-ratio) * -1.5em);
+  bottom: calc(var(--golden-ratio) * -1.5em);
+  left: calc(var(--golden-ratio) * -1.5em);
+  right: calc(var(--golden-ratio) * -1.5em);
   border: 52px solid gray;
   border-radius: calc((var(--golden-ratio) * 2.6em));
 }

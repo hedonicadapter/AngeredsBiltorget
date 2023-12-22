@@ -4,9 +4,10 @@
 
 section.container {
   --navbar-height: 0;
-  max-height: calc(100vh - (var(--navbar-height) + var(--golden-ratio) * 3em));
+  position: relative;
+  /* max-height: calc(100vh - (var(--navbar-height) + var(--golden-ratio) * 3em)); */
   padding: calc(var(--golden-ratio) * 1.5em);
-  padding-top: calc(var(--navbar-height) + var(--golden-ratio) * 1.5em);
+  padding-top: calc(var(--navbar-height) + var(--golden-ratio) * 4em);
   /* width: 100%; */
   /* padding-inline: calc(var(--golden-ratio) * 1em); */
 }
@@ -14,8 +15,8 @@ section.container {
 .filter-container {
   /* --original-position: 165px; */
 
-  /* position: sticky; */
-  /* top: var(--original-position); */
+  position: sticky;
+  top: var(--navbar-height);
   width: 100%;
 }
 
@@ -44,12 +45,12 @@ hr {
 }
 
 .cars-container {
-  width: 100%;
+  /* width: 100%; */
   flex-wrap: wrap;
-  justify-content: space-evenly;
   gap: calc(var(--golden-ratio) * 1em);
   padding-block: calc(var(--golden-ratio) * 1em);
   overflow-y: auto;
+  overflow-x: visible;
 }
 
 @media (min-width: 768px) {
@@ -68,6 +69,6 @@ hr {
   }
   .card-container {
     /* 1/4 minus .cars-container gap */
-    width: calc(25% - (var(--golden-ratio) * 1em));
+    width: calc(25% - (var(--golden-ratio) * 1.2em));
   }
 }

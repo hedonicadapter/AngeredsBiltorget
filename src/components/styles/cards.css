@@ -11,7 +11,7 @@
   overflow: visible;
   /* gap: calc(var(--golden-ratio) * 0.6em); */
 
-  aspect-ratio: 1 / 1;
+  /* aspect-ratio: 1 / 1; */
 }
 
 .card img {

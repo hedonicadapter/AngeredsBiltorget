@@ -84,19 +84,19 @@ class Navbar extends HTMLElement {
   constructor() {
     super();
 
-    this.scrollTop = 0;
+    this.oldScrollTop = 0;
   }
 
   expandAndContract() {
-    const direction = window.scrollY > this.scrollTop ? 'down' : 'up';
-    console.log(this.classList);
-    if (direction == 'up') {
+    const direction = window.scrollY > this.oldScrollTop ? 'down' : 'up';
+
+    if (direction == 'up' && window.scrollY < 100) {
       this.firstChild.classList.remove('navbar-contracted');
     } else if (direction == 'down') {
       this.firstChild.classList.add('navbar-contracted');
     }
 
-    this.scrollTop = window.scrollY;
+    this.oldScrollTop = window.scrollY;
   }
 
   static anchorCreator(anchorText, anchorHref) {

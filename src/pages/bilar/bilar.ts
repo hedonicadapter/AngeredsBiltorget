@@ -1,10 +1,6 @@
-const section = document.querySelector('section.container') as HTMLElement;
-const navbar = document.querySelector('.navbar-top') as HTMLElement;
 const filterContainer = document.querySelector(
   '.filter-container'
 ) as HTMLElement;
-
-section.style.setProperty('--navbar-height', `${navbar.offsetHeight}px`);
 
 const filterContainerRect = filterContainer?.getBoundingClientRect();
 filterContainer?.style.setProperty(
@@ -27,3 +23,12 @@ document.querySelectorAll('.custom-dropdown-checkbox').forEach((el) => {
     }
   });
 });
+
+const setFilterContainerPosition = () => {
+  const section = document.querySelector('section.container') as HTMLElement;
+  const navbar = document.querySelector('.navbar-top') as HTMLElement;
+  section.style.setProperty('--navbar-height', `${navbar.offsetHeight}px`);
+};
+
+window.addEventListener('scroll', setFilterContainerPosition);
+setFilterContainerPosition();
