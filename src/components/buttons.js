@@ -1,6 +1,5 @@
 class Dropdown extends HTMLElement {
-  constructor() {
-    super();
+  connectedCallback() {
     this.className = `dropdown-container ${this.getAttribute('className')}`;
 
     const dropdown = document.createElement('div');
@@ -37,6 +36,10 @@ class Dropdown extends HTMLElement {
 
     this.appendChild(dropdown);
     this.style.minWidth = `${dropdown.offsetWidth}px`;
+  }
+
+  constructor() {
+    super();
   }
 }
 

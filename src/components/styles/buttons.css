@@ -33,29 +33,36 @@
 
 .search-bar {
   flex: 1;
+  height: calc(var(--golden-ratio) * 1.2em);
 
   min-width: calc(var(--golden-ratio) * 5em);
   position: relative;
-  height: fit-content;
 }
 input[type='search'] {
   width: 100%;
 }
+input[type='search']::placeholder {
+  font-weight: bold;
+}
 #search-bar-symbol {
   position: absolute;
-  top: calc(var(--golden-ratio) * 0.15em);
+  top: calc(var(--golden-ratio) * 0.225em);
   right: calc(var(--golden-ratio) * 0.3em);
   color: var(--on-bg-light);
+  font-size: calc(var(--golden-ratio) * 0.8em);
 
   transition: color 0.15s ease-out;
 }
 
 .dropdown-container {
   position: relative;
+  height: calc(var(--golden-ratio) * 1.2em);
 }
 .dropdown {
   z-index: 100;
   position: absolute;
+  top: 0;
+  left: 0;
 
   padding-left: calc(var(--golden-ratio) * 0.3em);
   padding-right: calc(var(--golden-ratio) * 1em);
