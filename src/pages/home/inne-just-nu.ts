@@ -13,7 +13,7 @@ const setCardsVisible = () => {
     const timeout = setTimeout(() => {
       card.classList.add('visible');
       card.classList.remove('invisible');
-    }, (index + 1) * 650);
+    }, (index + 0.5) * 650);
 
     timeouts.push(timeout);
   });
@@ -40,3 +40,23 @@ whileInView(
   setCardsVisible,
   setCardsInVisible
 );
+
+const container = document.querySelector('.inne-just-nu');
+const cardsContainer = document.querySelector('.cards-container');
+
+window.addEventListener('scroll', () => {
+  const rect = container!.getBoundingClientRect();
+  const scrollTop = window.scrollY || document.documentElement.scrollTop;
+  const elementTop = rect.top + scrollTop;
+
+  const scrollPos = Math.max(scrollTop - elementTop, 0);
+  const maxScroll = rect.height - window.innerHeight;
+
+  let scrollPercentage = (scrollPos / maxScroll) * 100;
+
+  scrollPercentage = Math.max(0, Math.min(100, scrollPercentage));
+  console.log(cardsContainer!.children);
+
+  (cardsContainer as HTMLElement).scrollLeft =
+    scrollPercentage * 0.01 * cardsContainer!.scrollWidth;
+});

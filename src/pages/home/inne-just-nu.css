@@ -18,16 +18,22 @@
 
   display: flex;
   flex-direction: row;
-  align-items: center;
-  gap: calc(var(--golden-ratio) * 2em);
-  max-height: 100vh;
 
-  transform: translateX(100%);
-  overflow-x: visible;
+  gap: calc(var(--golden-ratio) * 2em);
+  max-height: 80vh;
+
+  overflow-x: auto;
+  box-sizing: content-box;
+}
+.cards-container::-webkit-scrollbar {
+  display: none;
 }
 
 .card {
-  width: 80vw;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  min-width: 100vw;
 }
 
 .CTA {
@@ -46,15 +52,16 @@
 }
 @media (min-width: 1024px) {
   .cards-container {
+    flex-direction: row;
     transform: translateX(0%);
+    gap: 0;
+    justify-content: center;
+    margin-inline: calc(var(--golden-ratio) * 2em);
   }
   .card {
-    width: unset;
+    min-width: 80%;
+    max-width: 80%;
   }
 }
 @media (min-width: 1460px) {
-  .cards-container {
-    flex-direction: row;
-    gap: calc(var(--golden-ratio) * 1em);
-  }
 }

@@ -1,10 +1,13 @@
 .card-container {
   transition: opacity 0.75s ease-in-out;
-  width: 100%;
+
+  display: flex;
+  /* justify-content: center; */
 }
 
 .card {
-  /* max-width: calc(var(--golden-ratio) * 12em); */
+  width: calc(var(--golden-ratio) * 10em);
+  height: calc(var(--golden-ratio) * 10em);
   overflow: visible;
   /* gap: calc(var(--golden-ratio) * 0.6em); */
 
@@ -13,7 +16,7 @@
 
 .card img {
   z-index: 50;
-  width: 100%;
+  width: 80%;
   margin-bottom: calc(var(--golden-ratio) * 0.4em);
 }
 

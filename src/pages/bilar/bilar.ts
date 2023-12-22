@@ -1,3 +1,11 @@
+const filterContainer = document.querySelector(
+  '.filter-container'
+) as HTMLElement;
+const rect = filterContainer?.getBoundingClientRect();
+// const navbar = document.querySelector('navbar-top') as HTMLElement;
+
+filterContainer?.style.setProperty('--top', `${rect.top}px`);
+
 document.querySelectorAll('.custom-dropdown-checkbox').forEach((el) => {
   const checkbox = el as HTMLInputElement;
   checkbox.addEventListener('change', () => {

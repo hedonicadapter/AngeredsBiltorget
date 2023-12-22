@@ -9,6 +9,10 @@ section.container {
 }
 
 .filter-container {
+  --top: 165px;
+
+  position: sticky;
+  top: var(--top);
   width: 100%;
 }
 
@@ -24,6 +28,7 @@ hr {
 }
 
 .tags-and-result-count-container {
+  min-height: calc(var(--golden-ratio) * 1.4em);
   gap: calc(var(--golden-ratio) * 0.5em);
 }
 .tags-container {
