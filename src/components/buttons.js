@@ -24,10 +24,13 @@ class Dropdown extends HTMLElement {
         input.value = option;
 
         const label = document.createElement('label');
+        label.className =
+          'label-and-input flex flex-row items-center justify-between';
         label.innerText = option;
         label.for = option;
 
-        inputContainer.append(input, label);
+        label.appendChild(input);
+        inputContainer.appendChild(label);
         dropdown.appendChild(inputContainer);
       });
     } catch (err) {
@@ -70,14 +73,23 @@ class Tag extends HTMLElement {
       `${text.offsetWidth - cross.offsetWidth}px`
     );
 
-    this.onclick = () => {
-      this.remove();
-    };
+    this.onclick = this.removeTag;
   }
 
   constructor() {
     super();
   }
+
+  removeTag = () => {
+    const correspondingCheckbox = document.querySelector(
+      `.custom-dropdown-checkbox[value="${this.getAttribute('text')}"]`
+    );
+    if (correspondingCheckbox) {
+      correspondingCheckbox.checked = false;
+    }
+
+    this.remove();
+  };
 }
 
 customElements.define('custom-dropdown', Dropdown);

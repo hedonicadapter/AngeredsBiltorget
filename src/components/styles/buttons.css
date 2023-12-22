@@ -64,8 +64,7 @@ input[type='search']::placeholder {
   top: 0;
   left: 0;
 
-  padding-left: calc(var(--golden-ratio) * 0.3em);
-  padding-right: calc(var(--golden-ratio) * 1em);
+  padding-inline: calc(var(--golden-ratio) * 0.3em);
 
   max-height: calc(var(--golden-ratio) * 1.2em);
   overflow: hidden;
@@ -86,6 +85,9 @@ input[type='search']::placeholder {
   pointer-events: none;
 
   transition: transform 0.45s ease-out;
+}
+.dropdown label {
+  gap: calc(var(--golden-ratio) * 0.4em);
 }
 
 .dropdown:hover {
