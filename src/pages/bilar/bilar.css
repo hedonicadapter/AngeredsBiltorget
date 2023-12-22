@@ -3,16 +3,19 @@
 }
 
 section.container {
+  --navbar-height: 0;
+  max-height: calc(100vh - (var(--navbar-height) + var(--golden-ratio) * 3em));
   padding: calc(var(--golden-ratio) * 1.5em);
+  padding-top: calc(var(--navbar-height) + var(--golden-ratio) * 1.5em);
   /* width: 100%; */
   /* padding-inline: calc(var(--golden-ratio) * 1em); */
 }
 
 .filter-container {
-  --top: 165px;
+  /* --original-position: 165px; */
 
-  position: sticky;
-  top: var(--top);
+  /* position: sticky; */
+  /* top: var(--original-position); */
   width: 100%;
 }
 
@@ -46,6 +49,7 @@ hr {
   justify-content: space-evenly;
   gap: calc(var(--golden-ratio) * 1em);
   padding-block: calc(var(--golden-ratio) * 1em);
+  overflow-y: auto;
 }
 
 @media (min-width: 768px) {

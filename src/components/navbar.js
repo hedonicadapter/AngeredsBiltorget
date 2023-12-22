@@ -1,6 +1,5 @@
 class Navbar extends HTMLElement {
-  constructor() {
-    super();
+  connectedCallback() {
     this.className = 'navbar-top-container';
 
     const nav = document.createElement('nav');
@@ -76,8 +75,28 @@ class Navbar extends HTMLElement {
     // can't control z-index for border-bottom
     const borderBottom = document.createElement('div');
     borderBottom.className = 'navbar-top-border';
-    borderBottom.style.top = nav.offsetHeight + 'px';
+    borderBottom.style.setProperty('--top', nav.offsetHeight + 'px');
     this.appendChild(borderBottom);
+
+    document.addEventListener('scroll', this.expandAndContract.bind(this));
+  }
+
+  constructor() {
+    super();
+
+    this.scrollTop = 0;
+  }
+
+  expandAndContract() {
+    const direction = window.scrollY > this.scrollTop ? 'down' : 'up';
+    console.log(this.classList);
+    if (direction == 'up') {
+      this.firstChild.classList.remove('navbar-contracted');
+    } else if (direction == 'down') {
+      this.firstChild.classList.add('navbar-contracted');
+    }
+
+    this.scrollTop = window.scrollY;
   }
 
   static anchorCreator(anchorText, anchorHref) {

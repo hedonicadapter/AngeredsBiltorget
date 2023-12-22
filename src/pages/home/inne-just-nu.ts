@@ -55,7 +55,6 @@ window.addEventListener('scroll', () => {
   let scrollPercentage = (scrollPos / maxScroll) * 100;
 
   scrollPercentage = Math.max(0, Math.min(100, scrollPercentage));
-  console.log(cardsContainer!.children);
 
   (cardsContainer as HTMLElement).scrollLeft =
     scrollPercentage * 0.01 * cardsContainer!.scrollWidth;

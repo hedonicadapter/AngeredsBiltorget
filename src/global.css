@@ -90,7 +90,7 @@ body {
 }
 
 main {
-  padding-top: calc(var(--golden-ratio) * 8em);
+  /* padding-top: calc(var(--golden-ratio) * 8em); */
   /* overflow: hidden; */
   position: relative;
   /* padding-inline: calc(var(--golden-ratio) * 4em); */

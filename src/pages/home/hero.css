@@ -2,6 +2,10 @@ body {
   background: radial-gradient(at center top, var(--surface) 0%, var(--bg) 100%);
 }
 
+main {
+  padding-top: calc(var(--golden-ratio) * 8em);
+}
+
 header {
   display: flex;
   justify-content: center;
