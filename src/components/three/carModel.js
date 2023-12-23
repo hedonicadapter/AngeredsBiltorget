@@ -93,7 +93,7 @@ dracoLoader.preload();
 const modelLoader = new GLTFLoader();
 modelLoader.setDRACOLoader(dracoLoader);
 modelLoader.load(
-  'optimizedCar.glb',
+  'Volvo S90.glb',
   modelLoaderCallback,
   undefined,
   console.error

@@ -3,9 +3,10 @@
   transition: opacity 0.75s ease-in-out;
 
   display: flex;
-  /* justify-content: center; */
 }
-.card-container * {
+
+.card-container:hover img {
+  scale: 1.075;
 }
 
 .card {
@@ -23,8 +24,10 @@
   mix-blend-mode: exclusion;
   /* z-index: 50; */
   width: 80%;
-
   margin-bottom: calc(var(--golden-ratio) * 0.4em);
+
+  transform-origin: center;
+  transition: scale 0.15s ease-out;
 }
 
 .card h4 {

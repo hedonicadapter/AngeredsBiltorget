@@ -26,7 +26,7 @@ class Navbar extends HTMLElement {
 
       anchorHighlighter.style.setProperty(
         '--highlighter-width',
-        `${ratio * widthInEm}em`
+        `${ratio * widthInEm - 0.25}em`
       );
       anchorHighlighter.style.setProperty('--anchor-left', `${left}px`);
       anchorHighlighter.style.setProperty('--anchor-width', `${width}px`);
@@ -76,20 +76,62 @@ class Navbar extends HTMLElement {
     const carsAnchor = Navbar.anchorCreator('Bilar', 'bilar');
     const aboutAnchor = Navbar.anchorCreator('Om oss', 'about');
     const kontaktAnchor = Navbar.anchorCreator('Kontakt', 'contact');
+    const cartAnchor = Navbar.anchorCreator('Cart', 'cart'); // TODO: delete after labbinlämning
     rightContainer.appendChild(carsAnchor);
     rightContainer.appendChild(aboutAnchor);
     rightContainer.appendChild(kontaktAnchor);
+    rightContainer.appendChild(cartAnchor); // TODO: delete after labbinlämning
     nav.appendChild(rightContainer);
 
     this.appendChild(nav);
 
-    // can't control z-index for border-bottom
+    // can't control z-index for border-bottom, so I use a div instead
     // const borderBottom = document.createElement('div');
     // borderBottom.className = 'navbar-top-border';
     // borderBottom.style.setProperty('--top', nav.offsetHeight + 'px');
     // this.appendChild(borderBottom);
 
     document.addEventListener('scroll', this.expandAndContract.bind(this));
+    navigation.addEventListener('navigatesuccess', () => {
+      const page = window.location.pathname.slice(1);
+      console.log(page);
+      switch (page) {
+        case 'bilar':
+          carsAnchor.classList.add('active');
+
+          aboutAnchor.classList.remove('active');
+          kontaktAnchor.classList.remove('active');
+          cartAnchor.classList.remove('active');
+          break;
+        case 'about':
+          aboutAnchor.classList.add('active');
+
+          carsAnchor.classList.remove('active');
+          kontaktAnchor.classList.remove('active');
+          cartAnchor.classList.remove('active');
+          break;
+        case 'contact':
+          kontaktAnchor.classList.add('active');
+
+          carsAnchor.classList.remove('active');
+          aboutAnchor.classList.remove('active');
+          cartAnchor.classList.remove('active');
+          break;
+        case 'cart':
+          cartAnchor.classList.add('active');
+
+          aboutAnchor.classList.remove('active');
+          kontaktAnchor.classList.remove('active');
+          cartAnchor.classList.remove('active');
+          break;
+        default:
+          carsAnchor.classList.remove('active');
+          aboutAnchor.classList.remove('active');
+          kontaktAnchor.classList.remove('active');
+          cartAnchor.classList.remove('active');
+          break;
+      }
+    });
   }
 
   constructor() {
@@ -112,9 +154,11 @@ class Navbar extends HTMLElement {
 
   static anchorCreator(anchorText, anchorHref) {
     const anchor = document.createElement('a');
-    anchor.className = 'nav-anchor';
+    // TODO: fix after labbinlämning
+    anchor.className =
+      anchorHref == 'cart' ? 'material-symbols-sharp nav-anchor' : 'nav-anchor';
     anchor.href = `/${anchorHref}`;
-    anchor.innerText = `${anchorText}`;
+    anchor.innerText = anchorHref == 'cart' ? 'shopping_bag' : `${anchorText}`;
 
     anchor.onmouseover = (evt) => {
       const hoverEvent = new Event('nav-anchor-mouseover');

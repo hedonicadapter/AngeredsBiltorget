@@ -59,6 +59,10 @@ hr {
   display: none;
 }
 
+.card {
+  flex-shrink: 0;
+}
+
 @media (min-width: 768px) {
   section.container {
     padding-inline: calc(var(--golden-ratio) * 5em);
@@ -75,8 +79,31 @@ hr {
   }
   .card-container {
     /* 1/4 minus .cars-container gap */
-    width: calc(25% - (var(--golden-ratio) * 1.2em));
+    width: calc(30% - (var(--golden-ratio) * 1.2em));
   }
   .cars-container {
   }
+}
+
+.addToCartButton {
+  z-index: 100;
+  background-color: transparent;
+  color: var(--on-bg);
+  border: none;
+  cursor: pointer;
+
+  opacity: 0;
+  transition: opacity 0.1s ease-out, scale 0.1s ease-out;
+
+  position: absolute;
+  top: 40px;
+  left: 0;
+  right: 0;
+}
+.addToCartButton:active {
+  scale: 0.9;
+  opacity: 0.6 !important;
+}
+.addToCartContainer:hover .addToCartButton {
+  opacity: 1;
 }
