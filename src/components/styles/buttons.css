@@ -57,9 +57,9 @@ input[type='search']::placeholder {
 .dropdown-container {
   position: relative;
   height: calc(var(--golden-ratio) * 1.2em);
+  z-index: 100;
 }
 .dropdown {
-  z-index: 100;
   position: absolute;
   top: 0;
   left: 0;

@@ -1,5 +1,7 @@
 type Car = {
-  title: string;
+  id?: string;
+  title?: string;
+  price: number;
   description?: string;
   make: string;
   model: string;
@@ -12,3 +14,5 @@ type Car = {
   color?: string;
   extraFeatures?: string[];
 };
+
+export default Car;

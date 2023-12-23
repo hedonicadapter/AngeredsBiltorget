@@ -13,6 +13,7 @@
     "vite": "^5.0.8"
   },
   "dependencies": {
+    "firebase": "^10.7.1",
     "three": "^0.159.0",
     "vite-plugin-top-level-await": "^1.4.1"
   }

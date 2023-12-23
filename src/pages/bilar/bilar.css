@@ -43,6 +43,7 @@ hr {
 .results-count {
   text-transform: uppercase;
   font-size: calc(var(--golden-ratio) * 0.4em);
+  color: var(--on-bg-lightest);
 }
 
 .cars-container {
@@ -52,7 +53,7 @@ hr {
   padding-block: calc(var(--golden-ratio) * 1em);
   overflow-y: auto;
   overflow-x: visible;
-  z-index: 0;
+  /* z-index: 0; */
 }
 .cars-container::-webkit-scrollbar {
   display: none;

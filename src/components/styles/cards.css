@@ -4,6 +4,8 @@
   display: flex;
   /* justify-content: center; */
 }
+.card-container * {
+}
 
 .card {
   width: calc(var(--golden-ratio) * 10em);
@@ -15,8 +17,10 @@
 }
 
 .card img {
-  z-index: 50;
+  mix-blend-mode: exclusion;
+  /* z-index: 50; */
   width: 80%;
+
   margin-bottom: calc(var(--golden-ratio) * 0.4em);
 }
 
