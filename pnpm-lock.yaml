@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@types/three':
+    specifier: ^0.160.0
+    version: 0.160.0
   firebase:
     specifier: ^10.7.1
     version: 10.7.1
@@ -931,6 +934,23 @@ packages:
       undici-types: 5.26.5
     dev: false
 
+  /@types/stats.js@0.17.3:
+    resolution: {integrity: sha512-pXNfAD3KHOdif9EQXZ9deK82HVNaXP5ZIF5RP2QG6OQFNTaY2YIetfrE9t528vEreGQvEPRDDc8muaoYeK0SxQ==}
+    dev: false
+
+  /@types/three@0.160.0:
+    resolution: {integrity: sha512-jWlbUBovicUKaOYxzgkLlhkiEQJkhCVvg4W2IYD2trqD2om3VK4DGLpHH5zQHNr7RweZK/5re/4IVhbhvxbV9w==}
+    dependencies:
+      '@types/stats.js': 0.17.3
+      '@types/webxr': 0.5.10
+      fflate: 0.6.10
+      meshoptimizer: 0.18.1
+    dev: false
+
+  /@types/webxr@0.5.10:
+    resolution: {integrity: sha512-n3u5sqXQJhf1CS68mw3Wf16FQ4cRPNBBwdYLFzq3UddiADOim1Pn3Y6PBdDilz1vOJF3ybLxJ8ZEDlLIzrOQZg==}
+    dev: false
+
   /ansi-regex@5.0.1:
     resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
     engines: {node: '>=8'}
@@ -1008,6 +1028,10 @@ packages:
       websocket-driver: 0.7.4
     dev: false
 
+  /fflate@0.6.10:
+    resolution: {integrity: sha512-IQrh3lEPM93wVCEczc9SaAOvkmcoQn/G8Bo1e8ZPlY3X3bnAxWaBdvTdvM1hP62iZp0BXWDy4vTAy4fF0+Dlpg==}
+    dev: false
+
   /firebase@10.7.1:
     resolution: {integrity: sha512-Mlt7y7zQ43FtKp4SCyYie3tnrOL3UMF2XXiV4ZXMrC0d0wtcOYmABuybhkJpJCKILpdekxr39wjnaai0DZlWFg==}
     dependencies:
@@ -1076,6 +1100,10 @@ packages:
 
   /long@5.2.3:
     resolution: {integrity: sha512-lcHwpNoggQTObv5apGNCTdJrO69eHOZMi4BNC+rTLER8iHAqGrUVeLh/irVIM7zTw2bOXA8T6uNPeujwOLg/2Q==}
+    dev: false
+
+  /meshoptimizer@0.18.1:
+    resolution: {integrity: sha512-ZhoIoL7TNV4s5B6+rx5mC//fw8/POGyNxS/DZyCJeiZ12ScLfVwRE/GfsxwiTkMYYD5DmK2/JXnEVXqL4rF+Sw==}
     dev: false
 
   /nanoid@3.3.7:

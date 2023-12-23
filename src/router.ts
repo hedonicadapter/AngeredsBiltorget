@@ -71,7 +71,7 @@ class Router {
         if (filePath.endsWith('.js') || filePath.endsWith('.ts')) {
           const script = document.createElement('script');
           script.type = 'module';
-          script.src = filePath;
+          script.src = `${filePath}?cachebuster=${new Date().getTime()}`; // prevents script caching so scripts re-execute on navigation
           outletContainerElement.appendChild(script);
         } else if (filePath.endsWith('.css')) {
           const link = document.createElement('link');

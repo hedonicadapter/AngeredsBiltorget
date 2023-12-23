@@ -22,7 +22,8 @@ class CardSM extends HTMLElement {
     card.className += 'card flex flex-col items-center';
 
     const img = document.createElement('img');
-    img.src = this.getAttribute('src') ?? '/images/placeholder-car.webp';
+    const src = this.getAttribute('src');
+    img.src = src && src.length > 0 ? src : '/images/placeholder-car.webp';
     img.alt = `Picture of ${title || 'car'}`;
 
     const header = document.createElement('h4');

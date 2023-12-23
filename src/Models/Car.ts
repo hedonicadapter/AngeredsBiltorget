@@ -13,6 +13,10 @@ type Car = {
   vehicleType?: string; // Fordonstyp
   color?: string;
   extraFeatures?: string[];
+
+  // not in firestore
+  thumbnail?: string;
+  images?: string[];
 };
 
 export default Car;

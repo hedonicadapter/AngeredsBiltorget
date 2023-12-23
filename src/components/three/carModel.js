@@ -83,19 +83,17 @@ const modelLoaderCallback = (gltf) => {
 };
 
 const envLoader = new RGBELoader();
-envLoader.load(
-  '/environments/MR_INT-003_Kitchen_Pierre.hdr',
-  envLoaderCallback
-);
+envLoader.load('/environments/autoshop_01_4k.hdr', envLoaderCallback);
 
 const dracoLoader = new DRACOLoader();
 dracoLoader.setDecoderPath(
   'https://www.gstatic.com/draco/versioned/decoders/1.5.6/'
 );
+dracoLoader.preload();
 const modelLoader = new GLTFLoader();
 modelLoader.setDRACOLoader(dracoLoader);
 modelLoader.load(
-  'carCompressed.glb',
+  'optimizedCar.glb',
   modelLoaderCallback,
   undefined,
   console.error

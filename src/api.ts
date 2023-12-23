@@ -1,4 +1,4 @@
-import { db } from './db';
+import { db, storage } from './db';
 import {
   collection,
   query,
@@ -16,6 +16,16 @@ import {
   limit,
   getCountFromServer,
 } from 'firebase/firestore';
+import {
+  getStorage,
+  ref,
+  getMetadata,
+  uploadBytes,
+  listAll,
+  getDownloadURL,
+  StorageReference,
+} from 'firebase/storage';
+
 import Car from './Models/Car';
 
 const productCollection = collection(db, 'products');
@@ -64,6 +74,66 @@ export async function upsertProduct(product: Car) {
 export async function deleteProduct(id: string) {
   const productRef = doc(db, 'products', id);
   await deleteDoc(productRef);
+}
+
+export async function removeImageBackground(imageFile: File): Promise<Blob> {
+  const formData = new FormData();
+  formData.append('image_file', imageFile);
+
+  const response = await fetch('https://sdk.photoroom.com/v1/segment', {
+    method: 'POST',
+    headers: {
+      'X-Api-Key': import.meta.env.VITE_PHOTOROOM_API_KEY,
+    },
+    body: formData,
+  });
+
+  if (!response.ok) {
+    console.error(response.json());
+    throw new Error('Network response was not ok');
+  }
+
+  const imageBlob: Blob = await response.blob();
+
+  return imageBlob;
+}
+
+export async function postProductImage(
+  id: string,
+  file: File,
+  overwrite: boolean = true
+) {
+  const storage = getStorage();
+  let storageRef = ref(storage, `products/${id}/${file.name}`);
+
+  if (!overwrite) {
+    try {
+      await getMetadata(storageRef);
+    } catch (err) {
+      storageRef = ref(storage, `products/${id}/${file.name} (duplicate)`);
+    }
+  }
+
+  //   TODO: error handling
+  await uploadBytes(storageRef, file);
+
+  return await getDownloadURL(storageRef);
+}
+
+export async function getProductFiles(id: string) {
+  const storage = getStorage();
+  let storageRef = ref(storage, `products/${id}`);
+
+  const res = await listAll(storageRef);
+
+  const fileURLs = await Promise.all(
+    res.items.map(async (item: StorageReference) => {
+      const fileUrl = await getDownloadURL(item);
+
+      return { name: item.name, url: fileUrl };
+    })
+  );
+  return fileURLs;
 }
 
 // for (let i = 0; i < 96; i++) {

@@ -2,10 +2,13 @@ import Car from '../../Models/Car';
 import {
   generateDummyCarData,
   getProductCount,
+  getProductFiles,
   getProducts,
   upsertProduct,
 } from '../../api';
 import { DocumentSnapshot } from 'firebase/firestore';
+
+console.log('hello');
 
 const filterContainer = document.querySelector(
   '.filter-container'
@@ -42,7 +45,7 @@ const setFilterContainerPosition = () => {
   const section = document.querySelector('section.container') as HTMLElement;
   const navbar = document.querySelector('.navbar-top') as HTMLElement;
 
-  section.style.setProperty('--navbar-height', `${navbar.offsetHeight}px`);
+  section?.style.setProperty('--navbar-height', `${navbar.offsetHeight}px`);
 };
 
 let oldScrollY = 0;
@@ -88,8 +91,9 @@ const getCars = async () => {
 
   const carDocs = await getProducts(page, 16, 'year');
 
-  carDocs.forEach((doc, index) => {
+  carDocs.forEach(async (doc, index) => {
     page = doc;
+    const fileUrls = await getProductFiles(doc.id);
 
     const car = doc.data() as Car;
     // console.log(car);
@@ -98,6 +102,11 @@ const getCars = async () => {
     carCard.setAttribute('model', car.model);
     carCard.setAttribute('make', car.make);
     carCard.setAttribute('price', car.price?.toString());
+
+    const thumbnail =
+      fileUrls.find((file) => file.name.startsWith('thumbnail'))?.url || '';
+
+    carCard.setAttribute('src', thumbnail);
     carsContainer.appendChild(carCard);
 
     setTimeout(() => {
