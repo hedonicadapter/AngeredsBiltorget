@@ -14,8 +14,16 @@ import {
   orderBy,
   startAfter,
   limit,
+  getCountFromServer,
 } from 'firebase/firestore';
 import Car from './Models/Car';
+
+const productCollection = collection(db, 'products');
+
+export async function getProductCount() {
+  const snapshot = await getCountFromServer(productCollection);
+  return snapshot.data().count;
+}
 
 export async function getProducts(
   start: number | DocumentSnapshot,
@@ -23,7 +31,7 @@ export async function getProducts(
   order: string = 'year'
 ): Promise<DocumentSnapshot<DocumentData, DocumentData>[]> {
   const q = query(
-    collection(db, 'products'),
+    productCollection,
     orderBy(order),
     startAfter(start),
     limit(perPage)
@@ -49,7 +57,7 @@ export async function upsertProduct(product: Car) {
     const productRef = doc(db, 'products', product.id);
     await updateDoc(productRef, product);
   } else {
-    await addDoc(collection(db, 'products'), product);
+    await addDoc(productCollection, product);
   }
 }
 
@@ -86,7 +94,6 @@ export const generateDummyCarData = () => {
   };
 
   const dummyCar = {
-    title: 'Dummy Car',
     price: generateRandomNumber(50000, 1500000),
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     make: getRandomElement(carMakes),

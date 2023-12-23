@@ -1,5 +1,10 @@
 import Car from '../../Models/Car';
-import { generateDummyCarData, getProducts, upsertProduct } from '../../api';
+import {
+  generateDummyCarData,
+  getProductCount,
+  getProducts,
+  upsertProduct,
+} from '../../api';
 import { DocumentSnapshot } from 'firebase/firestore';
 
 const filterContainer = document.querySelector(
@@ -44,6 +49,14 @@ let oldScrollY = 0;
 const handleCarsContainerScroll = () => {
   const direction = window.scrollY > oldScrollY ? 'down' : 'up';
 
+  if (
+    carsContainer.scrollTop ===
+    carsContainer.scrollHeight - carsContainer.offsetHeight
+  ) {
+    console.log('scrolled to bottom');
+    getCars();
+  }
+
   if (direction === 'up') {
     window.scrollTo({ behavior: 'smooth', top: document.body.scrollHeight });
   }
@@ -55,20 +68,53 @@ carsContainer.addEventListener('scroll', handleCarsContainerScroll);
 window.addEventListener('scroll', setFilterContainerPosition);
 setFilterContainerPosition();
 
-let page: number | DocumentSnapshot = 0;
-(async () => {
-  const carDocs = await getProducts(page, 16, 'year');
-  console.log(carDocs);
-  page = carDocs[carDocs.length - 1];
+const resultsShowing = document.querySelector(
+  '#results-showing'
+) as HTMLElement;
+const resultsAvailable = document.querySelector(
+  '#results-available'
+) as HTMLElement;
+const getInventoryCount = async () => {
+  const count = await getProductCount();
 
-  carDocs.forEach((doc) => {
+  resultsAvailable.textContent = count.toString();
+};
+
+let gettingProducts = false; // Prevents multiple requests from being sent at once
+let page: number | DocumentSnapshot = 0;
+const getCars = async () => {
+  if (gettingProducts) return;
+  gettingProducts = true;
+
+  const carDocs = await getProducts(page, 16, 'year');
+
+  carDocs.forEach((doc, index) => {
+    page = doc;
+
     const car = doc.data() as Car;
-    console.log(car);
+    // console.log(car);
     const carCard = document.createElement('card-sm') as HTMLElement;
     carCard.setAttribute('title', car.title || '');
     carCard.setAttribute('model', car.model);
     carCard.setAttribute('make', car.make);
     carCard.setAttribute('price', car.price?.toString());
     carsContainer.appendChild(carCard);
+
+    setTimeout(() => {
+      carCard.classList.add('visible');
+      gettingProducts = false;
+    }, index * 100);
+
+    setTimeout(() => {
+      const incrementedResultsShowing = `${
+        parseInt(resultsShowing.textContent!) + 1
+      }`;
+      resultsShowing.textContent = incrementedResultsShowing;
+    }, index * 50);
   });
-})();
+};
+
+getCars();
+
+if (!resultsShowing.textContent) resultsShowing.textContent = '0';
+getInventoryCount();

@@ -1,4 +1,5 @@
 .card-container {
+  opacity: 0;
   transition: opacity 0.75s ease-in-out;
 
   display: flex;
