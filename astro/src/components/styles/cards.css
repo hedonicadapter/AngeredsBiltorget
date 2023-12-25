@@ -1,0 +1,39 @@
+.card-container {
+  transition: opacity 0.5s ease-out;
+
+  display: flex;
+}
+
+.card-container:hover img {
+  scale: 1.075;
+}
+
+.card {
+  width: calc(var(--golden-ratio) * 10em);
+  height: calc(var(--golden-ratio) * 10em);
+  overflow: visible;
+  /* gap: calc(var(--golden-ratio) * 0.6em); */
+
+  /* aspect-ratio: 1 / 1; */
+
+  text-align: center;
+}
+
+.card img {
+  mix-blend-mode: exclusion;
+  /* z-index: 50; */
+  width: 80%;
+  margin-bottom: calc(var(--golden-ratio) * 0.4em);
+
+  transform-origin: center;
+  transition: scale 0.15s ease-out;
+}
+
+.card h4 {
+  color: var(--on-bg);
+  margin-bottom: calc(var(--golden-ratio) * 0.1em);
+}
+
+.card p {
+  color: var(--on-bg-light);
+}

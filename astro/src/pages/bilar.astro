@@ -1,0 +1,127 @@
+---
+import Dropdown from '../components/Dropdown.astro';
+import CarsContainer from '../components/CarsContainer.jsx';
+import CurrentResultCount from '../components/CurrentResultCount.jsx';
+import "../components/styles/bilar.css";
+import Layout from "../layouts/Layout.astro";
+import type Car from '../Models/Car';
+import {
+  generateDummyCarData,
+  getProductCount,
+  getProductFiles,
+  getProducts,
+  upsertProduct,
+} from '../api';
+import { DocumentSnapshot } from 'firebase/firestore';
+
+  const count = await getProductCount();
+---
+<Layout>
+<section class="container flex flex-col justify-center items-center w-screen mx-auto">
+    <search class="filter-container flex flex-col">
+      <div class="buttons-container flex flex-row items-center justify-between">
+        <Dropdown
+          title="Märke"
+          options={["2019", "2020", "2021", "2022"]}
+        ></Dropdown>
+        <Dropdown
+          title="Märke"
+          options={["Volvo", "Saab", "Mercedes", "Audi"]}
+        ></Dropdown>
+  
+        <div class="search-bar">
+          <input
+            class="btn"
+            placeholder="Sök..."
+            type="search"
+            name="search-bilar"
+          />
+          <div id="search-bar-symbol" class="material-symbols-sharp">search</div>
+        </div>
+      </div>
+      <hr />
+      <div
+        class="tags-and-result-count-container flex flex-row justify-between items-start"
+      >
+        <div class="tags-container flex flex-row"></div>
+        <div class="results-count">
+          <CurrentResultCount client:load/> /
+          <span id="results-available">{count}</span> Resultat
+        </div>
+      </div>
+    </search>
+    <CarsContainer client:load/>
+  </section>
+</Layout>
+
+  <script>
+    import {
+      generateDummyCarData,
+      getProductCount,
+      getProductFiles,
+      getProducts,
+      upsertProduct,
+    } from '../api';
+    import type Car from '../Models/Car';
+    import { DocumentSnapshot } from 'firebase/firestore';
+
+    let oldScrollY = 0;
+
+    const filterContainer = document.querySelector(
+      '.filter-container'
+    ) as HTMLElement;
+    const filterContainerRect = filterContainer?.getBoundingClientRect();
+    filterContainer?.style.setProperty(
+      '--original-position',
+      `${filterContainerRect.top}px`
+    );
+
+    const carsContainer = document.querySelector('.cars-container') as HTMLElement;
+
+    const setFilterContainerPosition = () => {
+      const section = document.querySelector('section.container') as HTMLElement;
+      const navbar = document.querySelector('.navbar-top') as HTMLElement;
+
+      section?.style.setProperty('--navbar-height', `${navbar.offsetHeight}px`);
+    };
+
+    const redirectScrollY = (scrollIncrement = 100) => {
+      const scrolledToBottom =
+        window.scrollY + window.innerHeight === document.body.scrollHeight;
+      const direction = window.scrollY > oldScrollY ? 'down' : 'up';
+
+      if (scrolledToBottom) {
+        if (direction === 'down')
+          carsContainer.scrollBy({
+            behavior: 'smooth',
+            top: -scrollIncrement * 10,
+          });
+      }
+
+      if (direction === 'up')
+        carsContainer.scrollBy({ behavior: 'smooth', top: scrollIncrement * 10 });
+    };
+
+    const handleWindowScrollAttempt = (event: WheelEvent | KeyboardEvent) => {
+      redirectScrollY(event.deltaY);
+    };
+
+
+
+
+  
+    
+
+
+
+  window.addEventListener('scroll', setFilterContainerPosition);
+  window.addEventListener('wheel', handleWindowScrollAttempt);
+  window.addEventListener('keydown', (event: KeyboardEvent) => {
+    if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
+      handleWindowScrollAttempt(event);
+    }
+  });
+
+  setFilterContainerPosition();
+
+  </script>

@@ -1,0 +1,134 @@
+---
+import "./styles/navbar.css";
+import NavAnchor from './Nav-anchor.astro';
+---
+
+
+<div class="navbar-top-container ">
+    <nav class="navbar-top flex flex-row justify-between items-center navbar">
+        <div class="nav-container nav-container-left flex flex-row items-center">
+            <a id="navbar-home" href="/" class="flex flex-row items-center">
+                <img id="navbar-logo" src="/images/logo.svg" alt="Angered Biltorget logo"/>
+                <h5>Angered biltorget</h5>
+
+            </a>
+        </div>
+        <div class="nav-container nav-container-right flex-row items-center">
+            <NavAnchor anchorText="Bilar" anchorHref="bilar" />
+            <NavAnchor anchorText="Om oss" anchorHref="" id="fake-nav-anchor" />
+            <NavAnchor anchorText="Kontakt" anchorHref="contact" />
+            <NavAnchor anchorText="Cart" anchorHref="cart" />
+            <div class="nav-anchor-highlighter"></div>
+        </div>
+        <a id="borger" class="flex flex-row items-center">
+            <div id="borger-icon" class="material-symbols-sharp">
+                menu
+            </div>
+        
+        </a>
+    </nav>
+</div>
+
+
+<script>
+    const anchorHighlighter = document.querySelector('.nav-anchor-highlighter');
+    const carsAnchor = document.querySelector('.nav-anchor[href="/bilar"]');
+    const aboutAnchor = document.querySelector('.nav-anchor[href="/about"]');
+    const kontaktAnchor = document.querySelector('.nav-anchor[href="/contact"]');
+    const cartAnchor = document.querySelector('.nav-anchor[href=""]');
+
+    let oldScrollTop = 0;
+
+    const setAnchorHighlighter = (evt) => {
+      const { left, width } = evt.anchorInfo;
+      const ratio = window
+        .getComputedStyle(document.documentElement)
+        .getPropertyValue('--golden-ratio');
+      const widthInEm =
+        width /
+        parseFloat(getComputedStyle(anchorHighlighter.parentElement).fontSize);
+
+      anchorHighlighter.style.setProperty(
+        '--highlighter-width',
+        `${ratio * widthInEm - 0.25}em`
+      );
+      anchorHighlighter.style.setProperty('--anchor-left', `${left}px`);
+      anchorHighlighter.style.setProperty('--anchor-width', `${width}px`);
+    }
+
+    const removeAnchorHighlighterMotionBlur = (evt) => {
+      if (evt.propertyName !== 'left') return;
+
+      anchorHighlighter.classList.remove('motion-blur');
+    }
+
+    const setAnchorHighlighterMotionBlur = (evt) => {
+      if (evt.propertyName !== 'left') return;
+
+      anchorHighlighter.classList.add('motion-blur');
+    }
+
+    const expandAndContract = () => {
+        const navbar = document.querySelector('.navbar-top');
+        if (!navbar) return;
+
+        const direction = window.scrollY > oldScrollTop ? 'down' : 'up';
+
+        if (direction == 'up' && window.scrollY < 100) {
+            navbar.firstChild!.classList.remove('navbar-contracted');
+        } else if (direction == 'down') {
+            navbar.firstChild!.classList.add('navbar-contracted');
+        }
+
+        oldScrollTop = window.scrollY;
+    }
+
+    const setActiveNavAnchor = () => {
+      const page = window.location.pathname.slice(1);
+
+      switch (page) {
+        case 'bilar':
+          carsAnchor?.classList.add('active');
+
+          aboutAnchor?.classList.remove('active');
+          kontaktAnchor?.classList.remove('active');
+          cartAnchor?.classList.remove('active');
+          break;
+        case 'about':
+          aboutAnchor?.classList.add('active');
+
+          carsAnchor?.classList.remove('active');
+          kontaktAnchor?.classList.remove('active');
+          cartAnchor?.classList.remove('active');
+          break;
+        case 'contact':
+          kontaktAnchor?.classList.add('active');
+
+          carsAnchor?.classList.remove('active');
+          aboutAnchor?.classList.remove('active');
+          cartAnchor?.classList.remove('active');
+          break;
+        case 'cart':
+          cartAnchor?.classList.add('active');
+
+          aboutAnchor?.classList.remove('active');
+          kontaktAnchor?.classList.remove('active');
+          cartAnchor?.classList.remove('active');
+          break;
+        default:
+          carsAnchor?.classList.remove('active');
+          aboutAnchor?.classList.remove('active');
+          kontaktAnchor?.classList.remove('active');
+          cartAnchor?.classList.remove('active');
+          break;
+      }
+    }
+    
+    anchorHighlighter.addEventListener('transitionend', removeAnchorHighlighterMotionBlur);
+    anchorHighlighter.addEventListener('transitionstart', setAnchorHighlighterMotionBlur);
+
+    document.addEventListener('nav-anchor-mouseover', setAnchorHighlighter);
+    document.addEventListener('scroll', expandAndContract);
+    navigation.addEventListener('navigatesuccess', setActiveNavAnchor);
+
+</script>
