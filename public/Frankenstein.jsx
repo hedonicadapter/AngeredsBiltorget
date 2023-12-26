@@ -5,7 +5,7 @@ Files: frankenstein.glb [12.43MB] > F:\Coding\ITHSLabbar\Vanilla\astro\public\fr
 */
 import { useFrame, useLoader, useThree } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
-import { forwardRef, useEffect, useMemo } from 'react';
+import { forwardRef, useEffect, useMemo, useState } from 'react';
 
 import { TextureLoader } from 'three';
 import {
@@ -29,7 +29,6 @@ const Model = forwardRef((props, ref) => {
 
   return (
     <group ref={ref} {...props} dispose={null}>
-      <Headlights />
       <mesh
         geometry={nodes.Windsheild_Null.geometry}
         material={materials.PaletteMaterial007}
@@ -187,34 +186,6 @@ const Model = forwardRef((props, ref) => {
     </group>
   );
 });
-
-function Headlights() {
-  const { scene } = useThree();
-  const textureFlare0 = useLoader(TextureLoader, 'lens-flare.webp');
-
-  useEffect(() => {
-    const lensFlareLeft = new Lensflare();
-    lensFlareLeft.addElement(new LensflareElement(textureFlare0, 700, 0));
-    lensFlareLeft.position.set(-0.24, 3.204, 2.34);
-    scene.add(lensFlareLeft);
-
-    const lensFlareRight = new Lensflare();
-    lensFlareRight.addElement(new LensflareElement(textureFlare0, 700, 0));
-    lensFlareRight.position.set(-1.51, 3.225, 1.8);
-    scene.add(lensFlareRight);
-
-    // Clean up on unmount
-    return () => {
-      scene.remove(lensFlareLeft);
-      lensFlareLeft.dispose();
-
-      scene.remove(lensFlareRight);
-      lensFlareRight.dispose();
-    };
-  }, [scene, textureFlare0]);
-
-  return null;
-}
 
 useGLTF.preload('/frankenstein-transformed.glb');
 // useLoader.preload('/lens-flare.webp');

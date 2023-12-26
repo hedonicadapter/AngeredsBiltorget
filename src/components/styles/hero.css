@@ -44,6 +44,34 @@ header {
   position: relative;
 }
 
+body {
+  /* background: url('https://farm9.staticflickr.com/8760/17195790401_94fcf60556_c.jpg'); */
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.CTA {
+  background-color: var(--bg-transparent);
+}
+
+/* Cut-out text effect */
+/* svg {
+  width: 100%;
+}
+.CTA {
+  font-size: calc(var(--golden-ratio) * 1.2em);
+  font-weight: 700;
+  margin: auto;
+  transition: all 0.2s ease-in-out;
+}
+.CTA rect {
+  stroke: var(--primary);
+  stroke-width: 2;
+
+  rx: calc(var(--golden-ratio) * 0.1em);
+  border-radius: calc(var(--golden-ratio) * 0.1em);
+} */
+
 @keyframes shake {
   0% {
     transform: translate(0.5px, 0.5px) rotate(0deg);
@@ -175,9 +203,9 @@ header {
 }
 
 #model-container {
-  margin-top: -55vh;
+  margin-top: -100vh;
   width: 100vw;
-  height: 300vh;
+  height: 200vh;
 }
 canvas {
   pointer-events: none;
@@ -212,7 +240,7 @@ canvas {
     font-size: calc(var(--golden-ratio) * 3em);
   }
   .subtitle {
-    font-size: calc(var(--golden-ratio) * 1em);
+    font-size: calc(var(--golden-ratio) * 0.9em);
   }
 }
 @media (min-width: 1280px) {

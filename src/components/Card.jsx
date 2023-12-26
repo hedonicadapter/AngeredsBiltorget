@@ -46,13 +46,13 @@ export default function Card(props) {
 
   return (
     <div className={cardClassName}>
-      <div className='card flex flex-col items-center'>
+      <div className='card flex flex-col items-center z-40'>
         <img
           src={src && src.length > 0 ? src : '/images/placeholder-car.webp'}
           alt={`Picture of ${title || 'car'}`}
-          class='object-contain aspect-square flex-1'
+          className='object-contain aspect-square flex-1'
         />
-        <h4 class='whitespace-nowrap'>{title || `${make} ${model}`}</h4>
+        <h4 className='whitespace-nowrap'>{title || `${make} ${model}`}</h4>
         <p>{price}SEK</p>
 
         {/* TODO: delete after labbinlämning */}

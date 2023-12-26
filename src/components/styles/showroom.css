@@ -61,26 +61,3 @@ hr {
     /* padding-inline: 16vw; */
   }
 }
-
-.addToCartButton {
-  z-index: 100;
-  background-color: transparent;
-  color: var(--on-bg);
-  border: none;
-  cursor: pointer;
-
-  opacity: 0;
-  transition: opacity 0.1s ease-out, scale 0.1s ease-out;
-
-  position: absolute;
-  top: 40px;
-  left: 0;
-  right: 0;
-}
-.addToCartButton:active {
-  scale: 0.9;
-  opacity: 0.6 !important;
-}
-.addToCartContainer:hover .addToCartButton {
-  opacity: 1;
-}

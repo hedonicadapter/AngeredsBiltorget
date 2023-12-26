@@ -14,7 +14,7 @@ import NavAnchor from './Nav-anchor.astro';
             </a>
         </div>
         <div class="nav-container nav-container-right flex-row items-center">
-            <NavAnchor anchorText="Bilar" anchorHref="bilar" />
+            <NavAnchor anchorText="Showroom" anchorHref="showroom" />
             <NavAnchor anchorText="Om oss" anchorHref="" id="fake-nav-anchor" />
             <NavAnchor anchorText="Kontakt" anchorHref="contact" />
             <NavAnchor anchorText="Cart" anchorHref="cart" />
@@ -32,7 +32,7 @@ import NavAnchor from './Nav-anchor.astro';
 
 <script>
     const anchorHighlighter = document.querySelector('.nav-anchor-highlighter');
-    const carsAnchor = document.querySelector('.nav-anchor[href="/bilar"]');
+    const carsAnchor = document.querySelector('.nav-anchor[href="/showroom"]');
     const aboutAnchor = document.querySelector('.nav-anchor[href="/about"]');
     const kontaktAnchor = document.querySelector('.nav-anchor[href="/contact"]');
     const cartAnchor = document.querySelector('.nav-anchor[href=""]');
@@ -87,7 +87,7 @@ import NavAnchor from './Nav-anchor.astro';
       const page = window.location.pathname.slice(1);
 
       switch (page) {
-        case 'bilar':
+        case 'showroom':
           carsAnchor?.classList.add('active');
 
           aboutAnchor?.classList.remove('active');

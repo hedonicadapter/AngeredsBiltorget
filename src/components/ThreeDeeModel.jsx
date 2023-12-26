@@ -13,6 +13,12 @@ import {
 import Model from '../../public/Frankenstein';
 import useScroll from '../util/useScroll';
 
+import { TextureLoader } from 'three';
+import {
+  Lensflare,
+  LensflareElement,
+} from 'three/examples/jsm/objects/Lensflare';
+
 export default function ThreeDeeModel() {
   const modelRef = useRef();
   const [cameraPosition, setCameraPosition] = useState([0, 1, 9]);
@@ -21,14 +27,16 @@ export default function ThreeDeeModel() {
   return (
     <Suspense fallback={<LoadingSpinner />}>
       <Canvas shadows dpr={window.devicePixelRatio}>
-        <group position={[0, 2.5, 0]}>
+        <group position={[0, 0, 0]}>
           <Model
+            scale={0.8}
             ref={modelRef}
-            scale={1}
+            position={[0, 0, 0]}
             rotation={[modelRotationY, -Math.PI / 8, 0]}
           />
+          <Headlights scale={0.8} />
           <spotLight
-            position={[0, 15, 0]}
+            position={[0, 30, 0]}
             angle={0.3}
             penumbra={1}
             castShadow
@@ -36,11 +44,11 @@ export default function ThreeDeeModel() {
             shadow-bias={-0.0001}
             shadow-mapSize={[256, 256]}
           />
-          <ambientLight intensity={0.2} />
+          <ambientLight intensity={0} />
           <ContactShadows
             resolution={1024}
             frames={1}
-            position={[0, -0.1, 0]}
+            position={[0, 0, 0]}
             scale={10}
             blur={3}
             opacity={1}
@@ -82,19 +90,87 @@ export default function ThreeDeeModel() {
           </Environment>
           <BakeShadows />
           {/* <CameraShake
-          maxYaw={0.001}
-          maxPitch={0.001}
-          maxRoll={0.001}
-          yawFrequency={10}
-          pitchFrequency={10}
-          rollFrequency={10}
-        /> */}
+            maxYaw={0.0008}
+            maxPitch={0.0008}
+            maxRoll={0.0008}
+            yawFrequency={10}
+            pitchFrequency={10}
+            rollFrequency={10}
+          /> */}
           <ScrollCallback setModelRotationY={setModelRotationY} />
-          <PerspectiveCamera makeDefault fov={60} position={cameraPosition} />
+          <PerspectiveCamera
+            zoom={0.8}
+            makeDefault
+            fov={60}
+            position={cameraPosition}
+          />
         </group>
       </Canvas>
     </Suspense>
   );
+
+  function Headlights(props) {
+    const { scene } = useThree();
+    const textureFlare0 = useLoader(TextureLoader, 'lens-flare.webp');
+    const [lensFlareLeft, setLensFlareLeft] = useState();
+    const [lensFlareRight, setLensFlareRight] = useState();
+
+    useEffect(() => {
+      const lensFlareLeft = new Lensflare();
+      lensFlareLeft.addElement(new LensflareElement(textureFlare0, 700, 0));
+      // lensFlareLeft.position.set(-0.24, 3.204, 2.34);
+      setLensFlareLeft(lensFlareLeft);
+
+      const lensFlareRight = new Lensflare();
+      lensFlareRight.addElement(new LensflareElement(textureFlare0, 700, 0));
+      // lensFlareRight.position.set(-1.51, 3.225, 1.8);
+      setLensFlareRight(lensFlareRight);
+
+      // Clean up on unmount
+      return () => {
+        lensFlareLeft.dispose();
+        lensFlareRight.dispose();
+      };
+    }, [scene, textureFlare0]);
+
+    return (
+      <group {...props}>
+        {lensFlareLeft && (
+          <primitive position={[-0.24, 0.72, 2.39]} object={lensFlareLeft} />
+        )}
+        {lensFlareRight && (
+          <primitive position={[-1.55, 0.72, 1.9]} object={lensFlareRight} />
+        )}
+      </group>
+    );
+  }
+  // function Headlights() {
+  //   const { scene } = useThree();
+  //   const textureFlare0 = useLoader(TextureLoader, 'lens-flare.webp');
+
+  //   useEffect(() => {
+  //     const lensFlareLeft = new Lensflare();
+  //     lensFlareLeft.addElement(new LensflareElement(textureFlare0, 700, 0));
+  //     lensFlareLeft.position.set(-0.24, 3.204, 2.34);
+  //     scene.add(lensFlareLeft);
+
+  //     const lensFlareRight = new Lensflare();
+  //     lensFlareRight.addElement(new LensflareElement(textureFlare0, 700, 0));
+  //     lensFlareRight.position.set(-1.51, 3.225, 1.8);
+  //     scene.add(lensFlareRight);
+
+  //     // Clean up on unmount
+  //     return () => {
+  //       scene.remove(lensFlareLeft);
+  //       lensFlareLeft.dispose();
+
+  //       scene.remove(lensFlareRight);
+  //       lensFlareRight.dispose();
+  //     };
+  //   }, [scene, textureFlare0]);
+
+  //   return null;
+  // }
 
   // function BMW(props) {
   //   const { scene, nodes, materials } = useGLTF('/frankenstein.glb');

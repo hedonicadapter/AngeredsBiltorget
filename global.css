@@ -1,8 +1,6 @@
 @import url(/src/components/styles/navbar.css);
 @import url(/src/components/styles/buttons.css);
 @import url(/src/components/styles/cards.css);
-@import url(/src/components/styles/hero.css);
-@import url(/src/components/styles/inne-just-nu.css);
 
 :root {
   --golden-ratio: 1.618;
@@ -21,6 +19,7 @@
   --accent:  */
 
   --bg: #070505;
+  --bg-transparent: rgba(7, 5, 5, 0.2);
   --on-bg: rgba(255, 255, 255, 0.9);
   --on-bg-medium: rgba(255, 255, 255, 0.82);
   --on-bg-light: rgba(255, 255, 255, 0.74);
@@ -140,6 +139,7 @@ h1 {
   color: var(--on-bg);
   text-transform: uppercase;
   font-size: calc(var(--golden-ratio) * 3.3em);
+  line-height: calc(var(--golden-ratio) * 0.8em);
 }
 
 h3 {
@@ -245,4 +245,27 @@ p {
 @media (min-width: 1280px) {
 }
 @media (min-width: 1536px) {
+}
+
+.addToCartButton {
+  z-index: 100;
+  background-color: transparent;
+  color: var(--on-bg);
+  border: none;
+  cursor: pointer;
+
+  opacity: 0;
+  transition: opacity 0.1s ease-out, scale 0.1s ease-out;
+
+  position: absolute;
+  top: 40px;
+  left: 0;
+  right: 0;
+}
+.addToCartButton:active {
+  scale: 0.9;
+  opacity: 0.6 !important;
+}
+.addToCartContainer:hover .addToCartButton {
+  opacity: 1;
 }
