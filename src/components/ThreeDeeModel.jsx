@@ -1,4 +1,4 @@
-import { Suspense, useRef, useState, useEffect } from 'react';
+import { Suspense, useRef, useState, useEffect, useMemo } from 'react';
 import { Canvas, useFrame, useThree, useLoader } from '@react-three/fiber';
 import {
   Environment,
@@ -12,7 +12,8 @@ import {
 } from '@react-three/drei';
 import Model from '../../public/Frankenstein';
 import useScroll from '../util/useScroll';
-
+import { useStore } from '@nanostores/react';
+import { CTAHovered } from '../nanoStores/CTAStore.js';
 import { TextureLoader } from 'three';
 import {
   Lensflare,
@@ -23,87 +24,122 @@ export default function ThreeDeeModel() {
   const modelRef = useRef();
   const [cameraPosition, setCameraPosition] = useState([0, 1, 9]);
   const [modelRotationY, setModelRotationY] = useState(0.001);
+  const [runEngine, setRunEngine] = useState(false);
+
+  const [lightSize, setLightSize] = useState([0, 0, 0]);
+  const $CTAHovered = useStore(CTAHovered);
+  const $CTAHoveredRef = useRef($CTAHovered);
+
+  useEffect(() => {
+    let timeout;
+    if ($CTAHovered) {
+      timeout = setTimeout(() => setRunEngine(true), 500);
+    } else {
+      setRunEngine(false);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [$CTAHovered]);
+
+  const modelMemo = useMemo(
+    () => (
+      <group>
+        <Model
+          scale={0.8}
+          ref={modelRef}
+          position={[0, 0, 0]}
+          rotation={[modelRotationY, -Math.PI / 8, 0]}
+        />
+        <Headlights scale={0.8} />
+      </group>
+    ),
+    [modelRotationY]
+  );
+
+  const environmentMemo = useMemo(
+    () => (
+      <group>
+        <spotLight
+          position={[0, 30, 0]}
+          angle={0.3}
+          penumbra={1}
+          castShadow
+          intensity={2}
+          shadow-bias={-0.0001}
+          shadow-mapSize={[256, 256]}
+        />
+        <ambientLight intensity={0} />
+        <ContactShadows
+          resolution={1024}
+          frames={1}
+          position={[0, 0, 0]}
+          scale={10}
+          blur={3}
+          opacity={1}
+          far={10}
+        />
+        <Environment frames={Infinity} resolution={128}>
+          <Lightformer
+            intensity={0.4}
+            rotation-x={Math.PI / 2}
+            position={[0, 5, -9]}
+            scale={[10, 10, 1]}
+          />
+          <MovingSpots />
+          <Lightformer
+            intensity={4}
+            rotation-y={Math.PI / 2}
+            position={[-5, 1, -1]}
+            scale={[20, 0.05, 1]}
+          />
+          <Lightformer
+            intensity={3}
+            rotation-y={Math.PI / 2}
+            position={[-5, -1, -1]}
+            scale={[20, 0.05, 1]}
+          />
+          <Lightformer
+            intensity={1}
+            rotation-y={-Math.PI / 2}
+            position={[10, 1, 0]}
+            scale={[20, 1, 1]}
+          />
+          <Lightformer
+            intensity={1}
+            form='circle'
+            scale={10}
+            position={[-15, 10, -25]}
+            target={[0, 0, 0]}
+          />
+        </Environment>
+        <BakeShadows />
+      </group>
+    ),
+    []
+  );
+
+  const cameraMemo = useMemo(
+    () => (
+      <PerspectiveCamera
+        zoom={0.8}
+        makeDefault
+        fov={60}
+        position={cameraPosition}
+      />
+    ),
+    [cameraPosition]
+  );
 
   return (
     <Suspense fallback={<LoadingSpinner />}>
       <Canvas shadows dpr={window.devicePixelRatio}>
         <group position={[0, 0, 0]}>
-          <Model
-            scale={0.8}
-            ref={modelRef}
-            position={[0, 0, 0]}
-            rotation={[modelRotationY, -Math.PI / 8, 0]}
-          />
-          <Headlights scale={0.8} />
-          <spotLight
-            position={[0, 30, 0]}
-            angle={0.3}
-            penumbra={1}
-            castShadow
-            intensity={2}
-            shadow-bias={-0.0001}
-            shadow-mapSize={[256, 256]}
-          />
-          <ambientLight intensity={0} />
-          <ContactShadows
-            resolution={1024}
-            frames={1}
-            position={[0, 0, 0]}
-            scale={10}
-            blur={3}
-            opacity={1}
-            far={10}
-          />
-          <Environment frames={Infinity} resolution={128}>
-            <Lightformer
-              intensity={0.4}
-              rotation-x={Math.PI / 2}
-              position={[0, 5, -9]}
-              scale={[10, 10, 1]}
-            />
-            <MovingSpots />
-            <Lightformer
-              intensity={4}
-              rotation-y={Math.PI / 2}
-              position={[-5, 1, -1]}
-              scale={[20, 0.05, 1]}
-            />
-            <Lightformer
-              intensity={3}
-              rotation-y={Math.PI / 2}
-              position={[-5, -1, -1]}
-              scale={[20, 0.05, 1]}
-            />
-            <Lightformer
-              intensity={1}
-              rotation-y={-Math.PI / 2}
-              position={[10, 1, 0]}
-              scale={[20, 1, 1]}
-            />
-            <Lightformer
-              intensity={1}
-              form='circle'
-              scale={10}
-              position={[-15, 10, -25]}
-              target={[0, 0, 0]}
-            />
-          </Environment>
-          <BakeShadows />
-          {/* <CameraShake
-            maxYaw={0.0008}
-            maxPitch={0.0008}
-            maxRoll={0.0008}
-            yawFrequency={10}
-            pitchFrequency={10}
-            rollFrequency={10}
-          /> */}
+          {modelMemo}
+
+          {environmentMemo}
+          {runEngine && <EngineShaker />}
           <ScrollCallback setModelRotationY={setModelRotationY} />
-          <PerspectiveCamera
-            zoom={0.8}
-            makeDefault
-            fov={60}
-            position={cameraPosition}
-          />
+          {cameraMemo}
         </group>
       </Canvas>
     </Suspense>
@@ -114,6 +150,30 @@ export default function ThreeDeeModel() {
     const textureFlare0 = useLoader(TextureLoader, 'lens-flare.webp');
     const [lensFlareLeft, setLensFlareLeft] = useState();
     const [lensFlareRight, setLensFlareRight] = useState();
+
+    const [lightSize, setLightSize] = useState([0, 0, 0]);
+    const $CTAHovered = useStore(CTAHovered);
+    const $CTAHoveredRef = useRef($CTAHovered);
+
+    useEffect(() => {
+      $CTAHoveredRef.current = $CTAHovered;
+    }, [$CTAHovered]);
+
+    useEffect(() => {
+      const interval = setInterval(() => {
+        setLightSize((prevValue) => {
+          let newvalue;
+          if ($CTAHoveredRef.current) {
+            newvalue = prevValue[0] < 1 ? prevValue[0] + 0.05 : 1;
+          } else {
+            newvalue = prevValue[0] > 0 ? prevValue[0] - 0.05 : 0;
+          }
+          return [newvalue, newvalue, newvalue];
+        });
+      }, 10);
+
+      return () => clearInterval(interval);
+    }, []);
 
     useEffect(() => {
       const lensFlareLeft = new Lensflare();
@@ -126,22 +186,34 @@ export default function ThreeDeeModel() {
       // lensFlareRight.position.set(-1.51, 3.225, 1.8);
       setLensFlareRight(lensFlareRight);
 
-      // Clean up on unmount
       return () => {
         lensFlareLeft.dispose();
         lensFlareRight.dispose();
       };
     }, [scene, textureFlare0]);
 
-    return (
-      <group {...props}>
-        {lensFlareLeft && (
-          <primitive position={[-0.24, 0.72, 2.39]} object={lensFlareLeft} />
-        )}
-        {lensFlareRight && (
-          <primitive position={[-1.55, 0.72, 1.9]} object={lensFlareRight} />
-        )}
-      </group>
+    return useMemo(
+      () => (
+        <group {...props}>
+          {lensFlareLeft && (
+            <group scale={lightSize}>
+              <primitive
+                position={[-0.24, 0.72, 2.39]}
+                object={lensFlareLeft}
+              />
+            </group>
+          )}
+          {lensFlareRight && (
+            <group scale={lightSize}>
+              <primitive
+                position={[-1.55, 0.72, 1.9]}
+                object={lensFlareRight}
+              />
+            </group>
+          )}
+        </group>
+      ),
+      [lensFlareLeft, lensFlareRight, lightSize]
     );
   }
   // function Headlights() {
@@ -159,7 +231,7 @@ export default function ThreeDeeModel() {
   //     lensFlareRight.position.set(-1.51, 3.225, 1.8);
   //     scene.add(lensFlareRight);
 
-  //     // Clean up on unmount
+  //
   //     return () => {
   //       scene.remove(lensFlareLeft);
   //       lensFlareLeft.dispose();
@@ -172,15 +244,34 @@ export default function ThreeDeeModel() {
   //   return null;
   // }
 
-  // function BMW(props) {
-  //   const { scene, nodes, materials } = useGLTF('/frankenstein.glb');
-  //   useMemo(() => {
-  //     Object.values(nodes).forEach(
-  //       (node) => node.isMesh && (node.receiveShadow = node.castShadow = true)
-  //     );
-  //   }, [nodes, materials]);
-  //   return <primitive object={scene} {...props} />;
-  // }
+  function EngineShaker() {
+    const [shakeIntensity, setShakeIntensity] = useState(0.001);
+
+    useEffect(() => {
+      const interval = setInterval(() => {
+        setShakeIntensity((prevValue) =>
+          prevValue > 0.0005 ? prevValue - 0.0001 : 0.0005
+        );
+      }, 250);
+
+      return () => clearInterval(interval);
+    }, []);
+
+    useEffect(() => {
+      console.log(shakeIntensity);
+    }, [shakeIntensity]);
+
+    return (
+      <CameraShake
+        maxYaw={shakeIntensity}
+        maxPitch={shakeIntensity}
+        maxRoll={shakeIntensity}
+        yawFrequency={10}
+        pitchFrequency={10}
+        rollFrequency={10}
+      />
+    );
+  }
 
   function LoadingSpinner() {
     return (
