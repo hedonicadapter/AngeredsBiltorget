@@ -17,6 +17,9 @@ type Car = {
   // not in firestore
   thumbnail?: string;
   images?: string[];
+
+  // TODO: remove after labbinlämning
+  quantity?: number;
 };
 
-export default Car;
+export type { Car as default };

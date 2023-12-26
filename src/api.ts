@@ -1,12 +1,10 @@
-import { db, storage } from './db';
+import { db } from './firebase/client';
 import {
   collection,
   query,
   where,
   getDoc,
   getDocs,
-  DocumentSnapshot,
-  DocumentData,
   addDoc,
   updateDoc,
   deleteDoc,
@@ -16,6 +14,8 @@ import {
   limit,
   getCountFromServer,
 } from 'firebase/firestore';
+import type { DocumentSnapshot, DocumentData } from 'firebase/firestore';
+
 import {
   getStorage,
   ref,
@@ -23,10 +23,10 @@ import {
   uploadBytes,
   listAll,
   getDownloadURL,
-  StorageReference,
 } from 'firebase/storage';
+import type { StorageReference } from 'firebase/storage';
 
-import Car from './Models/Car';
+import type Car from './Models/Car';
 
 const productCollection = collection(db, 'products');
 
@@ -83,7 +83,7 @@ export async function removeImageBackground(imageFile: File): Promise<Blob> {
   const response = await fetch('https://sdk.photoroom.com/v1/segment', {
     method: 'POST',
     headers: {
-      'X-Api-Key': import.meta.env.VITE_PHOTOROOM_API_KEY,
+      'X-Api-Key': import.meta.env.PHOTOROOM_API_KEY,
     },
     body: formData,
   });
