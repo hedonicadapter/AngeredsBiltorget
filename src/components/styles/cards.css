@@ -1,7 +1,5 @@
 .card-container {
   transition: opacity 0.5s ease-out;
-
-  display: flex;
 }
 
 .card-container:hover img {

@@ -1,10 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import _ from 'lodash';
+
 import { getProducts, getProductFiles } from '../api.ts';
 import Card from './Card.jsx';
 
 export default function CarsContainer() {
-  //   let oldScrollY = 0;
-  const [oldScrollY, setOldScrollY] = useState(0);
+  const oldScrollY = useRef(0);
   const [cars, setCars] = useState([]);
   const [gettingProducts, setGettingProducts] = useState(false); // Prevents multiple requests from being sent at once
   const [page, setPage] = useState(0);
@@ -74,25 +75,25 @@ export default function CarsContainer() {
     setCars(newCars);
   };
 
-  const handleCarsContainerScroll = (evt) => {
-    console.log(oldScrollY);
+  const handleCarsContainerScroll = _.debounce((evt) => {
     const scrolledToTop = window.scrollY == 0;
     const scrolledToBottom =
       evt.target.scrollTop ===
       evt.target.scrollHeight - evt.target.offsetHeight;
-    const direction = window.scrollY > oldScrollY ? 'down' : 'up';
+    const direction = window.scrollY > oldScrollY.current ? 'down' : 'up';
 
     if (scrolledToBottom) {
       getCars();
     }
 
     // TODO: what was I cooking?
-    if (direction === 'up') {
-      window.scrollTo({ behavior: 'smooth', top: document.body.scrollHeight });
-    }
+    // if (direction === 'up' && scrolledToTop) {
+    //   evt.target.scrollTo();
+    //   window.scrollTo({ top: document.body.scrollHeight });
+    // }
 
-    setOldScrollY(window.scrollY);
-  };
+    oldScrollY.current = window.scrollY;
+  }, 150);
 
   useEffect(() => {
     getCars();
@@ -101,7 +102,7 @@ export default function CarsContainer() {
   return (
     <div
       onScroll={handleCarsContainerScroll}
-      className='cars-container flex flex-row items-center justify-evenly'
+      className='cars-container flex flex-col lg:flex-row items-center justify-evenly overflow-x-visible overflow-y-auto flex-wrap'
     >
       {cars &&
         cars.length > 0 &&

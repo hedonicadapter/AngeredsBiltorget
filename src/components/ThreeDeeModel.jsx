@@ -1,62 +1,31 @@
-import * as THREE from 'three';
-import {
-  Suspense,
-  createRef,
-  forwardRef,
-  useMemo,
-  useRef,
-  useState,
-  useEffect,
-} from 'react';
-import { Canvas, applyProps, useFrame, useThree } from '@react-three/fiber';
+import { Suspense, useRef, useState, useEffect } from 'react';
+import { Canvas, useFrame, useThree, useLoader } from '@react-three/fiber';
 import {
   Environment,
   Lightformer,
-  useGLTF,
   BakeShadows,
   ContactShadows,
   CameraShake,
   PerspectiveCamera,
+  ScrollControls,
+  Scroll,
 } from '@react-three/drei';
 import Model from '../../public/Frankenstein';
-
-const CameraRig = ({ target, modelRef }) => {
-  useEffect(() => {
-    console.log(modelRef);
-  }, [modelRef]);
-  // useThree((state) => {
-  //   state.camera?.lookAt(target);
-  //   // state.camera.up = new THREE.Vector3(0, 1, 0);
-  //   state.camera.updateProjectionMatrix();
-  // });
-  // return useFrame((state) => {
-  //   // const t = state.clock.elapsedTime;
-  //   // state.camera.position.lerp(
-  //   //   v.set(Math.sin(t / 5), 0, 10 + Math.cos(t / 5)),
-  //   //   0.05
-  //   // );
-  //   console.log(modelRef?.current.position);
-  //   state.camera.lookAt(modelRef?.current.position);
-  // });
-};
+import useScroll from '../util/useScroll';
 
 export default function ThreeDeeModel() {
-  const [position, setPosition] = useState([0, 0, 0]);
   const modelRef = useRef();
+  const [cameraPosition, setCameraPosition] = useState([0, 1, 9]);
+  const [modelRotationY, setModelRotationY] = useState(0.001);
 
   return (
-    <Suspense fallback={<div>Loading</div>}>
-      <Canvas
-        shadows
-        dpr={window.devicePixelRatio}
-        // camera={{ position: [0, 0, -8], fov: 60 }}
-      >
+    <Suspense fallback={<LoadingSpinner />}>
+      <Canvas shadows dpr={window.devicePixelRatio}>
         <group position={[0, 2.5, 0]}>
           <Model
             ref={modelRef}
             scale={1}
-            // position={[0, 3, 0]}
-            rotation={[0, -(Math.PI / 8), 0]}
+            rotation={[modelRotationY, -Math.PI / 8, 0]}
           />
           <spotLight
             position={[0, 15, 0]}
@@ -120,8 +89,8 @@ export default function ThreeDeeModel() {
           pitchFrequency={10}
           rollFrequency={10}
         /> */}
-          <PerspectiveCamera makeDefault fov={60} position={[0, 1, 9]} />
-          {/* <CameraRig target={position} model={modelRef} /> */}
+          <ScrollCallback setModelRotationY={setModelRotationY} />
+          <PerspectiveCamera makeDefault fov={60} position={cameraPosition} />
         </group>
       </Canvas>
     </Suspense>
@@ -136,6 +105,43 @@ export default function ThreeDeeModel() {
   //   }, [nodes, materials]);
   //   return <primitive object={scene} {...props} />;
   // }
+
+  function LoadingSpinner() {
+    return (
+      // stolen from https://tailwindflex.com/@anonymous/loading-dots
+      <div class='flex space-x-2 justify-center items-center h-screen'>
+        <span class='sr-only'>Loading...</span>
+        <div class='h-6 w-6 bg-on-bg rounded-full animate-bounce [animation-delay:-0.3s]'></div>
+        <div class='h-6 w-6 bg-on-bg rounded-full animate-bounce [animation-delay:-0.15s]'></div>
+        <div class='h-6 w-6 bg-on-bg rounded-full animate-bounce'></div>
+      </div>
+    );
+  }
+
+  function ScrollContainer({ children }) {
+    return (
+      <ScrollControls pages={1} damping={0.05}>
+        <Scroll>{children}</Scroll>
+      </ScrollControls>
+    );
+  }
+  function ScrollCallback({ children, ...props }) {
+    const { camera } = useThree();
+    // const scrollData = useScroll();
+
+    useFrame(() => {
+      // const modifier = window.scrollY > 0 ? window.scrollY * 0.0004 : 0.0004;
+      // console.log(modifier);
+      // props.setModelRotationY(-modifier);
+      // camera.position.y =
+      //   cameraPosition[1] -
+      //   (cameraPosition[1] * scrollData.scroll.current * 10 - 0);
+    });
+    return children;
+    // <ScrollControls pages={3} damping={0.1}>
+    //   <Scroll>{children}</Scroll>
+    // </ScrollControls>
+  }
 
   function MovingSpots({ positions = [2, 0, 2, 0, 2, 0, 2, 0] }) {
     const group = useRef();

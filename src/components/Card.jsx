@@ -42,7 +42,7 @@ export default function Card(props) {
     }
   };
 
-  const cardClassName = `card-container ${className}}`;
+  const cardClassName = `card-container flex justify-center items-center mx-auto ${className}}`;
 
   return (
     <div className={cardClassName}>
@@ -50,8 +50,9 @@ export default function Card(props) {
         <img
           src={src && src.length > 0 ? src : '/images/placeholder-car.webp'}
           alt={`Picture of ${title || 'car'}`}
+          class='object-contain aspect-square flex-1'
         />
-        <h4>{title || `${make} ${model}`}</h4>
+        <h4 class='whitespace-nowrap'>{title || `${make} ${model}`}</h4>
         <p>{price}SEK</p>
 
         {/* TODO: delete after labbinlämning */}

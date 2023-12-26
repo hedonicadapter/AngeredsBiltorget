@@ -7,7 +7,7 @@ section.container {
   position: relative;
   /* max-height: calc(100vh - (var(--navbar-height) + var(--golden-ratio) * 3em)); */
   padding: calc(var(--golden-ratio) * 1.5em);
-  padding-top: calc(var(--navbar-height) + var(--golden-ratio) * 4em);
+  /* padding-top: calc(var(--navbar-height) + var(--golden-ratio) * 4em); */
   min-height: 100vh;
   max-height: calc(100vh - (var(--navbar-height) + var(--golden-ratio) * 3em));
   /* width: 100%; */
@@ -48,42 +48,17 @@ hr {
   color: var(--on-bg-lightest);
 }
 
-.cars-container {
-  /* width: 100%; */
-  flex-wrap: wrap;
-  gap: calc(var(--golden-ratio) * 1em);
-  padding-block: calc(var(--golden-ratio) * 1em);
-  overflow-y: auto;
-  overflow-x: visible;
-  /* z-index: 0; */
-}
 .cars-container::-webkit-scrollbar {
   display: none;
 }
 
-.card {
-  flex-shrink: 0;
-}
-
 @media (min-width: 768px) {
-  section.container {
-  }
-  .card-container {
-    /* 2/4 minus .cars-container gap */
-    width: calc(50% - (var(--golden-ratio) * 1em));
-  }
 }
 
 @media (min-width: 1024px) {
   section.container {
     padding-inline: calc(var(--golden-ratio) * 5em);
     /* padding-inline: 16vw; */
-  }
-  .card-container {
-    /* 1/4 minus .cars-container gap */
-    width: calc(30% - (var(--golden-ratio) * 1.2em));
-  }
-  .cars-container {
   }
 }
 

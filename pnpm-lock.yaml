@@ -44,6 +44,9 @@ dependencies:
   firebase-admin:
     specifier: ^12.0.0
     version: 12.0.0
+  lodash.debounce:
+    specifier: ^4.0.8
+    version: 4.0.8
   nanostores:
     specifier: ^0.9.5
     version: 0.9.5
@@ -3657,6 +3660,10 @@ packages:
 
   /lodash.clonedeep@4.5.0:
     resolution: {integrity: sha512-H5ZhCF25riFd9uB5UCkVKo61m3S/xZk1x4wA6yp/L3RFP6Z/eHH1ymQcGLo7J3GMPfm0V/7m1tryHuGVxpqEBQ==}
+    dev: false
+
+  /lodash.debounce@4.0.8:
+    resolution: {integrity: sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==}
     dev: false
 
   /lodash.includes@4.3.0:

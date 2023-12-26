@@ -75,9 +75,9 @@ import NavAnchor from './Nav-anchor.astro';
         const direction = window.scrollY > oldScrollTop ? 'down' : 'up';
 
         if (direction == 'up' && window.scrollY < 100) {
-            navbar.firstChild!.classList.remove('navbar-contracted');
+            navbar.classList.remove('navbar-contracted');
         } else if (direction == 'down') {
-            navbar.firstChild!.classList.add('navbar-contracted');
+            navbar.classList.add('navbar-contracted');
         }
 
         oldScrollTop = window.scrollY;
