@@ -1,6 +1,7 @@
 .inne-just-nu {
   position: relative;
   top: -220vh;
+  z-index: -1;
   height: 300vh;
   width: 100vw;
   background-color: var(--surface-variant);
