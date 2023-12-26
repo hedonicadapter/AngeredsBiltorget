@@ -193,7 +193,7 @@ p {
   display: block;
   /* background: radial-gradient(at center top, var(--surface) 10%, var(--bg) 40%); */
   position: fixed;
-  z-index: 10;
+  /* z-index: 10; */
   /* max-height: 100vh; */
   /* calc(var(--golden-ratio) * 1em) */
   top: calc(var(--golden-ratio) * -1.5em);
