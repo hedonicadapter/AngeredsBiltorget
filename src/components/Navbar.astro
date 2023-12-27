@@ -7,7 +7,7 @@ import NavAnchor from './Nav-anchor.astro';
 <div class="navbar-top-container ">
     <nav class="navbar-top flex flex-row justify-between items-center navbar">
         <div class="nav-container nav-container-left flex flex-row items-center">
-            <a id="navbar-home" href="/" class="flex flex-row items-center">
+            <a id="navbar-home" href="/#home" class="flex flex-row items-center">
                 <img id="navbar-logo" src="/images/logo.svg" alt="Angered Biltorget logo"/>
                 <h5>Angered biltorget</h5>
 
@@ -15,7 +15,7 @@ import NavAnchor from './Nav-anchor.astro';
         </div>
         <div class="nav-container nav-container-right flex-row items-center">
             <NavAnchor anchorText="Showroom" anchorHref="showroom" />
-            <NavAnchor anchorText="Om oss" anchorHref="" id="fake-nav-anchor" />
+            <NavAnchor anchorText="Om oss" anchorHref="#about"/>
             <NavAnchor anchorText="Kontakt" anchorHref="contact" />
             <NavAnchor anchorText="Cart" anchorHref="cart" />
             <div class="nav-anchor-highlighter"></div>

@@ -6,16 +6,16 @@ export default function CTA() {
   const $CTAHovered = useStore(CTAHovered);
 
   return (
-    <div class='z-40'>
+    <div className='z-40'>
       <a
-        class='text-2xl px-9 pt-4 pb-5 text-on-bg font-light outline outline-on-bg-medium outline-1 backdrop-blur-xl shadow-inner CTA'
+        className='text-2xl px-9 pt-4 pb-5 text-on-bg font-light outline outline-on-bg-medium outline-1 backdrop-blur-xl shadow-inner CTA'
         href='/showroom'
         onMouseEnter={() => CTAHovered.set(true)}
         onMouseLeave={() => CTAHovered.set(false)}
       >
         Se vårt showroom
         {/* <!-- Cut-out text effect -->
-          <!-- <svg class="knockout-text-container" width=100%" height="55">
+          <!-- <svg className="knockout-text-container" width=100%" height="55">
             
             <rect class="fill-surface" width="94%" height="55" x="3%" y="0" fill-opacity="1" mask="url(#knockout-text)" />
             

@@ -5,7 +5,9 @@ Files: frankenstein.glb [12.43MB] > F:\Coding\ITHSLabbar\Vanilla\astro\public\fr
 */
 import { useFrame, useLoader, useThree } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
-import { forwardRef, useEffect, useMemo, useState } from 'react';
+import { forwardRef, useEffect, useMemo, useState, useRef } from 'react';
+import { useStore } from '@nanostores/react';
+import { CTAHovered } from '../src/nanoStores/CTAStore.js';
 
 import { TextureLoader } from 'three';
 import {
@@ -21,11 +23,6 @@ const Model = forwardRef((props, ref) => {
       (node) => node.isMesh && (node.receiveShadow = node.castShadow = true)
     );
   }, [nodes, materials]);
-
-  useThree((state) => {
-    if (!ref || !ref.current) return;
-    state.camera.lookAt(ref.current.position);
-  });
 
   return (
     <group ref={ref} {...props} dispose={null}>
@@ -186,6 +183,72 @@ const Model = forwardRef((props, ref) => {
     </group>
   );
 });
+
+export function Headlights(props) {
+  const { scene } = useThree();
+  const textureFlare0 = useLoader(TextureLoader, 'lens-flare.webp');
+  const [lensFlareLeft, setLensFlareLeft] = useState();
+  const [lensFlareRight, setLensFlareRight] = useState();
+
+  const [lightSize, setLightSize] = useState([0, 0, 0]);
+  const $CTAHovered = useStore(CTAHovered);
+  const $CTAHoveredRef = useRef($CTAHovered);
+
+  useEffect(() => {
+    $CTAHoveredRef.current = $CTAHovered;
+  }, [$CTAHovered]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setLightSize((prevValue) => {
+        let newvalue;
+        if ($CTAHoveredRef.current) {
+          newvalue = prevValue[0] < 1 ? prevValue[0] + 0.05 : 1;
+        } else {
+          newvalue = prevValue[0] > 0 ? prevValue[0] - 0.05 : 0;
+        }
+        return [newvalue, newvalue, newvalue];
+      });
+    }, 10);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    const lensFlareLeft = new Lensflare();
+    lensFlareLeft.addElement(new LensflareElement(textureFlare0, 700, 0));
+    // lensFlareLeft.position.set(-0.24, 3.204, 2.34);
+    setLensFlareLeft(lensFlareLeft);
+
+    const lensFlareRight = new Lensflare();
+    lensFlareRight.addElement(new LensflareElement(textureFlare0, 700, 0));
+    // lensFlareRight.position.set(-1.51, 3.225, 1.8);
+    setLensFlareRight(lensFlareRight);
+
+    return () => {
+      lensFlareLeft.dispose();
+      lensFlareRight.dispose();
+    };
+  }, [scene, textureFlare0]);
+
+  return useMemo(
+    () => (
+      <group {...props}>
+        {lensFlareLeft && (
+          <group scale={lightSize}>
+            <primitive position={[-0.24, 0.72, 2.39]} object={lensFlareLeft} />
+          </group>
+        )}
+        {lensFlareRight && (
+          <group scale={lightSize}>
+            <primitive position={[-1.55, 0.72, 1.9]} object={lensFlareRight} />
+          </group>
+        )}
+      </group>
+    ),
+    [lensFlareLeft, lensFlareRight, lightSize]
+  );
+}
 
 useGLTF.preload('/frankenstein-transformed.glb');
 // useLoader.preload('/lens-flare.webp');

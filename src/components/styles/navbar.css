@@ -1,6 +1,6 @@
 #navbar-logo {
-  width: calc(var(--golden-ratio) * 1.2em);
-  height: calc(var(--golden-ratio) * 1.2em);
+  width: calc(var(--golden-ratio) * 1.1em);
+  height: calc(var(--golden-ratio) * 1.1em);
   max-width: calc(var(--golden-ratio) * 50px);
   max-height: calc(var(--golden-ratio) * 50px);
 }

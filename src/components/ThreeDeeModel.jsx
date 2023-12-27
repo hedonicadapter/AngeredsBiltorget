@@ -10,7 +10,7 @@ import {
   ScrollControls,
   Scroll,
 } from '@react-three/drei';
-import Model from '../../public/Frankenstein';
+import Model, { Headlights } from '../../public/Frankenstein';
 import useScroll from '../util/useScroll';
 import { useStore } from '@nanostores/react';
 import { CTAHovered } from '../nanoStores/CTAStore.js';
@@ -19,16 +19,19 @@ import {
   Lensflare,
   LensflareElement,
 } from 'three/examples/jsm/objects/Lensflare';
+import { LoadingSpinner } from './spinners.tsx';
+import * as TWEEN from '@tweenjs/tween.js';
 
 export default function ThreeDeeModel() {
   const modelRef = useRef();
-  const [cameraPosition, setCameraPosition] = useState([0, 1, 9]);
+  // const [cameraPosition, setCameraPosition] = useState([0.45, 1.04, -0.1]);
+  // const cameraPosition = { x: 0, y: 1, z: 9 };
+  const [cameraFOV, setCameraFOV] = useState(60);
+  // const [cameraFOV, setCameraFOV] = useState(90);
   const [modelRotationY, setModelRotationY] = useState(0.001);
   const [runEngine, setRunEngine] = useState(false);
 
-  const [lightSize, setLightSize] = useState([0, 0, 0]);
   const $CTAHovered = useStore(CTAHovered);
-  const $CTAHoveredRef = useRef($CTAHovered);
 
   useEffect(() => {
     let timeout;
@@ -41,8 +44,28 @@ export default function ThreeDeeModel() {
     return () => clearTimeout(timeout);
   }, [$CTAHovered]);
 
-  const modelMemo = useMemo(
-    () => (
+  return (
+    <Suspense fallback={<LoadingSpinner />}>
+      <Canvas shadows dpr={window.devicePixelRatio}>
+        <group position={[0, 0, 0]}>
+          <ModelMemo
+            headlights={<Headlights scale={0.8} />}
+            modelRef={modelRef}
+            modelRotationY={modelRotationY}
+          />
+
+          {<EnvironmentMemo />}
+          {runEngine && <EngineShaker />}
+          <CameraMemo modelRef={modelRef} />
+        </group>
+      </Canvas>
+    </Suspense>
+  );
+}
+
+function ModelMemo({ modelRotationY, modelRef, headlights }) {
+  return useMemo(() => {
+    return (
       <group>
         <Model
           scale={0.8}
@@ -50,13 +73,167 @@ export default function ThreeDeeModel() {
           position={[0, 0, 0]}
           rotation={[modelRotationY, -Math.PI / 8, 0]}
         />
-        <Headlights scale={0.8} />
+        {headlights}
       </group>
-    ),
-    [modelRotationY]
-  );
+    );
+  }, [modelRotationY, modelRef]);
+}
 
-  const environmentMemo = useMemo(
+const exitPosition = { x: 0.45, y: 1.04, z: -0.1 };
+const exitTo = { x: 0, y: 1, z: 9 };
+
+const newExitFOV = { fov: 85 };
+const toExitFOV = { fov: 60 };
+
+const newExitLookAt = { x: -2.6, y: -1.8, z: 4 };
+const toExitLookAt = { x: 0, y: 0, z: 0 };
+
+const newEnterPosition = { x: 0, y: 1, z: 9 };
+const toEnterPosition = { x: 0.45, y: 1.04, z: -0.1 };
+
+const newEnterFOV = { fov: 60 };
+const toEnterFOV = { fov: 85 };
+
+const newEnterLookAt = { x: 0, y: 0, z: 0 };
+const toEnterLookAt = { x: -2.6, y: -1.8, z: 4 };
+
+function CameraMemo({ modelRef }) {
+  const [position, setPosition] = useState([0, 1, 9]);
+  const [FOV, setFOV] = useState(60);
+  const [lookAt, setLookAt] = useState([0, 0, 0]);
+
+  const enterCar = () => {
+    new TWEEN.Tween(newEnterPosition)
+      .to(toEnterPosition, 2000)
+      .easing(TWEEN.Easing.Cubic.Out)
+      .onUpdate(() => {
+        setPosition(Object.values(newEnterPosition));
+      })
+      .start();
+
+    new TWEEN.Tween(newEnterFOV)
+      .to(toEnterFOV, 2000)
+      .easing(TWEEN.Easing.Cubic.Out)
+      .onUpdate(() => {
+        setFOV(Object.values(newEnterFOV));
+      })
+      .start();
+
+    new TWEEN.Tween(newEnterLookAt)
+      .to(toEnterLookAt, 3250)
+      .easing(TWEEN.Easing.Cubic.Out)
+      .onUpdate(() => {
+        setLookAt(Object.values(newEnterLookAt));
+      })
+      .start();
+  };
+
+  const exitCar = () => {
+    new TWEEN.Tween(exitPosition)
+      .to(exitTo, 2000)
+      .easing(TWEEN.Easing.Cubic.Out)
+      .onUpdate(() => {
+        setPosition(Object.values(exitPosition));
+      })
+      .start();
+
+    new TWEEN.Tween(newExitFOV)
+      .to(toExitFOV, 2000)
+      .easing(TWEEN.Easing.Cubic.Out)
+      .onUpdate(() => {
+        setFOV(Object.values(newExitFOV));
+      })
+      .start();
+
+    new TWEEN.Tween(newExitLookAt)
+      .to(toExitLookAt, 2250)
+      .easing(TWEEN.Easing.Quadratic.Out)
+      .onUpdate(() => {
+        setLookAt(Object.values(newExitLookAt));
+      })
+      .start();
+  };
+
+  useFrame(({ camera }) => {
+    camera.lookAt(...lookAt);
+  });
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (window.location.hash === '#about') enterCar();
+      else exitCar();
+    };
+
+    window.addEventListener('hashchange', handleHashChange);
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
+  }, []);
+
+  useFrame(() => {
+    TWEEN.update();
+  });
+
+  return useMemo(() => {
+    return (
+      <PerspectiveCamera zoom={0.8} makeDefault fov={FOV} position={position} />
+    );
+  }, [position, FOV]);
+}
+
+function EngineShaker() {
+  const [shakeIntensity, setShakeIntensity] = useState(0.001);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setShakeIntensity((prevValue) =>
+        prevValue > 0.0005 ? prevValue - 0.0001 : 0.0005
+      );
+    }, 250);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <CameraShake
+      maxYaw={shakeIntensity}
+      maxPitch={shakeIntensity}
+      maxRoll={shakeIntensity}
+      yawFrequency={10}
+      pitchFrequency={10}
+      rollFrequency={10}
+    />
+  );
+}
+
+function MovingSpots({ positions = [2, 0, 2, 0, 2, 0, 2, 0] }) {
+  const group = useRef();
+  useFrame(
+    (state, delta) =>
+      (group.current.position.z += delta * 15) > 60 &&
+      (group.current.position.z = -60)
+  );
+  return (
+    <group rotation={[0, 0.5, 0]}>
+      <group ref={group}>
+        {positions.map((x, i) => (
+          <Lightformer
+            key={i}
+            form='circle'
+            intensity={2}
+            rotation={[Math.PI / 2, 0, 0]}
+            position={[x, 4, i * 4]}
+            scale={[3, 1, 1]}
+          />
+        ))}
+      </group>
+    </group>
+  );
+}
+
+function EnvironmentMemo() {
+  return useMemo(
     () => (
       <group>
         <spotLight
@@ -68,7 +245,7 @@ export default function ThreeDeeModel() {
           shadow-bias={-0.0001}
           shadow-mapSize={[256, 256]}
         />
-        <ambientLight intensity={0} />
+        <ambientLight intensity={0.5} />
         <ContactShadows
           resolution={1024}
           frames={1}
@@ -117,221 +294,4 @@ export default function ThreeDeeModel() {
     ),
     []
   );
-
-  const cameraMemo = useMemo(
-    () => (
-      <PerspectiveCamera
-        zoom={0.8}
-        makeDefault
-        fov={60}
-        position={cameraPosition}
-      />
-    ),
-    [cameraPosition]
-  );
-
-  return (
-    <Suspense fallback={<LoadingSpinner />}>
-      <Canvas shadows dpr={window.devicePixelRatio}>
-        <group position={[0, 0, 0]}>
-          {modelMemo}
-
-          {environmentMemo}
-          {runEngine && <EngineShaker />}
-          <ScrollCallback setModelRotationY={setModelRotationY} />
-          {cameraMemo}
-        </group>
-      </Canvas>
-    </Suspense>
-  );
-
-  function Headlights(props) {
-    const { scene } = useThree();
-    const textureFlare0 = useLoader(TextureLoader, 'lens-flare.webp');
-    const [lensFlareLeft, setLensFlareLeft] = useState();
-    const [lensFlareRight, setLensFlareRight] = useState();
-
-    const [lightSize, setLightSize] = useState([0, 0, 0]);
-    const $CTAHovered = useStore(CTAHovered);
-    const $CTAHoveredRef = useRef($CTAHovered);
-
-    useEffect(() => {
-      $CTAHoveredRef.current = $CTAHovered;
-    }, [$CTAHovered]);
-
-    useEffect(() => {
-      const interval = setInterval(() => {
-        setLightSize((prevValue) => {
-          let newvalue;
-          if ($CTAHoveredRef.current) {
-            newvalue = prevValue[0] < 1 ? prevValue[0] + 0.05 : 1;
-          } else {
-            newvalue = prevValue[0] > 0 ? prevValue[0] - 0.05 : 0;
-          }
-          return [newvalue, newvalue, newvalue];
-        });
-      }, 10);
-
-      return () => clearInterval(interval);
-    }, []);
-
-    useEffect(() => {
-      const lensFlareLeft = new Lensflare();
-      lensFlareLeft.addElement(new LensflareElement(textureFlare0, 700, 0));
-      // lensFlareLeft.position.set(-0.24, 3.204, 2.34);
-      setLensFlareLeft(lensFlareLeft);
-
-      const lensFlareRight = new Lensflare();
-      lensFlareRight.addElement(new LensflareElement(textureFlare0, 700, 0));
-      // lensFlareRight.position.set(-1.51, 3.225, 1.8);
-      setLensFlareRight(lensFlareRight);
-
-      return () => {
-        lensFlareLeft.dispose();
-        lensFlareRight.dispose();
-      };
-    }, [scene, textureFlare0]);
-
-    return useMemo(
-      () => (
-        <group {...props}>
-          {lensFlareLeft && (
-            <group scale={lightSize}>
-              <primitive
-                position={[-0.24, 0.72, 2.39]}
-                object={lensFlareLeft}
-              />
-            </group>
-          )}
-          {lensFlareRight && (
-            <group scale={lightSize}>
-              <primitive
-                position={[-1.55, 0.72, 1.9]}
-                object={lensFlareRight}
-              />
-            </group>
-          )}
-        </group>
-      ),
-      [lensFlareLeft, lensFlareRight, lightSize]
-    );
-  }
-  // function Headlights() {
-  //   const { scene } = useThree();
-  //   const textureFlare0 = useLoader(TextureLoader, 'lens-flare.webp');
-
-  //   useEffect(() => {
-  //     const lensFlareLeft = new Lensflare();
-  //     lensFlareLeft.addElement(new LensflareElement(textureFlare0, 700, 0));
-  //     lensFlareLeft.position.set(-0.24, 3.204, 2.34);
-  //     scene.add(lensFlareLeft);
-
-  //     const lensFlareRight = new Lensflare();
-  //     lensFlareRight.addElement(new LensflareElement(textureFlare0, 700, 0));
-  //     lensFlareRight.position.set(-1.51, 3.225, 1.8);
-  //     scene.add(lensFlareRight);
-
-  //
-  //     return () => {
-  //       scene.remove(lensFlareLeft);
-  //       lensFlareLeft.dispose();
-
-  //       scene.remove(lensFlareRight);
-  //       lensFlareRight.dispose();
-  //     };
-  //   }, [scene, textureFlare0]);
-
-  //   return null;
-  // }
-
-  function EngineShaker() {
-    const [shakeIntensity, setShakeIntensity] = useState(0.001);
-
-    useEffect(() => {
-      const interval = setInterval(() => {
-        setShakeIntensity((prevValue) =>
-          prevValue > 0.0005 ? prevValue - 0.0001 : 0.0005
-        );
-      }, 250);
-
-      return () => clearInterval(interval);
-    }, []);
-
-    useEffect(() => {
-      console.log(shakeIntensity);
-    }, [shakeIntensity]);
-
-    return (
-      <CameraShake
-        maxYaw={shakeIntensity}
-        maxPitch={shakeIntensity}
-        maxRoll={shakeIntensity}
-        yawFrequency={10}
-        pitchFrequency={10}
-        rollFrequency={10}
-      />
-    );
-  }
-
-  function LoadingSpinner() {
-    return (
-      // stolen from https://tailwindflex.com/@anonymous/loading-dots
-      <div class='flex space-x-2 justify-center items-center h-screen'>
-        <span class='sr-only'>Loading...</span>
-        <div class='h-6 w-6 bg-on-bg rounded-full animate-bounce [animation-delay:-0.3s]'></div>
-        <div class='h-6 w-6 bg-on-bg rounded-full animate-bounce [animation-delay:-0.15s]'></div>
-        <div class='h-6 w-6 bg-on-bg rounded-full animate-bounce'></div>
-      </div>
-    );
-  }
-
-  function ScrollContainer({ children }) {
-    return (
-      <ScrollControls pages={1} damping={0.05}>
-        <Scroll>{children}</Scroll>
-      </ScrollControls>
-    );
-  }
-  function ScrollCallback({ children, ...props }) {
-    const { camera } = useThree();
-    // const scrollData = useScroll();
-
-    useFrame(() => {
-      // const modifier = window.scrollY > 0 ? window.scrollY * 0.0004 : 0.0004;
-      // console.log(modifier);
-      // props.setModelRotationY(-modifier);
-      // camera.position.y =
-      //   cameraPosition[1] -
-      //   (cameraPosition[1] * scrollData.scroll.current * 10 - 0);
-    });
-    return children;
-    // <ScrollControls pages={3} damping={0.1}>
-    //   <Scroll>{children}</Scroll>
-    // </ScrollControls>
-  }
-
-  function MovingSpots({ positions = [2, 0, 2, 0, 2, 0, 2, 0] }) {
-    const group = useRef();
-    useFrame(
-      (state, delta) =>
-        (group.current.position.z += delta * 15) > 60 &&
-        (group.current.position.z = -60)
-    );
-    return (
-      <group rotation={[0, 0.5, 0]}>
-        <group ref={group}>
-          {positions.map((x, i) => (
-            <Lightformer
-              key={i}
-              form='circle'
-              intensity={2}
-              rotation={[Math.PI / 2, 0, 0]}
-              position={[x, 4, i * 4]}
-              scale={[3, 1, 1]}
-            />
-          ))}
-        </group>
-      </group>
-    );
-  }
 }
