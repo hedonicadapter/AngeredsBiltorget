@@ -8,7 +8,6 @@
 
 .card {
   width: calc(var(--golden-ratio) * 10em);
-  height: calc(var(--golden-ratio) * 10em);
   overflow: visible;
   /* gap: calc(var(--golden-ratio) * 0.6em); */
 
@@ -33,5 +32,14 @@
 }
 
 .card p {
-  color: var(--on-bg-light);
+  color: var(--on-bg-lightest);
+}
+
+.invisible {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+.visible {
+  opacity: 1 !important;
+  pointer-events: auto !important;
 }

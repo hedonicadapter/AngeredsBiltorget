@@ -99,7 +99,11 @@ body {
   overflow-x: hidden;
   height: 100vh;
 
-  background: radial-gradient(at center top, var(--surface) 10%, var(--bg) 40%);
+  background: radial-gradient(
+    at center top,
+    var(--surface) 10%,
+    var(--bg) 100%
+  );
   background-size: cover;
 
   color: var(--on-bg);
@@ -144,9 +148,9 @@ h3 {
 
 h4 {
   color: var(--on-bg-medium);
-  font-size: calc(var(--golden-ratio) * 1em);
+  font-size: calc(var(--golden-ratio) * 1.1em);
   font-weight: bold;
-  letter-spacing: calc(var(--golden-ratio) * 0.15em);
+  /* letter-spacing: calc(var(--golden-ratio) * 0.05em); */
 }
 
 h5 {
@@ -198,31 +202,6 @@ p {
   border: 52px solid var(--surface);
   border-radius: calc((var(--golden-ratio) * 2.35em));
 }
-
-/* .flex {
-  display: flex;
-}
-.flex-row {
-  flex-direction: row;
-}
-.flex-col {
-  flex-direction: column;
-}
-.justify-center {
-  justify-content: center;
-}
-.justify-between {
-  justify-content: space-between;
-}
-.justify-evenly {
-  justify-content: space-evenly;
-}
-.items-center {
-  align-items: center;
-}
-.items-start {
-  align-items: flex-start;
-} */
 
 @media (min-width: 640px) {
 }

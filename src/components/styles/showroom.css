@@ -3,7 +3,7 @@
 }
 
 section.container {
-  --navbar-height: 0;
+  --navbar-height: 127px;
   position: relative;
   /* max-height: calc(100vh - (var(--navbar-height) + var(--golden-ratio) * 3em)); */
   padding: calc(var(--golden-ratio) * 1.5em);
@@ -51,13 +51,27 @@ hr {
 .cars-container::-webkit-scrollbar {
   display: none;
 }
+.cars-container {
+  margin-top: calc(var(--navbar-height) - 2em);
+  height: calc(100vh - (var(--navbar-height) + var(--golden-ratio) * 2em));
+}
+.card {
+  width: 70vw !important;
+}
 
 @media (min-width: 768px) {
+  .card {
+    width: calc(var(--golden-ratio) * 20vw) !important;
+  }
 }
 
 @media (min-width: 1024px) {
   section.container {
     padding-inline: calc(var(--golden-ratio) * 5em);
     /* padding-inline: 16vw; */
+  }
+
+  .card {
+    width: calc(var(--golden-ratio) * 14em) !important;
   }
 }

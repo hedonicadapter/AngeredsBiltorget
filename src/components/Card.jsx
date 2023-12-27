@@ -19,7 +19,7 @@ export default function Card(props) {
     color,
     extraFeatures,
     title,
-    className,
+    overrideClass,
     src,
   } = props;
 
@@ -42,18 +42,18 @@ export default function Card(props) {
     }
   };
 
-  const cardClassName = `card-container flex justify-center items-center mx-auto ${className}}`;
+  const cardClassName = `card-container flex justify-center items-center mx-auto ${overrideClass}}`;
 
   return (
     <div className={cardClassName}>
       <div className='card flex flex-col items-center z-40'>
         <img
           src={src && src.length > 0 ? src : '/images/placeholder-car.webp'}
-          alt={`Picture of ${title || 'car'}`}
+          alt={`${title || 'car'}`}
           className='object-contain aspect-square flex-1'
         />
         <h4 className='whitespace-nowrap'>{title || `${make} ${model}`}</h4>
-        <p>{price}SEK</p>
+        <p>{price} SEK</p>
 
         {/* TODO: delete after labbinlämning */}
         <div className='addToCartContainer' style={{ position: 'relative' }}>

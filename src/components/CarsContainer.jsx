@@ -102,7 +102,7 @@ export default function CarsContainer() {
   return (
     <div
       onScroll={handleCarsContainerScroll}
-      className='cars-container flex flex-col lg:flex-row items-center justify-evenly overflow-x-visible overflow-y-auto flex-wrap'
+      className='cars-container flex sm:flex-row items-center justify-evenly overflow-x-visible overflow-y-auto flex-wrap'
     >
       {cars &&
         cars.length > 0 &&

@@ -1,16 +1,16 @@
 ---
 import "./styles/navbar.css";
 import NavAnchor from './Nav-anchor.astro';
+import Sidebar from './Sidebar.tsx';
 ---
 
 
-<div class="navbar-top-container ">
+<div>
     <nav class="navbar-top flex flex-row justify-between items-center navbar">
         <div class="nav-container nav-container-left flex flex-row items-center">
             <a id="navbar-home" href="/#home" class="flex flex-row items-center">
                 <img id="navbar-logo" src="/images/logo.svg" alt="Angered Biltorget logo"/>
                 <h5>Angered biltorget</h5>
-
             </a>
         </div>
         <div class="nav-container nav-container-right flex-row items-center">
@@ -20,13 +20,15 @@ import NavAnchor from './Nav-anchor.astro';
             <NavAnchor anchorText="Cart" anchorHref="cart" />
             <div class="nav-anchor-highlighter"></div>
         </div>
-        <a id="borger" class="flex flex-row items-center">
-            <div id="borger-icon" class="material-symbols-sharp">
-                menu
-            </div>
-        
-        </a>
-    </nav>
+      </nav>
+      <Sidebar client:load>
+        <div slot="anchors" class="flex flex-col gap-4">
+          <NavAnchor anchorText="Showroom" anchorHref="showroom" />
+          <NavAnchor anchorText="Om oss" anchorHref="#about"/>
+          <NavAnchor anchorText="Kontakt" anchorHref="contact" />
+          <NavAnchor anchorText="Cart" anchorHref="cart" />
+        </div>
+      </Sidebar>
 </div>
 
 

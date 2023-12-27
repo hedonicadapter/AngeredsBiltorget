@@ -2,7 +2,6 @@ body {
 }
 
 main {
-  padding-top: calc(var(--golden-ratio) * 8em);
 }
 
 header {
@@ -22,32 +21,36 @@ header {
   font-family: 'Fjalla One', sans-serif;
   font-style: normal;
   font-weight: 400;
-  font-size: calc(var(--golden-ratio) * 1.8em);
+  font-size: calc(var(--golden-ratio) * 6vw);
   letter-spacing: 0.07em;
   text-transform: uppercase;
   padding-inline: calc(var(--golden-ratio) * 0.5em);
+  color: white;
 }
 
 .subtitle {
-  opacity: 0.8;
-  font-size: calc(var(--golden-ratio) * 1em);
+  color: var(--on-bg-lightest);
+  font-size: calc(var(--golden-ratio) * 3vw);
   font-style: normal;
-  font-weight: 300;
-  line-height: 20px;
-  padding-inline: calc(var(--golden-ratio) * 0.9em);
+  font-weight: 400;
+  line-height: 7vw;
+  padding-inline: calc(var(--golden-ratio) * 1em);
 
   text-transform: capitalize;
 }
 
 .hero-container {
-  height: 300vh;
+  padding-top: calc(var(--golden-ratio) * 8.5em);
+  height: 100vh;
   position: relative;
 }
 
 body {
-  /* background: url('https://farm9.staticflickr.com/8760/17195790401_94fcf60556_c.jpg'); */
-  background-size: cover;
-  background-attachment: fixed;
+  background: radial-gradient(
+    at center top,
+    var(--primary) 10%,
+    var(--bg) 100%
+  );
 }
 
 .CTA {
@@ -205,25 +208,30 @@ body {
 #model-container {
   margin-top: -100vh;
   width: 100vw;
-  height: 200vh;
+  height: 200vh; /* to prevent lighting from going outside the box */
 }
 canvas {
+  position: relative;
   pointer-events: none;
-  z-index: 100;
+  z-index: -1;
+  top: 35vh;
   left: 0;
   right: 0;
   width: 100vw;
-  height: 300vh;
+  height: 100vh;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 724px) {
   .title {
-    font-size: calc(var(--golden-ratio) * 3.4em);
+    font-size: calc(var(--golden-ratio) * 3em);
   }
   .subtitle {
-    font-size: calc(var(--golden-ratio) * 1em);
+    font-size: calc(var(--golden-ratio) * 0.9em);
     padding-inline: calc(var(--golden-ratio) * 1.8em);
+    line-height: calc(var(--golden-ratio) * 0.9em);
   }
+}
+@media (min-width: 768px) {
 }
 @media (min-width: 1024px) {
   body {
@@ -234,13 +242,6 @@ canvas {
   .title,
   .subtitle {
     text-align: center;
-  }
-
-  .title {
-    font-size: calc(var(--golden-ratio) * 3em);
-  }
-  .subtitle {
-    font-size: calc(var(--golden-ratio) * 0.9em);
   }
 }
 @media (min-width: 1280px) {

@@ -123,13 +123,26 @@
 }
 
 #borger {
-  height: min-content;
-  width: min-content;
+  /* height: min-content;
+  width: min-content; */
+  transition: color 0.1s ease-out;
+  /* color: var(--on-bg-medium);
+
+  mix-blend-mode: exclusion; */
 }
 #borger-icon {
-  font-size: calc(var(--golden-ratio) * 1em);
+  font-size: calc(var(--golden-ratio) * 0.8em);
   margin: auto;
   text-align: center;
+}
+#borger:hover {
+  color: var(--on-bg);
+}
+#borger:active {
+  color: var(--on-bg-lightest);
+}
+#borger:focus {
+  outline: none;
 }
 
 @media (min-width: 768px) {

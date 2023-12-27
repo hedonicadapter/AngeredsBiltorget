@@ -1,27 +1,30 @@
 ---
 import Card from './Card';
+import FrontPageCars from './FrontPageCars';
 
 ---
 
-<section class="inne-just-nu">
-    <div class="sticky-just-nu">
-      <h3>Inne just nu</h3>
-      <div class="cards-container">
-        <Card
-          className="invisible"
-          title="Yoyota"
-          price="1.99"
-          />
-          <Card className="invisible" title="Yoyota" price="1.99" />
-          <Card  className="invisible"
-          title="Din bil?"
-          price="Ditt pris" />
-      </div>
-      <div class="flex flex-row items-center justify-evenly">
-        <a class="CTA">Visa alla</a>
-        <!-- <a>Sälj din bil</a> -->
+<section>
+  <div class="relative h-[300vh] w-screen text-center">
+    <div class="bg-bg absolute w-full h-full -z-[1]"></div>
+    <div class="sticky top-0 h-screen pt-[calc(var(--golden-ratio)*6em)]">
+      <div class="flex flex-col h-full justify-evenly">
+        <h3>Inne just nu</h3>
+        <div class="cards-container flex-1 overflow-y-visible">
+          <Card overrideClass="invisible" title='Yoyota' price='1.99' client:idle />
+          <Card overrideClass="invisible" title='Yoyota' price='1.99' client:idle />
+          <Card overrideClass="invisible" title='Din bil?' price='Ditt pris' client:idle />
+            <!-- <FrontPageCars client:idle/> -->
+        </div>
+        <div class="flex justify-center my-auto pb-32 pt-14 z-40">
+          <a href="/showroom" class="z-40 flex flex-row pointer-events-auto items-center gap-4 outline outline-on-bg-light text-on-bg-light hover:outline-on-bg hover:text-on-bg p-4 outline-1 pl-8">Visa alla <div class="material-symbols-sharp">
+            chevron_right
+            </div></a>
+        </div>
+        
       </div>
     </div>
+  </div>
 </section>
   
 
@@ -32,15 +35,15 @@ import Card from './Card';
     let timeouts: NodeJS.Timeout[] = [];
 
     const setCardsVisible = () => {
-    const cards = document.querySelectorAll('.inne-just-nu .card-container');
+    const cards = document.querySelectorAll('.card-container');
     if (!cards) return;
 
     clearTimeouts(timeouts);
 
     cards.forEach((card, index) => {
         const timeout = setTimeout(() => {
-        card.classList.add('visible');
-        card.classList.remove('invisible');
+          card.classList.add('visible');
+          card.classList.remove('invisible');
         }, (index + 0.5) * 650);
 
         timeouts.push(timeout);
@@ -48,15 +51,15 @@ import Card from './Card';
     };
 
     const setCardsInVisible = () => {
-    const cards = document.querySelectorAll('.inne-just-nu .card-container');
+    const cards = document.querySelectorAll('.card-container');
     if (!cards) return;
 
     clearTimeouts(timeouts);
 
     for (let i = cards.length; i >= 0; i--) {
         const timeout = setTimeout(() => {
-        cards[i].classList.remove('visible');
-        cards[i].classList.add('invisible');
+          cards[i].classList.remove('visible');
+          cards[i].classList.add('invisible');
         }, i * 100);
 
         timeouts.push(timeout);

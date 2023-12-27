@@ -6,9 +6,9 @@ export default function CTA() {
   const $CTAHovered = useStore(CTAHovered);
 
   return (
-    <div className='z-40'>
+    <div className='z-40 relative top-40 flex flex-col justify-center text-center gap-4'>
       <a
-        className='text-2xl px-9 pt-4 pb-5 text-on-bg font-light outline outline-on-bg-medium outline-1 backdrop-blur-xl shadow-inner CTA'
+        className='text-2xl w-fit m-auto px-9 pt-4 pb-5 text-on-bg font-light outline outline-on-bg-medium outline-1 backdrop-blur-xl shadow-inner CTA'
         href='/showroom'
         onMouseEnter={() => CTAHovered.set(true)}
         onMouseLeave={() => CTAHovered.set(false)}

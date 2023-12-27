@@ -19,7 +19,7 @@ import {
   Lensflare,
   LensflareElement,
 } from 'three/examples/jsm/objects/Lensflare';
-import { LoadingSpinner } from './spinners.tsx';
+import { LoadingSpinner, LoadingScreen } from './spinners.tsx';
 import * as TWEEN from '@tweenjs/tween.js';
 
 export default function ThreeDeeModel() {
@@ -45,7 +45,7 @@ export default function ThreeDeeModel() {
   }, [$CTAHovered]);
 
   return (
-    <Suspense fallback={<LoadingSpinner />}>
+    <Suspense fallback={<LoadingScreen />}>
       <Canvas shadows dpr={window.devicePixelRatio}>
         <group position={[0, 0, 0]}>
           <ModelMemo
@@ -154,10 +154,6 @@ function CameraMemo({ modelRef }) {
       .start();
   };
 
-  useFrame(({ camera }) => {
-    camera.lookAt(...lookAt);
-  });
-
   useEffect(() => {
     const handleHashChange = () => {
       if (window.location.hash === '#about') enterCar();
@@ -171,13 +167,15 @@ function CameraMemo({ modelRef }) {
     };
   }, []);
 
-  useFrame(() => {
+  useFrame(({ camera }) => {
     TWEEN.update();
+
+    camera.lookAt(...lookAt);
   });
 
   return useMemo(() => {
     return (
-      <PerspectiveCamera zoom={0.8} makeDefault fov={FOV} position={position} />
+      <PerspectiveCamera zoom={1.5} makeDefault fov={FOV} position={position} />
     );
   }, [position, FOV]);
 }
