@@ -1,19 +1,20 @@
 ---
-import Dropdown from '../components/Dropdown.tsx';
-import CarsContainer from '../components/CarsContainer.jsx';
-import SearchBar from '../components/SearchBar.tsx';
-import CurrentResultCount from '../components/CurrentResultCount.jsx';
-import "../components/styles/showroom.css";
-import Layout from "../layouts/Layout.astro";
-import type Car from '../Models/Car';
-import {
-  generateDummyCarData,
-  getProductCount,
-  getProductFiles,
-  getProducts,
-  upsertProduct,
-} from '../api';
-import { DocumentSnapshot } from 'firebase/firestore';
+  import Dropdown from '../components/Dropdown.tsx';
+  import TagsContainer from '../components/TagsContainer.tsx';
+  import CarsContainer from '../components/CarsContainer.jsx';
+  import SearchBar from '../components/SearchBar.tsx';
+  import CurrentResultCount from '../components/CurrentResultCount.jsx';
+  import "../components/styles/showroom.css";
+  import Layout from "../layouts/Layout.astro";
+  import type Car from '../Models/Car';
+  import {
+    generateDummyCarData,
+    getProductCount,
+    getProductFiles,
+    getProducts,
+    upsertProduct,
+  } from '../api';
+  import { DocumentSnapshot } from 'firebase/firestore';
 
   const count = await getProductCount();
 ---
@@ -35,10 +36,11 @@ import { DocumentSnapshot } from 'firebase/firestore';
         <SearchBar client:load/>
       </div>
       <hr />
+      <!-- TODO: not entirely responsive -->
       <div
         class="tags-and-result-count-container flex flex-row justify-between items-start"
       >
-        <div class="tags-container flex flex-row"></div>
+        <TagsContainer client:only/>
         <div class="results-count">
           <CurrentResultCount client:load/> /
           <span id="results-available">{count}</span> Resultat
@@ -50,6 +52,7 @@ import { DocumentSnapshot } from 'firebase/firestore';
 </Layout>
 
   <script>
+    // TODO: migrate to astro
     import {
       generateDummyCarData,
       getProductCount,
@@ -100,14 +103,6 @@ import { DocumentSnapshot } from 'firebase/firestore';
     const handleWindowScrollAttempt = (event: WheelEvent | KeyboardEvent) => {
       redirectScrollY(event.deltaY);
     };
-
-
-
-
-  
-    
-
-
 
   window.addEventListener('scroll', setFilterContainerPosition);
   window.addEventListener('wheel', handleWindowScrollAttempt);

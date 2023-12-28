@@ -2,11 +2,9 @@ import { useRef, useEffect } from 'react';
 import { useStore } from '@nanostores/react';
 import {
   resultFilters,
-  type filterProps,
   type ResultFilters,
   filterPropsSwedish,
 } from '../nanoStores/resultStore';
-import { useMediaQuery } from '../util/helpers';
 
 export default function Dropdown({
   title,
@@ -24,31 +22,34 @@ export default function Dropdown({
     if (!containerRef || !containerRef.current) return;
     if (!dropdownRef || !dropdownRef.current) return;
 
-    containerRef.current.style.minWidth =
-      dropdownRef.current.offsetWidth + 'px';
+    containerRef.current.style.minWidth = `${dropdownRef.current.offsetWidth}px`;
   }, [containerRef, dropdownRef]);
 
   return (
     <div
       ref={containerRef}
-      className='relative min-h-[calc(var(--golden-ratio)*1.2em)] z-[100]'
+      className='relative min-h-[calc(var(--golden-ratio)*1.4em)] z-[100]'
     >
       <div
+        // TODO: funkar ej
+        onScroll={(evt) => evt.stopPropagation()}
         ref={dropdownRef}
-        className='btn dropdown absolute top-0 left-0 px-[calc(var(--golden-ratio)*0.3em)] max-h-[calc(var(--golden-ratio)*1.2em)] overflow-hidden flex flex-col'
+        className='btn dropdown absolute top-0 left-0 px-[calc(var(--golden-ratio)*0.3em)] max-h-[calc(var(--golden-ratio)*1.4em)] overflow-hidden flex flex-col gap-3'
       >
-        <div>{title}</div>
-        {options?.map((option: string, index: number) => (
-          <div key={option} className='drop-down-input-label-container'>
-            <Checkbox index={index} filterProperty={filterProperty} />
-            <label
-              className='label-and-input flex flex-row items-center justify-between'
-              htmlFor={filterProperty}
-            >
-              {option}
-            </label>
-          </div>
-        ))}
+        <div className='sticky top-0 bg-bg'>{title}</div>
+        <div className='overflow-y-auto h-min-content'>
+          {options?.map((option: string, index: number) => (
+            <div key={option} className='drop-down-input-label-container'>
+              <Checkbox index={index} filterProperty={filterProperty} />
+              <label
+                className='label-and-input flex flex-row items-center justify-between'
+                htmlFor={filterProperty}
+              >
+                {option}
+              </label>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

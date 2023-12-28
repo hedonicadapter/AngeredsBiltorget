@@ -102,10 +102,6 @@ export default function CarsContainer() {
     getCars();
   }, []);
 
-  useEffect(() => {
-    console.log($resultFilters);
-  }, [$resultFilters]);
-
   return (
     <div
       onScroll={handleCarsContainerScroll}
