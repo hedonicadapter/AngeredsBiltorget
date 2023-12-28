@@ -62,6 +62,8 @@ function Checkbox({
   filterProperty: keyof typeof filterPropsSwedish;
   index: number;
 }) {
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const english = filterPropsSwedish[filterProperty];
   const $resultFilters = useStore(resultFilters);
 
@@ -79,8 +81,17 @@ function Checkbox({
     resultFilters.set({ ...$resultFilters, [english]: filters });
   };
 
+  useEffect(() => {
+    if (!inputRef || !inputRef.current) return;
+    const value = inputRef.current.nextSibling?.textContent;
+    const exists = $resultFilters[english as keyof ResultFilters]?.has(value);
+
+    if (!exists) inputRef.current.checked = false;
+  }, [$resultFilters, inputRef]);
+
   return (
     <input
+      ref={inputRef}
       onChange={handleCheckboxChange}
       className='custom-dropdown-checkbox'
       type='checkbox'

@@ -12,7 +12,7 @@ export default function TagsContainer() {
         ([key, values], i) =>
           key != 'query' &&
           [...values].map((value: string) => (
-            <div key={`value-${i}`}>
+            <div key={`${value}-${i}`}>
               <Tag text={value} />
             </div>
           ))
