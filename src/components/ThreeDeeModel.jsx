@@ -47,7 +47,7 @@ export default function ThreeDeeModel() {
   return (
     <Suspense fallback={<LoadingScreen />}>
       <Canvas shadows dpr={window.devicePixelRatio}>
-        <group position={[0, 0, 0]}>
+        <group position={[0.15, 0, 0]}>
           <ModelMemo
             headlights={<Headlights scale={0.8} />}
             modelRef={modelRef}
@@ -97,10 +97,12 @@ const toEnterFOV = { fov: 85 };
 const newEnterLookAt = { x: 0, y: 0, z: 0 };
 const toEnterLookAt = { x: -2.6, y: -1.8, z: 4 };
 
-function CameraMemo({ modelRef }) {
+function CameraMemo() {
+  const { camera } = useThree();
   const [position, setPosition] = useState([0, 1, 9]);
   const [FOV, setFOV] = useState(60);
   const [lookAt, setLookAt] = useState([0, 0, 0]);
+  const [zoom, setZoom] = useState(1.5);
 
   const enterCar = () => {
     new TWEEN.Tween(newEnterPosition)
@@ -155,15 +157,39 @@ function CameraMemo({ modelRef }) {
   };
 
   useEffect(() => {
+    // TODO: scale with interpolator for smoother zoom
+    const handleWindowResize = () => {
+      let newZoom = 1.5;
+      switch (true) {
+        case window.innerWidth < 330:
+          newZoom = 0.5;
+          break;
+        case window.innerWidth < 428:
+          newZoom = 0.75;
+          break;
+        case window.innerWidth < 540:
+          newZoom = 1;
+          break;
+        case window.innerWidth < 700:
+          newZoom = 1.25;
+          break;
+      }
+
+      setZoom(newZoom);
+      // camera.updateProjectionMatrix();
+    };
+
     const handleHashChange = () => {
       if (window.location.hash === '#about') enterCar();
       else exitCar();
     };
 
     window.addEventListener('hashchange', handleHashChange);
+    window.addEventListener('resize', handleWindowResize);
 
     return () => {
       window.removeEventListener('hashchange', handleHashChange);
+      window.removeEventListener('resize', handleWindowResize);
     };
   }, []);
 
@@ -175,9 +201,14 @@ function CameraMemo({ modelRef }) {
 
   return useMemo(() => {
     return (
-      <PerspectiveCamera zoom={1.5} makeDefault fov={FOV} position={position} />
+      <PerspectiveCamera
+        zoom={zoom}
+        makeDefault
+        fov={FOV}
+        position={position}
+      />
     );
-  }, [position, FOV]);
+  }, [position, FOV, zoom]);
 }
 
 function EngineShaker() {
@@ -233,7 +264,7 @@ function MovingSpots({ positions = [2, 0, 2, 0, 2, 0, 2, 0] }) {
 function EnvironmentMemo() {
   return useMemo(
     () => (
-      <group>
+      <group position={[-0.15, 0, 0]}>
         <spotLight
           position={[0, 30, 0]}
           angle={0.3}

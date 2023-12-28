@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { currentResultCount } from '../nanoStores/resultStore.js';
+import { currentResultCount } from '../nanoStores/resultStore.ts';
 import { useStore } from '@nanostores/react';
 
 export default function Card(props) {
@@ -46,11 +46,11 @@ export default function Card(props) {
 
   return (
     <div className={cardClassName}>
-      <div className='card flex flex-col items-center z-40'>
+      <div className='card flex flex-col items-center'>
         <img
           src={src && src.length > 0 ? src : '/images/placeholder-car.webp'}
           alt={`${title || 'car'}`}
-          className='object-contain aspect-square flex-1'
+          className='object-contain aspect-square flex-1 -z-[1]'
         />
         <h4 className='whitespace-nowrap'>{title || `${make} ${model}`}</h4>
         <p>{price} SEK</p>

@@ -14,19 +14,10 @@ section.container {
   /* padding-inline: calc(var(--golden-ratio) * 1em); */
 }
 
-.filter-container {
-  /* --original-position: 165px; */
-
-  gap: calc(var(--golden-ratio) * 0.25em);
-  position: sticky;
-  top: var(--navbar-height);
-  width: 100%;
-}
-
 .buttons-container {
   gap: calc(var(--golden-ratio) * 0.3em);
   height: calc(var(--golden-ratio) * 1.2em);
-  padding-bottom: calc(var(--golden-ratio) * 0.6em);
+  padding-bottom: calc(var(--golden-ratio) * 1.5em);
 }
 
 hr {

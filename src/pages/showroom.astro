@@ -1,6 +1,7 @@
 ---
-import Dropdown from '../components/Dropdown.astro';
+import Dropdown from '../components/Dropdown.tsx';
 import CarsContainer from '../components/CarsContainer.jsx';
+import SearchBar from '../components/SearchBar.tsx';
 import CurrentResultCount from '../components/CurrentResultCount.jsx';
 import "../components/styles/showroom.css";
 import Layout from "../layouts/Layout.astro";
@@ -18,26 +19,20 @@ import { DocumentSnapshot } from 'firebase/firestore';
 ---
 <Layout>
 <section class="container flex flex-col items-center w-screen mx-auto">
-    <search class="filter-container flex flex-col">
-      <div class="buttons-container flex flex-row items-center justify-between">
+  <search class="gap-[calc(var--golden-ratio)*0.25em] sticky top-[var(--navbar-height)] w-full flex flex-col">
+      <div class="buttons-container flex flex-row flex-wrap items-center justify-start md:justify-between">
         <Dropdown
-          title="Märke"
+          client:load
+          title="Årsmodell"
           options={["2019", "2020", "2021", "2022"]}
         ></Dropdown>
         <Dropdown
+          client:load
           title="Märke"
           options={["Volvo", "Saab", "Mercedes", "Audi"]}
         ></Dropdown>
   
-        <div class="search-bar">
-          <input
-            class="btn"
-            placeholder="Sök..."
-            type="search"
-            name="search-bilar"
-          />
-          <div id="search-bar-symbol" class="material-symbols-sharp">search</div>
-        </div>
+        <SearchBar client:load/>
       </div>
       <hr />
       <div

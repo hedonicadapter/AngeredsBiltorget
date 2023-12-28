@@ -55,21 +55,7 @@ input[type='search']::placeholder {
   transition: color 0.15s ease-out;
 }
 
-.dropdown-container {
-  position: relative;
-  height: calc(var(--golden-ratio) * 1.2em);
-  /* outline: 1px solid red; */
-  z-index: 100;
-}
 .dropdown {
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  padding-inline: calc(var(--golden-ratio) * 0.3em);
-
-  max-height: calc(var(--golden-ratio) * 1.2em);
-  overflow: hidden;
   transition: max-height 0.25s ease-in-out, color 0.15s ease-out,
     border-color 0.15s ease-out;
 }

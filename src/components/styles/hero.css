@@ -13,11 +13,10 @@ header {
   overflow: hidden;
   word-break: break-word;
   box-sizing: border-box;
+  margin-top: calc(var(--golden-ratio) * 6vw);
 }
 
 .title {
-  margin-bottom: calc(var(--golden-ratio) * 0.1em);
-
   font-family: 'Fjalla One', sans-serif;
   font-style: normal;
   font-weight: 400;
@@ -51,10 +50,6 @@ body {
     var(--primary) 10%,
     var(--bg) 100%
   );
-}
-
-.CTA {
-  background-color: var(--bg-transparent);
 }
 
 /* Cut-out text effect */
@@ -222,7 +217,11 @@ canvas {
 }
 
 @media (min-width: 724px) {
+  header {
+    margin-top: 0;
+  }
   .title {
+    margin-bottom: calc(var(--golden-ratio) * 0.1em);
     font-size: calc(var(--golden-ratio) * 3em);
   }
   .subtitle {

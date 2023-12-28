@@ -1,5 +1,5 @@
 import React from 'react';
-import { currentResultCount } from '../nanoStores/resultStore';
+import { currentResultCount } from '../nanoStores/resultStore.ts';
 import { useStore } from '@nanostores/react';
 
 export default function CurrentResultCount() {

@@ -3,12 +3,15 @@ import _ from 'lodash';
 
 import { getProducts, getProductFiles } from '../api.ts';
 import Card from './Card.jsx';
+import { useStore } from '@nanostores/react';
+import { resultFilters } from '../nanoStores/resultStore.ts';
 
 export default function CarsContainer() {
   const oldScrollY = useRef(0);
   const [cars, setCars] = useState([]);
   const [gettingProducts, setGettingProducts] = useState(false); // Prevents multiple requests from being sent at once
   const [page, setPage] = useState(0);
+  const $resultFilters = useStore(resultFilters);
   //   const [index, setIndex] = useState(0);
   //   const [repeatingIndex, _setRepeatingIndex] = useState(0);
 
@@ -99,6 +102,10 @@ export default function CarsContainer() {
     getCars();
   }, []);
 
+  useEffect(() => {
+    console.log($resultFilters);
+  }, [$resultFilters]);
+
   return (
     <div
       onScroll={handleCarsContainerScroll}
@@ -107,7 +114,7 @@ export default function CarsContainer() {
       {cars &&
         cars.length > 0 &&
         cars.map((car, index) => (
-          <div id={`car-${car.id}`}>
+          <div key={car.id} id={`car-${car.id}`}>
             <Card
               index={index}
               id={car?.id}
