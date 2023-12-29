@@ -171,6 +171,15 @@ p {
   opacity: 0;
 }
 
+.invisible {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+.visible {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
 #background-overlay:after {
   pointer-events: none;
   /* display: none; */
@@ -219,27 +228,4 @@ p {
 @media (min-width: 1280px) {
 }
 @media (min-width: 1536px) {
-}
-
-.addToCartButton {
-  z-index: 100;
-  background-color: transparent;
-  color: var(--on-bg);
-  border: none;
-  cursor: pointer;
-
-  opacity: 0;
-  transition: opacity 0.1s ease-out, scale 0.1s ease-out;
-
-  position: absolute;
-  top: 40px;
-  left: 0;
-  right: 0;
-}
-.addToCartButton:active {
-  scale: 0.9;
-  opacity: 0.6 !important;
-}
-.addToCartContainer:hover .addToCartButton {
-  opacity: 1;
 }

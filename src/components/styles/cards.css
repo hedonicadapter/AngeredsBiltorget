@@ -27,19 +27,37 @@
 }
 
 .card h4 {
+  z-index: -1;
+
   color: var(--on-bg);
   margin-bottom: calc(var(--golden-ratio) * 0.1em);
 }
 
 .card p {
+  z-index: -1;
+
   color: var(--on-bg-lightest);
 }
 
-.invisible {
-  opacity: 0 !important;
-  pointer-events: none !important;
+.addToCartButton {
+  z-index: -1;
+  background-color: transparent;
+  color: var(--on-bg);
+  border: none;
+  cursor: pointer;
+
+  opacity: 0;
+  transition: opacity 0.1s ease-out, scale 0.1s ease-out;
+
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
 }
-.visible {
-  opacity: 1 !important;
-  pointer-events: auto !important;
+.addToCartButton:active {
+  scale: 0.9;
+  opacity: 0.6 !important;
+}
+.card-container:hover .addToCartButton {
+  opacity: 1;
 }

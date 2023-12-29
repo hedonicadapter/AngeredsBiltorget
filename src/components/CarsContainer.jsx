@@ -45,11 +45,11 @@ export default function CarsContainer() {
   //   currentResultCount.set($currentResultCount + 1);
   // }, (index / 16) * 50);
 
-  const getCars = async () => {
+  const getCars = async (filter) => {
     if (gettingProducts) return;
     setGettingProducts(true);
 
-    const carDocs = await getProducts(page, 16, 'year');
+    const carDocs = await getProducts(page, 16, 'year', filter);
 
     const carsFromDB = await Promise.all(
       carDocs.map(async (doc) => {
@@ -101,6 +101,10 @@ export default function CarsContainer() {
   useEffect(() => {
     getCars();
   }, []);
+
+  useEffect(() => {
+    getCars($resultFilters);
+  }, [$resultFilters]);
 
   return (
     <div

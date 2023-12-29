@@ -34,6 +34,7 @@ export default function Card(props) {
       if (existingCarIndex !== -1) {
         cart[existingCarIndex].quantity += 1;
       } else {
+        // TODO: remove quantity
         cart.push({ ...props, quantity: 1 });
       }
       window.localStorage.setItem('cart', JSON.stringify(cart));
@@ -42,7 +43,7 @@ export default function Card(props) {
     }
   };
 
-  const cardClassName = `card-container flex justify-center items-center mx-auto ${overrideClass}}`;
+  const cardClassName = `card-container relative flex justify-center items-center mx-auto ${overrideClass}}`;
 
   return (
     <div className={cardClassName}>
@@ -56,15 +57,13 @@ export default function Card(props) {
         <p>{price} SEK</p>
 
         {/* TODO: delete after labbinlämning */}
-        <div className='addToCartContainer' style={{ position: 'relative' }}>
-          <button
-            type='button'
-            className='material-symbols-sharp addToCartButton'
-            onClick={handleAddToCart}
-          >
-            add_shopping_cart
-          </button>
-        </div>
+        <button
+          type='button'
+          className='material-symbols-sharp addToCartButton'
+          onClick={handleAddToCart}
+        >
+          add_shopping_cart
+        </button>
       </div>
     </div>
   );

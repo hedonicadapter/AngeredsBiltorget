@@ -27,6 +27,7 @@ import {
 import type { StorageReference } from 'firebase/storage';
 
 import type Car from './Models/Car';
+import type { ResultFilters } from './nanoStores/resultStore';
 
 const productCollection = collection(db, 'products');
 
@@ -38,14 +39,22 @@ export async function getProductCount() {
 export async function getProducts(
   start: number | DocumentSnapshot,
   perPage: number = 16,
-  order: string = 'year'
+  order: string = 'year',
+  filter?: ResultFilters
 ): Promise<DocumentSnapshot<DocumentData, DocumentData>[]> {
-  const q = query(
-    productCollection,
-    orderBy(order),
-    startAfter(start),
-    limit(perPage)
-  );
+  let q = query(productCollection);
+
+  if (filter) {
+    for (const [key, value] of Object.entries(filter)) {
+      if (value) {
+        q = q.where(key, '==', value);
+      }
+    }
+  }
+
+  query(productCollection, orderBy(order), startAfter(start), limit(perPage));
+
+  // where("state", "==", "CA")
 
   const snapshot = await getDocs(q);
   return snapshot.docs;
