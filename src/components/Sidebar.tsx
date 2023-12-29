@@ -17,7 +17,7 @@ export default function Sidebar({ anchors }: { anchors?: any }) {
       >
         <div
           onClick={(evt) => evt.stopPropagation()}
-          className={` absolute transition-[right0.25sease-out] absolute top-0 bg-surface w-[33vw] h-screen p-4 pt-44 
+          className={`absolute transition-[right0.25sease-out] absolute top-0 bg-surface w-[33vw] h-screen p-4 pt-44 
         ${$sidebarOpen ? 'right-0' : '-right-[100vw]'}
         `}
         >

@@ -12,8 +12,9 @@ export default function Borger(props: { anchors?: any }) {
         id='borger'
         className='flex items-center z-[1001]'
       >
+        {/* TODO: fix z-index */}
         <div id='borger-icon' className='material-symbols-sharp inline'>
-          menu
+          more_vert
         </div>
       </button>
     </div>
