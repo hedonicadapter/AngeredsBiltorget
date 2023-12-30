@@ -1,10 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import _ from 'lodash';
 
 import { getProducts, getProductFiles } from '../api.ts';
 import Card from './Card.jsx';
 import { useStore } from '@nanostores/react';
 import { resultFilters } from '../nanoStores/resultStore.ts';
+import { LoadingSpinner } from './spinners.tsx';
 
 export default function CarsContainer() {
   const oldScrollY = useRef(0);
@@ -45,55 +46,52 @@ export default function CarsContainer() {
   //   currentResultCount.set($currentResultCount + 1);
   // }, (index / 16) * 50);
 
-  const getCars = async (filter) => {
-    if (gettingProducts) return;
-    setGettingProducts(true);
+  useEffect(() => {
+    console.log('getting products');
+  }, [gettingProducts]);
 
-    const carDocs = await getProducts(page, 16, 'year', filter);
+  const getCars = useCallback(
+    async (filter) => {
+      if (gettingProducts) return;
+      setGettingProducts(true);
 
-    const carsFromDB = await Promise.all(
-      carDocs.map(async (doc) => {
-        setPage(doc);
-        const fileUrls = await getProductFiles(doc.id);
+      const carDocs = await getProducts(page, 16, 'year', filter);
 
-        const car = doc.data();
+      const carsFromDB = await Promise.all(
+        carDocs.map(async (doc, i) => {
+          setPage(doc);
+          const fileUrls = await getProductFiles(doc.id);
 
-        car.src = fileUrls.find((file) =>
-          file.name.startsWith('thumbnail')
-        )?.url;
-        car.id = doc.id;
+          const car = doc.data();
 
-        // TODO: delete after labbinlämning
-        car.quantity = 1;
+          car.src = fileUrls.find((file) =>
+            file.name.startsWith('thumbnail')
+          )?.url;
+          car.id = doc.id;
 
-        // setRepeatingIndex(repeatingIndex + 1);
-        // setIndex(index + 1);
-        return car;
-      })
-    );
+          // TODO: delete
+          car.quantity = 1;
 
-    setGettingProducts(false);
+          return car;
+        })
+      );
 
-    const newCars = [...cars, ...carsFromDB];
-    setCars(newCars);
-  };
+      setGettingProducts(false);
+
+      const newCars = [...cars, ...carsFromDB];
+      setCars(newCars);
+    },
+    [gettingProducts, page, cars]
+  );
 
   const handleCarsContainerScroll = _.debounce((evt) => {
-    const scrolledToTop = window.scrollY == 0;
     const scrolledToBottom =
       evt.target.scrollTop ===
       evt.target.scrollHeight - evt.target.offsetHeight;
-    const direction = window.scrollY > oldScrollY.current ? 'down' : 'up';
 
     if (scrolledToBottom) {
       getCars();
     }
-
-    // TODO: what was I cooking?
-    // if (direction === 'up' && scrolledToTop) {
-    //   evt.target.scrollTo();
-    //   window.scrollTo({ top: document.body.scrollHeight });
-    // }
 
     oldScrollY.current = window.scrollY;
   }, 150);
@@ -109,12 +107,16 @@ export default function CarsContainer() {
   return (
     <div
       onScroll={handleCarsContainerScroll}
-      className='cars-container flex sm:flex-row items-center justify-evenly overflow-x-visible overflow-y-auto flex-wrap'
+      className='cars-container relative pb-96 flex flex-row items-start justify-evenly overflow-x-visible overflow-y-auto px-[1px] flex-wrap gap-6 mt-10'
     >
       {cars &&
         cars.length > 0 &&
         cars.map((car, index) => (
-          <div key={car.id} id={`car-${car.id}`}>
+          <div
+            className='card-container flex-grow'
+            key={car.id}
+            id={`car-${car.id}`}
+          >
             <Card
               index={index}
               id={car?.id}
@@ -127,6 +129,10 @@ export default function CarsContainer() {
             />
           </div>
         ))}
+      {/* TODO: broken, gettingProducts is set to true right after theyve been fetched */}
+      <div className='fixed left-0 right-0 bottom-16 z-50 h-24 w-full '>
+        {gettingProducts ? <LoadingSpinner /> : null}
+      </div>
     </div>
   );
 }

@@ -13,7 +13,7 @@ import {
 import Model, { Headlights } from '../../public/Frankenstein';
 import useScroll from '../util/useScroll';
 import { useStore } from '@nanostores/react';
-import { CTAHovered } from '../nanoStores/CTAStore.js';
+import { CTAHovered } from '../nanoStores/uiStore.ts';
 import { TextureLoader } from 'three';
 import {
   Lensflare,

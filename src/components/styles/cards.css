@@ -6,58 +6,32 @@
   scale: 1.075;
 }
 
-.card {
-  width: calc(var(--golden-ratio) * 10em);
-  overflow: visible;
-  /* gap: calc(var(--golden-ratio) * 0.6em); */
-
-  /* aspect-ratio: 1 / 1; */
-
-  text-align: center;
-}
-
 .card img {
-  mix-blend-mode: exclusion;
-  /* z-index: 50; */
-  width: 80%;
-  margin-bottom: calc(var(--golden-ratio) * 0.4em);
-
-  transform-origin: center;
   transition: scale 0.15s ease-out;
 }
 
-.card h4 {
-  z-index: -1;
-
-  color: var(--on-bg);
-  margin-bottom: calc(var(--golden-ratio) * 0.1em);
-}
-
-.card p {
-  z-index: -1;
-
-  color: var(--on-bg-lightest);
-}
-
 .addToCartButton {
-  z-index: 0;
   background-color: transparent;
-  color: var(--on-bg);
+  color: var(--on-bg-light);
   border: none;
   cursor: pointer;
 
   opacity: 0;
-  transition: opacity 0.1s ease-out, scale 0.1s ease-out;
+  transition: color 0.1s ease-out, opacity 0.1s ease-out, scale 0.1s ease-out;
 
   position: absolute;
-  top: 50%;
-  left: 0;
+  bottom: 10%;
+  left: 80%;
   right: 0;
 }
 .addToCartButton:active {
   scale: 0.9;
   opacity: 0.6 !important;
 }
+.addToCartButton:hover {
+  color: var(--on-bg);
+}
+
 .card-container:hover .addToCartButton {
   opacity: 1;
 }

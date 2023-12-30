@@ -8,22 +8,28 @@ const {anchorText, anchorHref} = Astro.props;
 </a>
 
 <script>
+  	function initializeScript() {
+	
     const anchors = document.querySelectorAll('.nav-anchor') as HTMLAnchorElement;
 
     anchors.forEach(anchor=>{
-        anchor!.onmouseover = (evt) => {
-          const hoverEvent = new Event('nav-anchor-mouseover');
-    
-          const { paddingLeft, paddingRight } = window.getComputedStyle(anchor);
-    
-          hoverEvent.anchorInfo = {
-            left: evt.target.offsetLeft,
-            top: evt.target.offsetTop,
-            width: evt.target.offsetWidth,
-            paddingInline: parseFloat(paddingLeft) + parseFloat(paddingRight),
-          };
-    
-          document.dispatchEvent(hoverEvent);
+      anchor!.onmouseover = (evt) => {
+        const hoverEvent = new Event('nav-anchor-mouseover');
+  
+        const { paddingLeft, paddingRight } = window.getComputedStyle(anchor);
+  
+        hoverEvent.detail = {
+          left: evt.target.offsetLeft,
+          top: evt.target.offsetTop,
+          width: evt.target.offsetWidth,
+          paddingInline: parseFloat(paddingLeft) + parseFloat(paddingRight),
         };
+  
+        document.dispatchEvent(hoverEvent);
+      };
     })
+  }
+
+	document.addEventListener('astro:after-swap', initializeScript);
+  initializeScript();
 </script>

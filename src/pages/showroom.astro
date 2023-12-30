@@ -1,9 +1,8 @@
 ---
-  import Dropdown from '../components/Dropdown.tsx';
   import TagsContainer from '../components/TagsContainer.tsx';
   import CarsContainer from '../components/CarsContainer.jsx';
-  import SearchBar from '../components/SearchBar.tsx';
   import CurrentResultCount from '../components/CurrentResultCount.jsx';
+  import ButtonsContainer from '../components/ButtonsContainer.jsx';
   import "../components/styles/showroom.css";
   import Layout from "../layouts/Layout.astro";
   import type Car from '../Models/Car';
@@ -16,25 +15,15 @@
   } from '../api';
   import { DocumentSnapshot } from 'firebase/firestore';
 
+  // TODO: get initial cars here
+
   const count = await getProductCount();
 ---
 <Layout>
-<section class="container flex flex-col items-center w-screen mx-auto">
-  <search class="gap-[calc(var--golden-ratio)*0.25em] sticky top-[var(--navbar-height)] w-full flex flex-col">
-      <div class="buttons-container flex flex-row flex-wrap items-center justify-start md:justify-between">
-        <Dropdown
-          client:load
-          title="Årsmodell"
-          options={["2019", "2020", "2021", "2022"]}
-        ></Dropdown>
-        <Dropdown
-          client:load
-          title="Märke"
-          options={["Volvo", "Saab", "Mercedes", "Audi"]}
-        ></Dropdown>
+  <section class="container flex flex-col items-center w-screen mx-auto">
+    <search class=" gap-[calc(var--golden-ratio)*0.25em] sticky top-[var(--navbar-height)] w-full h-40 mb-10 flex flex-col">
+      <ButtonsContainer client:load />
   
-        <SearchBar client:load/>
-      </div>
       <hr />
       <!-- TODO: not entirely responsive -->
       <div
@@ -47,12 +36,13 @@
         </div>
       </div>
     </search>
-    <CarsContainer client:load/>
+    <div class="w-full mt-[calc(var(--navbar-height)-4em)]">
+      <CarsContainer client:load/>
+    </div>
   </section>
 </Layout>
 
   <script>
-    // TODO: migrate to astro
     import {
       generateDummyCarData,
       getProductCount,
@@ -62,6 +52,10 @@
     } from '../api';
     import type Car from '../Models/Car';
     import { DocumentSnapshot } from 'firebase/firestore';
+
+    const initializeScript = () => {
+    // TODO: migrate to astro
+    // TODO: fix formatting on all <script/>s
 
     let oldScrollY = 0;
 
@@ -113,5 +107,8 @@
   });
 
   setFilterContainerPosition();
+}
 
+  document.addEventListener('astro:after-swap', initializeScript);
+  initializeScript();
   </script>

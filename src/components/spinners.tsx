@@ -1,7 +1,7 @@
 export function LoadingSpinner() {
   return (
     //   stolen from https://tailwindflex.com/@anonymous/loading-dots
-    <div className='flex flex-col space-x-2 justify-center items-center h-screen'>
+    <div className='flex flex-col space-x-2 justify-center items-center'>
       <span className='sr-only'>Loading...</span>
       <div className='h-3 w-3 bg-on-bg rounded-full animate-bounce [animation-delay:-0.3s]'></div>
       <div className='h-3 w-3 bg-on-bg rounded-full animate-bounce [animation-delay:-0.2s]'></div>

@@ -24,9 +24,10 @@
   --on-bg-medium: rgba(255, 255, 255, 0.82);
   --on-bg-light: rgba(255, 255, 255, 0.74);
   --on-bg-lightest: rgba(255, 255, 255, 0.6);
-  --surface: #17191b;
+  --surface: #1c1212;
   /* --surface: #1c1212; */
   --surface-variant: #3a2525;
+  --surface-dark: #0a0a0a;
 
   --primary: #660c09;
   --secondary: #8f2522;
@@ -99,11 +100,8 @@ body {
   overflow-x: hidden;
   height: 100vh;
 
-  background: radial-gradient(
-    at center top,
-    var(--surface) 10%,
-    var(--bg) 100%
-  );
+  /* background-color: var(--surface); */
+  background: radial-gradient(at center top, var(--bg) 10%, var(--bg) 100%);
   background-size: cover;
 
   color: var(--on-bg);

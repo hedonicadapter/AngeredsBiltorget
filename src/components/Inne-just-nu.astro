@@ -1,6 +1,6 @@
 ---
 import Card from './Card';
-import FrontPageCars from './FrontPageCars';
+// import FrontPageCars from './FrontPageCars';
 
 ---
 
@@ -17,7 +17,7 @@ import FrontPageCars from './FrontPageCars';
             <!-- <FrontPageCars client:idle/> -->
         </div>
         <div class="flex justify-center my-auto pb-32 pt-14 z-40">
-          <a href="/showroom" class="z-40 flex flex-row pointer-events-auto items-center gap-4 outline outline-on-bg-light text-on-bg-light hover:outline-on-bg hover:text-on-bg p-4 outline-1 pl-8">Visa alla <div class="material-symbols-sharp">
+          <a href="/showroom" class="font-light backdrop-blur-xl shadow-inner rounded-xl z-40 flex flex-row pointer-events-auto items-center gap-4 outline outline-on-bg-light text-on-bg-light hover:outline-on-bg hover:text-on-bg p-4 outline-1 pl-8">Visa alla <div class="material-symbols-sharp">
             chevron_right
             </div></a>
         </div>
@@ -29,8 +29,10 @@ import FrontPageCars from './FrontPageCars';
   
 
 <script>
-    import { clearTimeouts } from '../util/helpers';
-    import { whileInView } from '../util/intersection-observer';
+  // TODO: migrate to react
+  import { clearTimeouts } from '../util/helpers';
+  import { whileInView } from '../util/intersection-observer';
+  const initializeScript = () => {
 
     let timeouts: NodeJS.Timeout[] = [];
 
@@ -90,5 +92,8 @@ import FrontPageCars from './FrontPageCars';
     (cardsContainer as HTMLElement).scrollLeft =
         scrollPercentage * 0.01 * cardsContainer!.scrollWidth;
     });
+  };
 
+  document.addEventListener('astro:after-swap', initializeScript);
+  initializeScript();
 </script>

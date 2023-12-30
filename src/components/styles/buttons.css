@@ -1,17 +1,14 @@
 .btn {
   user-select: none;
 
-  background: var(--bg);
-  border: 2px solid #1a1c1e;
-  border-radius: 4px;
+  background: transparent;
+  border-bottom: 1px solid transparent;
+  border-top: 1px solid transparent;
 
-  /* padding-inline: calc(var(--golden-ratio) * 1em); */
   padding-top: 0;
   padding-bottom: 0;
   color: var(--on-bg-light);
   outline: none;
-  /* min-height: calc(var(--golden-ratio) * 1.2em); */
-  /* line-height: calc(var(--golden-ratio) * 1.3em); */
   padding-inline: calc(var(--golden-ratio) * 0.6em);
   padding-block: calc(var(--golden-ratio) * 0.1em);
   color: var(--on-bg-light);
@@ -24,12 +21,12 @@
 .btn:hover,
 .btn:hover ~ #search-bar-symbol {
   color: var(--on-bg-medium);
-  border-color: var(--outline-hovered);
+  border-bottom-color: var(--accent);
 }
 .btn:focus,
 .btn:focus ~ #search-bar-symbol {
   color: var(--on-bg);
-  border-color: var(--outline-hovered);
+  border-bottom-color: var(--tertiary);
 }
 
 .search-bar {
@@ -42,16 +39,18 @@ input[type='search'] {
   width: 100%;
 }
 input[type='search']::placeholder {
-  font-weight: bold;
+  all: unset;
+  font-family: 'Lato', sans-serif;
   font-size: 1em;
+  font-weight: 200;
   line-height: normal;
 }
 #search-bar-symbol {
   position: absolute;
-  top: calc(var(--golden-ratio) * 0.225em);
+  top: calc(var(--golden-ratio) * 0.32em);
   right: calc(var(--golden-ratio) * 0.3em);
   color: var(--on-bg-light);
-  font-size: calc(var(--golden-ratio) * 0.8em);
+  font-size: calc(var(--golden-ratio) * 0.75em);
 
   transition: color 0.15s ease-out;
 }
@@ -85,6 +84,9 @@ input[type='search']::placeholder {
   max-height: calc(
     var(--golden-ratio) * 10em
   ); /* Set an appropriate value to allow for expansion */
+  @apply bg-bg;
+  @apply rounded-xl;
+  outline: 1px solid var(--outline);
 }
 .dropdown:hover:after {
   transform: rotate(-180deg);
@@ -116,6 +118,7 @@ input[type='search']::placeholder {
   cursor: pointer;
   padding-inline: calc(var(--golden-ratio) * 0.45em);
   overflow: hidden;
+  border-bottom-color: var(--on-bg-lightest);
 }
 
 .tag-text {
@@ -134,7 +137,7 @@ input[type='search']::placeholder {
   color: var(--error);
 }
 .tag:hover {
-  border-color: var(--error);
+  border-bottom-color: var(--error);
 }
 .tag:hover .tag-text {
   color: var(--error);

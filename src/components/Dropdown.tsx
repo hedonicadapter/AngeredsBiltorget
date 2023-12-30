@@ -5,7 +5,9 @@ import {
   type ResultFilters,
   filterPropsSwedish,
 } from '../nanoStores/resultStore';
+import { filterContainerExpanded } from '../nanoStores/uiStore';
 
+// TODO: hovering past a certain point closes the dropdown...
 export default function Dropdown({
   title,
   options,
@@ -27,6 +29,10 @@ export default function Dropdown({
 
   return (
     <div
+      onFocus={() => filterContainerExpanded.set(true)}
+      onMouseEnter={() => filterContainerExpanded.set(true)}
+      onBlur={() => filterContainerExpanded.set(false)}
+      onMouseLeave={() => filterContainerExpanded.set(false)}
       ref={containerRef}
       className='relative min-h-[calc(var(--golden-ratio)*1.4em)] z-[100]'
     >
@@ -34,19 +40,17 @@ export default function Dropdown({
         // TODO: funkar ej
         onScroll={(evt) => evt.stopPropagation()}
         ref={dropdownRef}
-        className='btn dropdown absolute top-0 left-0 px-[calc(var(--golden-ratio)*0.3em)] max-h-[calc(var(--golden-ratio)*1.4em)] overflow-hidden flex flex-col gap-3'
+        className=' btn dropdown absolute top-0 left-0 px-[calc(var(--golden-ratio)*0.3em)] max-h-[calc(var(--golden-ratio)*1.4em)] overflow-hidden flex flex-col gap-4'
       >
-        <div className='sticky top-0 bg-bg'>{title}</div>
-        <div className='overflow-y-auto h-min-content'>
+        <div className='sticky top-[0.6px]  font-light'>{title}</div>
+        <div className='overflow-y-auto h-min-content rounded-xl'>
           {options?.map((option: string, index: number) => (
-            <div key={option} className='drop-down-input-label-container'>
-              <Checkbox index={index} filterProperty={filterProperty} />
-              <label
-                className='label-and-input flex flex-row items-center justify-between'
-                htmlFor={filterProperty}
-              >
-                {option}
-              </label>
+            <div key={option}>
+              <Checkbox
+                option={option}
+                index={index}
+                filterProperty={filterProperty}
+              />
             </div>
           ))}
         </div>
@@ -58,9 +62,11 @@ export default function Dropdown({
 function Checkbox({
   filterProperty,
   index,
+  option,
 }: {
   filterProperty: keyof typeof filterPropsSwedish;
   index: number;
+  option: string;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -90,15 +96,24 @@ function Checkbox({
   }, [$resultFilters, inputRef]);
 
   return (
-    <input
-      ref={inputRef}
-      onChange={handleCheckboxChange}
-      className='custom-dropdown-checkbox'
-      type='checkbox'
-      name={filterProperty}
-      id={`${filterProperty}-${index}`}
-      // keyof typeof? typescript moment
-      value={english?.slice(0, 1).toUpperCase() + english?.slice(1)}
-    />
+    <div className='drop-down-input-label-container'>
+      <input
+        ref={inputRef}
+        onChange={handleCheckboxChange}
+        className='custom-dropdown-checkbox'
+        type='checkbox'
+        name={filterProperty}
+        id={`${filterProperty}-${index}`}
+        // keyof typeof? typescript moment
+        value={english?.slice(0, 1).toUpperCase() + english?.slice(1)}
+      />
+      <label
+        onClick={() => inputRef.current?.click()}
+        className='label-and-input flex flex-row items-center justify-between font-light'
+        htmlFor={filterProperty}
+      >
+        {option}
+      </label>
+    </div>
   );
 }

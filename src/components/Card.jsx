@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { currentResultCount } from '../nanoStores/resultStore.ts';
+import { useEffect } from 'react';
 import { useStore } from '@nanostores/react';
+import { cart } from '../nanoStores/productStore.ts';
 
 export default function Card(props) {
   const {
@@ -23,48 +23,42 @@ export default function Card(props) {
     src,
   } = props;
 
-  const $currentResultCount = useStore(currentResultCount);
+  const $cart = useStore(cart);
 
   const handleAddToCart = () => {
-    try {
-      let cart = JSON.parse(window.localStorage.getItem('cart') || '[]');
-
-      let existingCarIndex = cart.findIndex((c) => c?.id === id);
-
-      if (existingCarIndex !== -1) {
-        cart[existingCarIndex].quantity += 1;
-      } else {
-        // TODO: remove quantity
-        cart.push({ ...props, quantity: 1 });
-      }
-      window.localStorage.setItem('cart', JSON.stringify(cart));
-    } catch (err) {
-      console.warn(err);
-    }
+    let carExists = $cart?.findIndex((c) => c?.id === id);
+    console.log(carExists);
+    if (carExists && carExists != -1) return;
+    cart.set($cart ? [...$cart, { ...props }] : [{ ...props }]);
   };
 
   const cardClassName = `card-container relative flex justify-center items-center mx-auto ${overrideClass}}`;
 
   return (
-    <div className={cardClassName}>
-      <div className='card flex flex-col items-center'>
-        <img
-          src={src && src.length > 0 ? src : '/images/placeholder-car.webp'}
-          alt={`${title || 'car'}`}
-          className='object-contain aspect-square flex-1 -z-[1]'
-        />
-        <h4 className='whitespace-nowrap'>{title || `${make} ${model}`}</h4>
-        <p>{price} SEK</p>
-
-        {/* TODO: delete after labbinlämning */}
-        <button
-          type='button'
-          className='material-symbols-sharp addToCartButton'
-          onClick={handleAddToCart}
-        >
-          add_shopping_cart
-        </button>
+    <div className='card hover:outline-on-bg-lightest relative bg-surface-dark hover:bg-surface transition-colors outline outline-outline outline-1 p-8  overflow-visible flex flex-row items-start rounded-[calc(var(--golden-ratio)*0.3em)]'>
+      <div className='absolute flex flex-col z-40'>
+        <h4 className='text-xl whitespace-nowrap '>
+          {title || `${make} ${model}`}
+        </h4>
+        <p className='text-sm text-on-bg-lightest'>{price} SEK</p>
       </div>
+      <img
+        // style={{ filter: src ? 'drop-shadow(0px 7px 6px #000000)' : '' }}
+        src={src && src.length > 0 ? src : '/images/volvo.webp'}
+        alt={`${title || 'car'}`}
+        width='200'
+        height='200'
+        className='origin-center object-contain aspect-video flex-1 '
+      />
+
+      {/* TODO: delete after labbinlämning */}
+      <button
+        type='button'
+        className='material-symbols-sharp addToCartButton'
+        onClick={handleAddToCart}
+      >
+        add_shopping_cart
+      </button>
     </div>
   );
 }

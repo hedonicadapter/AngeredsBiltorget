@@ -1,6 +1,6 @@
 import { useStore } from '@nanostores/react';
 import React from 'react';
-import { sidebarOpen } from '../nanoStores/navStore';
+import { sidebarOpen } from '../nanoStores/uiStore';
 
 export default function Sidebar({ anchors }: { anchors?: any }) {
   const $sidebarOpen = useStore(sidebarOpen);

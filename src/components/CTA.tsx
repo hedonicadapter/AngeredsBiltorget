@@ -1,6 +1,6 @@
 import React from 'react';
 import { useStore } from '@nanostores/react';
-import { CTAHovered } from '../nanoStores/CTAStore.js';
+import { CTAHovered } from '../nanoStores/uiStore.ts';
 
 export default function CTA() {
   const $CTAHovered = useStore(CTAHovered);
@@ -8,9 +8,11 @@ export default function CTA() {
   return (
     <div className='z-40 hover:-translate-y-2 active:opacity-75 active:scale-95 transition-transform relative top-40 flex flex-col justify-center text-center gap-4 shadow-xl'>
       <a
-        className='text-2xl w-fit m-auto px-9 pt-4 pb-5 text-on-bg  font-light outline outline-on-bg-medium outline-1 backdrop-blur-xl shadow-inner CTA'
+        className='text-2xl w-fit m-auto px-9 pt-4 pb-5 text-on-bg  font-light outline outline-on-bg-medium outline-1 backdrop-blur-xl shadow-inner rounded-xl CTA'
         href='/showroom'
+        onFocus={() => CTAHovered.set(true)}
         onMouseEnter={() => CTAHovered.set(true)}
+        onBlur={() => CTAHovered.set(false)}
         onMouseLeave={() => CTAHovered.set(false)}
       >
         Se vårt showroom

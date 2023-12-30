@@ -42,19 +42,13 @@ export async function getProducts(
   order: string = 'year',
   filter?: ResultFilters
 ): Promise<DocumentSnapshot<DocumentData, DocumentData>[]> {
-  let q = query(productCollection);
-
-  if (filter) {
-    for (const [key, value] of Object.entries(filter)) {
-      if (value) {
-        q = q.where(key, '==', value);
-      }
-    }
-  }
-
-  query(productCollection, orderBy(order), startAfter(start), limit(perPage));
-
-  // where("state", "==", "CA")
+  // TODO: Filtering needs a search provider
+  let q = query(
+    productCollection,
+    orderBy(order),
+    startAfter(start),
+    limit(perPage)
+  );
 
   const snapshot = await getDocs(q);
   return snapshot.docs;

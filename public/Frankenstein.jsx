@@ -7,7 +7,7 @@ import { useFrame, useLoader, useThree } from '@react-three/fiber';
 import { useGLTF } from '@react-three/drei';
 import { forwardRef, useEffect, useMemo, useState, useRef } from 'react';
 import { useStore } from '@nanostores/react';
-import { CTAHovered } from '../src/nanoStores/CTAStore.js';
+import { CTAHovered } from '../src/nanoStores/uiStore.ts';
 
 import { TextureLoader } from 'three';
 import {

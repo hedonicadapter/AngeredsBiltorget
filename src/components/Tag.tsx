@@ -68,7 +68,9 @@ const Tag: React.FC<TagProps> = ({ text }) => {
 
   return (
     <div
+      onFocus={() => setWidth(expandedWidth)}
       onMouseEnter={() => setWidth(expandedWidth)}
+      onBlur={() => setWidth(closedWidth)}
       onMouseLeave={() => setWidth(closedWidth)}
       style={{ maxWidth: width }}
       ref={containerRef}

@@ -1,6 +1,6 @@
 import { useStore } from '@nanostores/react';
 import { useState } from 'react';
-import { sidebarOpen } from '../nanoStores/navStore';
+import { sidebarOpen } from '../nanoStores/uiStore';
 
 export default function Borger(props: { anchors?: any }) {
   const $sidebarOpen = useStore(sidebarOpen);

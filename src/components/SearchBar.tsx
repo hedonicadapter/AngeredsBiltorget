@@ -1,5 +1,6 @@
 import { useStore } from '@nanostores/react';
 import { resultFilters, type ResultFilters } from '../nanoStores/resultStore';
+import { filterContainerExpanded } from '../nanoStores/uiStore';
 import _ from 'lodash';
 
 export default function SearchBar() {
@@ -17,7 +18,13 @@ export default function SearchBar() {
   );
 
   return (
-    <div className='search-bar'>
+    <div
+      onFocus={() => filterContainerExpanded.set(true)}
+      onMouseEnter={() => filterContainerExpanded.set(true)}
+      onBlur={() => filterContainerExpanded.set(false)}
+      onMouseLeave={() => filterContainerExpanded.set(false)}
+      className='search-bar'
+    >
       <input
         onChange={handleInputChange}
         className='btn'

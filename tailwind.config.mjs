@@ -7,12 +7,14 @@ export default {
       colors: {
         // All defined in root
         bg: 'var(--bg)',
+        'bg-transparent': 'var(--bg-transparent)',
         'on-bg': 'var(--on-bg)',
         'on-bg-medium': 'var(--on-bg-medium)',
         'on-bg-light': 'var(--on-bg-light)',
         'on-bg-lightest': 'var(--on-bg-lightest)',
         surface: 'var(--surface)',
         'surface-variant': 'var(--surface-variant)',
+        'surface-dark': 'var(--surface-dark)',
 
         primary: 'var(--primary)',
         secondary: 'var(--secondary)',
