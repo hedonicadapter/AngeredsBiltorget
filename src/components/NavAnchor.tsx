@@ -18,7 +18,6 @@ const NavAnchor: React.FC<NavAnchorProps> = ({
   const anchorRef = useRef<HTMLAnchorElement | null>(null);
   const [badgeVisible, setBadgeVisible] = useState(false);
   const $cart = useStore(cart);
-  const $sidebarOpen = useStore(sidebarOpen);
 
   useEffect(() => {
     closeOnClick;
@@ -62,7 +61,10 @@ const NavAnchor: React.FC<NavAnchorProps> = ({
         <a
           ref={anchorRef}
           // href={anchorHref}
-          onClick={() => navigate(anchorHref, { history: 'auto' })}
+          onClick={() => {
+            navigate(anchorHref, { history: 'auto' });
+            sidebarOpen.set(false);
+          }}
           className='nav-anchor material-symbols-sharp'
         >
           <span className='material-symbols-sharp'>shopping_cart</span>
@@ -76,7 +78,10 @@ const NavAnchor: React.FC<NavAnchorProps> = ({
         <a
           ref={anchorRef}
           // href={anchorHref}
-          onClick={() => navigate(anchorHref, { history: 'auto' })}
+          onClick={() => {
+            navigate(anchorHref, { history: 'auto' });
+            sidebarOpen.set(false);
+          }}
           className='nav-anchor material-symbols-sharp'
         >
           {anchorText}
