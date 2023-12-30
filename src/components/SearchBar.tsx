@@ -1,7 +1,7 @@
 import { useStore } from '@nanostores/react';
 import { resultFilters, type ResultFilters } from '../nanoStores/resultStore';
 import { filterContainerExpanded } from '../nanoStores/uiStore';
-import _ from 'lodash';
+import _ from 'lodash-es';
 
 export default function SearchBar() {
   const $resultFilters = useStore(resultFilters);
