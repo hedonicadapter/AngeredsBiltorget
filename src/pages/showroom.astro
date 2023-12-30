@@ -95,7 +95,8 @@
     };
 
     const handleWindowScrollAttempt = (event: WheelEvent | KeyboardEvent) => {
-      redirectScrollY(event.deltaY);
+      if (event instanceof WheelEvent) redirectScrollY( event.deltaY);
+      else redirectScrollY();
     };
 
   window.addEventListener('scroll', setFilterContainerPosition);

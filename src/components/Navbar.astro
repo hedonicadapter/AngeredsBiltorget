@@ -39,6 +39,12 @@ import Sidebar from './Sidebar.tsx';
 </div>
 
 <script>
+declare global {
+  interface GlobalEventHandlersEventMap {
+    'nav-anchor-mouseover': CustomEvent;
+  }
+}
+
 	function initializeScript() {
 	  const anchorHighlighter = document.querySelector('.nav-anchor-highlighter');
 	  const carsAnchor: HTMLAnchorElement | null = document.querySelector('.nav-anchor[href="showroom"]');
@@ -48,31 +54,32 @@ import Sidebar from './Sidebar.tsx';
   
 	  let oldScrollTop = 0;
   
-	  const setAnchorHighlighter = (evt) => {
+	  const setAnchorHighlighter = (evt:CustomEvent) => {
+		const highlighter = anchorHighlighter as HTMLElement;
 		const { left, width } = evt.detail;
 		const ratio = window
 		  .getComputedStyle(document.documentElement)
 		  .getPropertyValue('--golden-ratio');
-		const widthInEm =
+		const widthInEm = highlighter.parentElement &&
 		  width /
-		  parseFloat(getComputedStyle(anchorHighlighter!.parentElement).fontSize);
+		  parseFloat(getComputedStyle(highlighter.parentElement).fontSize);
   
-		anchorHighlighter!.style.setProperty(
+		highlighter.style.setProperty(
 		  '--highlighter-width',
-		  `${ratio * widthInEm - 0.25}em`
+		  `${parseFloat(ratio) * widthInEm! - 0.25}em`
 		);
-		anchorHighlighter!.style.setProperty('--anchor-left', `${left}px`);
-		anchorHighlighter!.style.setProperty('--anchor-width', `${width}px`);
+		highlighter.style.setProperty('--anchor-left', `${left}px`);
+		highlighter.style.setProperty('--anchor-width', `${width}px`);
 	  }
   
-	  const removeAnchorHighlighterMotionBlur = (evt) => {
-		if (evt.propertyName !== 'left') return;
+	  const removeAnchorHighlighterMotionBlur = (evt:Event) => {
+		if ((evt as TransitionEvent).propertyName !== 'left') return;
   
 		anchorHighlighter!.classList.remove('motion-blur');
 	  }
   
-	  const setAnchorHighlighterMotionBlur = (evt) => {
-		if (evt.propertyName !== 'left') return;
+	  const setAnchorHighlighterMotionBlur = (evt:Event) => {
+		if ((evt as TransitionEvent).propertyName !== 'left') return;
   
 		anchorHighlighter!.classList.add('motion-blur');
 	  }
@@ -134,8 +141,8 @@ import Sidebar from './Sidebar.tsx';
 		}
 	  }
 	  
-	  anchorHighlighter!.addEventListener('transitionend', removeAnchorHighlighterMotionBlur);
-	  anchorHighlighter!.addEventListener('transitionstart', setAnchorHighlighterMotionBlur);
+	anchorHighlighter!.addEventListener('transitionend', removeAnchorHighlighterMotionBlur);
+	anchorHighlighter!.addEventListener('transitionstart', setAnchorHighlighterMotionBlur);
   
 	  document.addEventListener('nav-anchor-mouseover', setAnchorHighlighter);
 	  document.addEventListener('scroll', expandAndContract);

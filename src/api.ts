@@ -2,7 +2,6 @@ import { db } from './firebase/client';
 import {
   collection,
   query,
-  where,
   getDoc,
   getDocs,
   addDoc,
@@ -151,13 +150,13 @@ const fuelTypeOptions = ['Bensin', 'Diesel', 'El'];
 const vehicleTypeOptions = ['Sedan', 'Kombi', 'SUV'];
 const colors = ['Vit', 'Svart', 'Blå', 'Röd', 'Grön'];
 export const generateDummyCarData = () => {
-  const getRandomElement = (array) =>
+  const getRandomElement = (array: string[]) =>
     array[Math.floor(Math.random() * array.length)];
 
-  const generateRandomNumber = (min, max) =>
+  const generateRandomNumber = (min: number, max: number) =>
     Math.floor(Math.random() * (max - min + 1)) + min;
 
-  const generateRandomArray = (array, maxCount) => {
+  const generateRandomArray = (array: string[], maxCount: number) => {
     const count = generateRandomNumber(0, maxCount);
     const result = [];
     for (let i = 0; i < count; i++) {
