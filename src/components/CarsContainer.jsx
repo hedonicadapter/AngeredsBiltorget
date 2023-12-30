@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import _ from 'lodash';
+import _ from 'lodash-es';
 
 import { getProducts, getProductFiles } from '../api.ts';
 import Card from './Card.jsx';
