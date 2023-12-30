@@ -180,18 +180,19 @@ function CameraMemo() {
     };
 
     const handleHashChange = () => {
-      if (window.location.hash === '#about') enterCar();
+      console.log('entering or exiting');
+      if (window.location.pathname === '/about') enterCar();
       else exitCar();
     };
 
-    window.addEventListener('hashchange', handleHashChange);
-    window.addEventListener('resize', handleWindowResize);
+    // document.addEventListener('astro:after-swap', handleHashChange);
+    // window.addEventListener('resize', handleWindowResize);
 
     return () => {
-      window.removeEventListener('hashchange', handleHashChange);
-      window.removeEventListener('resize', handleWindowResize);
+      // document.removeEventListener('astro:after-swap', handleHashChange);
+      // window.removeEventListener('resize', handleWindowResize);
     };
-  }, []);
+  }, [camera]);
 
   useFrame(({ camera }) => {
     TWEEN.update();

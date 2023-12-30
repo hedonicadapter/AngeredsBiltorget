@@ -4,7 +4,7 @@ Command: npx gltfjsx@6.2.16 frankenstein.glb --transform --resolution 512
 Files: frankenstein.glb [12.43MB] > F:\Coding\ITHSLabbar\Vanilla\astro\public\frankenstein-transformed.glb [7.95MB] (36%)
 */
 import { useFrame, useLoader, useThree } from '@react-three/fiber';
-import { useGLTF } from '@react-three/drei';
+import { useGLTF, useProgress } from '@react-three/drei';
 import { forwardRef, useEffect, useMemo, useState, useRef } from 'react';
 import { useStore } from '@nanostores/react';
 import { CTAHovered } from '../src/nanoStores/uiStore.ts';
@@ -16,6 +16,8 @@ import {
 } from 'three/examples/jsm/objects/Lensflare';
 
 const Model = forwardRef((props, ref) => {
+  const { progress, loaded, total } = useProgress();
+  console.log(progress, loaded, total);
   const { nodes, materials } = useGLTF('/frankenstein-transformed.glb');
 
   useMemo(() => {

@@ -1,11 +1,11 @@
 ---
-import ThreeDeeModel from '../components/ThreeDeeModel.jsx';
 import CTA from './CTA';
+import ModelContainer from './Model-container.astro';
 import './styles/hero.css';
 import './styles/inne-just-nu.css';
 ---
 
-<div class="hero-container flex flex-col items-center">
+<section class="hero-container flex flex-col items-center">
     <header class="hero-header">
       <div>
         <h2 class='subtitle'>Köp - Sälj - Byt</h2>
@@ -19,8 +19,6 @@ import './styles/inne-just-nu.css';
     </header>
     <CTA client:load/>
     
-    <div id="model-container">
-      <ThreeDeeModel client:only/>
-    </div>
-</div>
+    <ModelContainer />
+</section>
   

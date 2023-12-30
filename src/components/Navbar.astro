@@ -3,6 +3,7 @@ import "./styles/navbar.css";
 import NavAnchor from './NavAnchor.tsx';
 import Borger from './Borger.tsx';
 import Sidebar from './Sidebar.tsx';
+import Anka from './Anka.astro';
 ---
 
 
@@ -10,14 +11,14 @@ import Sidebar from './Sidebar.tsx';
     <nav class="navbar-top">
       <div class="relative w-full h-full flex flex-row justify-between items-center navbar">
         <div class="nav-container nav-container-left flex flex-row items-center">
-            <a id="navbar-home" href="/#home" class="flex flex-row items-center">
+            <a id="navbar-home" href="/" class="flex flex-row items-center">
                 <img id="navbar-logo" src="/images/logo.svg" alt="Angered Biltorget logo"/>
                 <h5>Angered biltorget</h5>
             </a>
         </div>
         <div class="nav-container nav-container-right flex-row items-center">
             <NavAnchor client:load anchorText="Showroom" anchorHref="showroom" />
-            <NavAnchor client:load anchorText="Om oss" anchorHref="#about"/>
+			<NavAnchor client:load anchorText="Om oss" anchorHref="about"/>
             <NavAnchor client:load anchorText="Kontakt" anchorHref="contact" />
             <NavAnchor client:load anchorText="Cart" anchorHref="cart" />
             <div class="nav-anchor-highlighter"></div>
@@ -27,14 +28,18 @@ import Sidebar from './Sidebar.tsx';
       </div>
     </nav>
     <nav class="navbar-right">
-      <Sidebar client:load>
-        <div slot="anchors" class="flex flex-col gap-4">
-          <NavAnchor client:load anchorText="Showroom" anchorHref="showroom" />
-          <NavAnchor client:load anchorText="Om oss" anchorHref="#about"/>
-          <NavAnchor client:load anchorText="Kontakt" anchorHref="contact" />
-          <NavAnchor client:load anchorText="Cart" anchorHref="cart" />
-        </div>
-      </Sidebar>
+		<Sidebar client:idle>
+		  <div slot='anchors' class='flex flex-col gap-4'>
+			  <NavAnchor
+				closeOnClick
+				anchorText='Showroom'
+				anchorHref='showroom'
+			  />
+			  <NavAnchor closeOnClick client:load anchorText="Om oss" anchorHref="about"/>
+			  <NavAnchor closeOnClick anchorText='Kontakt' anchorHref='contact' />
+			  <NavAnchor closeOnClick anchorText='Cart' anchorHref='cart' />
+			</div>
+		</Sidebar>
     </nav>
 </div>
 

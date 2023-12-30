@@ -138,6 +138,9 @@ h1 {
   font-size: calc(var(--golden-ratio) * 3.3em);
   line-height: calc(var(--golden-ratio) * 0.8em);
 }
+h2 {
+  letter-spacing: normal;
+}
 
 h3 {
   color: var(--on-bg-medium);

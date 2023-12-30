@@ -1,18 +1,27 @@
 import { useStore } from '@nanostores/react';
 import React, { useEffect, useRef, useState } from 'react';
 import { cart } from '../nanoStores/productStore';
+import { sidebarOpen } from '../nanoStores/uiStore';
+import { navigate } from 'astro:transitions/client';
 
 type NavAnchorProps = {
   anchorText: string;
   anchorHref: string;
+  closeOnClick?: boolean;
 };
 
-const NavAnchor: React.FC<NavAnchorProps> = ({ anchorText, anchorHref }) => {
+const NavAnchor: React.FC<NavAnchorProps> = ({
+  anchorText,
+  anchorHref,
+  closeOnClick,
+}) => {
   const anchorRef = useRef<HTMLAnchorElement | null>(null);
   const [badgeVisible, setBadgeVisible] = useState(false);
   const $cart = useStore(cart);
+  const $sidebarOpen = useStore(sidebarOpen);
 
   useEffect(() => {
+    closeOnClick;
     const anchor = anchorRef.current;
 
     if (!anchor) return;
@@ -47,27 +56,33 @@ const NavAnchor: React.FC<NavAnchorProps> = ({ anchorText, anchorHref }) => {
   }, [$cart]);
 
   // TODO: delete after labbinlämning
-  return anchorHref === 'cart' ? (
-    <a
-      ref={anchorRef}
-      href={anchorHref}
-      className='nav-anchor material-symbols-sharp'
-    >
-      <span className='material-symbols-sharp'>shopping_cart</span>
-      <div
-        className={`cart-badge transition-opacity ${
-          badgeVisible ? 'visible' : 'invisible'
-        }`}
-      ></div>
-    </a>
-  ) : (
-    <a
-      ref={anchorRef}
-      href={anchorHref}
-      className='nav-anchor material-symbols-sharp'
-    >
-      {anchorText}
-    </a>
+  return (
+    <div onClick={() => sidebarOpen.set(false)}>
+      {anchorHref === 'cart' ? (
+        <a
+          ref={anchorRef}
+          // href={anchorHref}
+          onClick={() => navigate(anchorHref, { history: 'auto' })}
+          className='nav-anchor material-symbols-sharp'
+        >
+          <span className='material-symbols-sharp'>shopping_cart</span>
+          <div
+            className={`cart-badge transition-opacity ${
+              badgeVisible ? 'visible' : 'invisible'
+            }`}
+          ></div>
+        </a>
+      ) : (
+        <a
+          ref={anchorRef}
+          // href={anchorHref}
+          onClick={() => navigate(anchorHref, { history: 'auto' })}
+          className='nav-anchor material-symbols-sharp'
+        >
+          {anchorText}
+        </a>
+      )}
+    </div>
   );
 };
 
