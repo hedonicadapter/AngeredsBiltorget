@@ -36,7 +36,7 @@ export default function Card(props) {
 
   return (
     <div className='card hover:outline-on-bg-lightest relative bg-surface-dark hover:bg-surface transition-colors outline outline-outline outline-1 p-8  overflow-visible flex flex-row items-start rounded-[calc(var(--golden-ratio)*0.3em)]'>
-      <div className='absolute flex flex-col z-40'>
+      <div className='absolute flex flex-col'>
         <h4 className='text-xl whitespace-nowrap '>
           {title || `${make} ${model}`}
         </h4>

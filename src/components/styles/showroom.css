@@ -46,8 +46,6 @@ hr {
   width: 100%;
 }
 .car-container {
-  z-index: 20;
-  /* width: calc(100vw - (var(--golden-ratio) * 3em)); */
   overflow: visible;
   width: 100%;
 }

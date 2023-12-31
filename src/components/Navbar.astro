@@ -28,15 +28,16 @@ import Sidebar from './Sidebar.tsx';
     </nav>
     <nav class="navbar-right">
 		<Sidebar client:idle>
-		  <div slot='anchors' class='flex flex-col gap-4'>
+		  <div slot='anchors' class='flex flex-col gap-4 z-50'>
 			  <NavAnchor
+			  	client:load
 				closeOnClick
 				anchorText='Showroom'
 				anchorHref='showroom'
 			  />
-			  <NavAnchor closeOnClick client:load anchorText="Om oss" anchorHref="about"/>
-			  <NavAnchor closeOnClick anchorText='Kontakt' anchorHref='contact' />
-			  <NavAnchor closeOnClick anchorText='Cart' anchorHref='cart' />
+			  <NavAnchor client:load closeOnClick client:load anchorText="Om oss" anchorHref="about"/>
+			  <NavAnchor client:load closeOnClick anchorText='Kontakt' anchorHref='contact' />
+			  <NavAnchor client:load closeOnClick anchorText='Cart' anchorHref='cart' />
 			</div>
 		</Sidebar>
     </nav>

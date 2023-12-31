@@ -42,9 +42,11 @@
 
 .nav-anchor {
   all: unset;
+  pointer-events: auto;
   cursor: pointer;
   color: var(--on-bg-light);
   font-size: max(calc(var(--golden-ratio) * 0.4em), 14px);
+  position: relative;
 
   font-style: normal;
   font-weight: 300;
@@ -54,6 +56,7 @@
   letter-spacing: 0.1em;
   /* text-transform: uppercase; */
   margin-inline: calc(var(--golden-ratio) * 0.8em);
+  width: max-content;
 
   border-bottom: 1px solid transparent;
 

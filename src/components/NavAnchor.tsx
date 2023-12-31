@@ -56,7 +56,7 @@ const NavAnchor: React.FC<NavAnchorProps> = ({
 
   // TODO: delete after labbinlämning
   return (
-    <div onClick={() => sidebarOpen.set(false)}>
+    <div className='z-50'>
       {anchorHref === 'cart' ? (
         <a
           ref={anchorRef}
