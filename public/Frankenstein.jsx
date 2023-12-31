@@ -18,7 +18,9 @@ import {
 const Model = forwardRef((props, ref) => {
   const { progress, loaded, total } = useProgress();
   console.log(progress, loaded, total);
-  const { nodes, materials } = useGLTF('/frankenstein-transformed.glb');
+  const { nodes, materials } = useGLTF(
+    'https://csb10032002dd958075.blob.core.windows.net/model/frankenstein-transformed.glb'
+  );
 
   useMemo(() => {
     Object.values(nodes).forEach(
