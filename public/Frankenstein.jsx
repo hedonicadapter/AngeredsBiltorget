@@ -16,15 +16,7 @@ import {
 } from 'three/examples/jsm/objects/Lensflare';
 
 const Model = forwardRef((props, ref) => {
-  const { nodes, materials } = useGLTF(
-    'https://csb10032002dd958075.blob.core.windows.net/model/frankenstein-lowres.glb'
-  );
-
-  useMemo(() => {
-    Object.values(nodes).forEach(
-      (node) => node.isMesh && (node.receiveShadow = node.castShadow = true)
-    );
-  }, [nodes, materials]);
+  const { nodes, materials } = useGLTF('frankenstein-lowres.glb');
 
   return (
     <group ref={ref} {...props} dispose={null}>

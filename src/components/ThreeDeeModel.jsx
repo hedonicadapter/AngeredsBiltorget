@@ -34,7 +34,7 @@ export default function ThreeDeeModel() {
 
   return (
     <Suspense fallback={<LoadingScreen />}>
-      <Canvas shadows dpr={window.devicePixelRatio}>
+      <Canvas shadows={false} gl={{ stencil: false }} dpr={[1, 2]}>
         <group position={[0.15, 0, 0]}>
           <ModelMemo
             headlights={<Headlights scale={0.8} />}
@@ -42,7 +42,7 @@ export default function ThreeDeeModel() {
             modelRotationY={modelRotationY}
           />
 
-          {<EnvironmentMemo />}
+          <EnvironmentMemo />
           {runEngine && <EngineShaker />}
           <CameraMemo modelRef={modelRef} />
         </group>
@@ -264,9 +264,8 @@ function EnvironmentMemo() {
           shadow-bias={-0.0001}
           shadow-mapSize={[256, 256]}
         />
-        <ambientLight intensity={0.5} />
         <ContactShadows
-          resolution={1024}
+          resolution={128}
           frames={1}
           position={[0, 0, 0]}
           scale={10}
@@ -274,7 +273,7 @@ function EnvironmentMemo() {
           opacity={1}
           far={10}
         />
-        <Environment frames={Infinity} resolution={128}>
+        <Environment frames={Infinity} resolution={64}>
           <Lightformer
             intensity={0.4}
             rotation-x={Math.PI / 2}
@@ -308,7 +307,7 @@ function EnvironmentMemo() {
             target={[0, 0, 0]}
           />
         </Environment>
-        <BakeShadows />
+        {/* <BakeShadows /> */}
       </group>
     ),
     []
