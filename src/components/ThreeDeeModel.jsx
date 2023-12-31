@@ -7,27 +7,15 @@ import {
   ContactShadows,
   CameraShake,
   PerspectiveCamera,
-  ScrollControls,
-  Scroll,
 } from '@react-three/drei';
 import Model, { Headlights } from '../../public/Frankenstein';
-import useScroll from '../util/useScroll';
 import { useStore } from '@nanostores/react';
 import { CTAHovered } from '../nanoStores/uiStore.ts';
-import { TextureLoader } from 'three';
-import {
-  Lensflare,
-  LensflareElement,
-} from 'three/examples/jsm/objects/Lensflare';
-import { LoadingSpinner, LoadingScreen } from './spinners.tsx';
+import { LoadingScreen } from './spinners.tsx';
 import * as TWEEN from '@tweenjs/tween.js';
 
 export default function ThreeDeeModel() {
   const modelRef = useRef();
-  // const [cameraPosition, setCameraPosition] = useState([0.45, 1.04, -0.1]);
-  // const cameraPosition = { x: 0, y: 1, z: 9 };
-  const [cameraFOV, setCameraFOV] = useState(60);
-  // const [cameraFOV, setCameraFOV] = useState(90);
   const [modelRotationY, setModelRotationY] = useState(0.001);
   const [runEngine, setRunEngine] = useState(false);
 
@@ -176,7 +164,6 @@ function CameraMemo() {
       }
 
       setZoom(newZoom);
-      // camera.updateProjectionMatrix();
     };
 
     const handleHashChange = () => {
@@ -185,12 +172,14 @@ function CameraMemo() {
       else exitCar();
     };
 
-    // document.addEventListener('astro:after-swap', handleHashChange);
-    // window.addEventListener('resize', handleWindowResize);
+    handleHashChange();
+
+    document.addEventListener('astro:page-load', handleHashChange);
+    window.addEventListener('resize', handleWindowResize);
 
     return () => {
-      // document.removeEventListener('astro:after-swap', handleHashChange);
-      // window.removeEventListener('resize', handleWindowResize);
+      document.removeEventListener('astro:page-load', handleHashChange);
+      window.removeEventListener('resize', handleWindowResize);
     };
   }, [camera]);
 
