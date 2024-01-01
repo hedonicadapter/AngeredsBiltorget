@@ -52,7 +52,7 @@ declare global {
 
 	function initializeScript() {
 	  const anchorHighlighter = document.querySelector('.nav-anchor-highlighter');
-	  const carsAnchor: HTMLAnchorElement | null = document.querySelector('.nav-anchor[href="showroom"]');
+	  const showroomAnchor: HTMLAnchorElement | null = document.querySelector('.nav-anchor[href="showroom"]');
 	  const aboutAnchor: HTMLAnchorElement | null = document.querySelector('.nav-anchor[href="about"]');
 	  const kontaktAnchor: HTMLAnchorElement | null = document.querySelector('.nav-anchor[href="contact"]');
 	  const cartAnchor: HTMLAnchorElement | null = document.querySelector('.nav-anchor[href="cart"]');
@@ -110,7 +110,7 @@ declare global {
 		// TODO: broken
 		switch (page) {
 		  case 'showroom':
-			carsAnchor?.classList.add('active');
+			showroomAnchor?.classList.add('active');
   
 			aboutAnchor?.classList.remove('active');
 			kontaktAnchor?.classList.remove('active');
@@ -119,14 +119,14 @@ declare global {
 		  case 'about':
 			aboutAnchor?.classList.add('active');
   
-			carsAnchor?.classList.remove('active');
+			showroomAnchor?.classList.remove('active');
 			kontaktAnchor?.classList.remove('active');
 			cartAnchor?.classList.remove('active');
 			break;
 		  case 'contact':
 			kontaktAnchor?.classList.add('active');
   
-			carsAnchor?.classList.remove('active');
+			showroomAnchor?.classList.remove('active');
 			aboutAnchor?.classList.remove('active');
 			cartAnchor?.classList.remove('active');
 			break;
@@ -138,7 +138,7 @@ declare global {
 			cartAnchor?.classList.remove('active');
 			break;
 		  default:
-			carsAnchor?.classList.remove('active');
+			showroomAnchor?.classList.remove('active');
 			aboutAnchor?.classList.remove('active');
 			kontaktAnchor?.classList.remove('active');
 			cartAnchor?.classList.remove('active');
@@ -152,8 +152,6 @@ declare global {
 	  document.addEventListener('nav-anchor-mouseover', setAnchorHighlighter);
 	  document.addEventListener('scroll', expandAndContract);
 	  setActiveNavAnchor();
-
-
 	}
 	
 	document.addEventListener('astro:after-swap', initializeScript);

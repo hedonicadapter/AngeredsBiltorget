@@ -34,7 +34,12 @@ export default function ThreeDeeModel() {
 
   return (
     <Suspense fallback={<LoadingScreen />}>
-      <Canvas shadows={false} gl={{ stencil: false }} dpr={[1, 2]}>
+      <Canvas
+        gl={{ preserveDrawingBuffer: true }}
+        shadows
+        dpr={window.devicePixelRatio}
+      >
+        <Scene />
         <group position={[0.15, 0, 0]}>
           <ModelMemo
             headlights={<Headlights scale={0.8} />}
@@ -49,6 +54,65 @@ export default function ThreeDeeModel() {
       </Canvas>
     </Suspense>
   );
+}
+
+function Scene() {
+  const { gl, size } = useThree();
+  const recordedChunks = useRef([]);
+  const mediaRecorder = useRef(null);
+
+  useEffect(() => {
+    gl.setSize(Math.floor(size.width / 2) * 2, Math.floor(size.height / 2) * 2);
+
+    const stream = gl.domElement.captureStream(60);
+    const options = {
+      mimeType: 'video/webm; codecs=vp9',
+      videoBitsPerSecond: 10000000,
+    };
+    mediaRecorder.current = new MediaRecorder(stream, options);
+
+    mediaRecorder.current.ondataavailable = (event) => {
+      if (event.data.size > 0) {
+        recordedChunks.current.push(event.data);
+      }
+    };
+
+    const startRecording = () => {
+      console.log('rec');
+      mediaRecorder.current.start();
+
+      // Stop recording after 9 seconds
+      setTimeout(() => {
+        mediaRecorder.current.stop();
+
+        // Wait for the last dataavailable event
+        setTimeout(() => {
+          // Create a blob from the recorded chunks
+          const blob = new Blob(recordedChunks.current, { type: 'video/webm' });
+
+          // Create a URL for the blob
+          const url = URL.createObjectURL(blob);
+
+          // Create a download link and click it
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = 'recorded.webm';
+          document.body.appendChild(link);
+          link.click();
+
+          // Clean up
+          document.body.removeChild(link);
+          URL.revokeObjectURL(url);
+        }, 1000);
+      }, 30000);
+    };
+
+    window.addEventListener('rec', startRecording);
+
+    return () => window.removeEventListener('rec', startRecording);
+  }, []);
+
+  return <></>;
 }
 
 function ModelMemo({ modelRotationY, modelRef, headlights }) {
@@ -167,9 +231,8 @@ function CameraMemo() {
     };
 
     const handleHashChange = () => {
-      console.log('entering or exiting');
-      if (window.location.pathname === '/about') enterCar();
-      else exitCar();
+      // if (window.location.pathname === '/about') enterCar();
+      // else exitCar();
     };
 
     handleHashChange();
@@ -265,7 +328,7 @@ function EnvironmentMemo() {
           shadow-mapSize={[256, 256]}
         />
         <ContactShadows
-          resolution={128}
+          resolution={256}
           frames={1}
           position={[0, 0, 0]}
           scale={10}
@@ -273,7 +336,7 @@ function EnvironmentMemo() {
           opacity={1}
           far={10}
         />
-        <Environment frames={Infinity} resolution={64}>
+        <Environment frames={Infinity} resolution={512}>
           <Lightformer
             intensity={0.4}
             rotation-x={Math.PI / 2}
@@ -307,7 +370,7 @@ function EnvironmentMemo() {
             target={[0, 0, 0]}
           />
         </Environment>
-        {/* <BakeShadows /> */}
+        <BakeShadows />
       </group>
     ),
     []

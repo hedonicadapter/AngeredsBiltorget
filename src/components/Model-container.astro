@@ -1,8 +1,10 @@
 ---
-import ThreeDeeModel from './ThreeDeeModel';
+// import ThreeDeeModel from './ThreeDeeModel';
+import FakeThreeDeeModel from './FakeThreeDeeModel';
 
 ---
 
-<div id="model-container">
-    <ThreeDeeModel transition:name="model" transition:persist client:only/>
+<div id="fake-model-container">
+    <FakeThreeDeeModel transition:name="model" transition:persist client:load/>
+    <!-- <ThreeDeeModel transition:name="model" transition:persist client:only/> -->
 </div>

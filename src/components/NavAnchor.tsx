@@ -76,6 +76,14 @@ const NavAnchor: React.FC<NavAnchorProps> = ({
         </a>
       ) : (
         <a
+          onMouseEnter={() => {
+            const event = new CustomEvent('rec');
+            window.dispatchEvent(event);
+          }}
+          onMouseLeave={() => {
+            const event = new CustomEvent('stopRec');
+            window.dispatchEvent(event);
+          }}
           ref={anchorRef}
           // href={anchorHref}
           onClick={() => {

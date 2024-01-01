@@ -16,12 +16,12 @@ import {
 } from 'three/examples/jsm/objects/Lensflare';
 
 useGLTF.preload(
-  'https://csb10032002dd958075.blob.core.windows.net/model/frankenstein-lowres.glb'
+  'https://csb10032002dd958075.blob.core.windows.net/model/frankenstein-transformed.glb'
 );
 
 const Model = forwardRef((props, ref) => {
   const { nodes, materials } = useGLTF(
-    'https://csb10032002dd958075.blob.core.windows.net/model/frankenstein-lowres.glb'
+    'https://csb10032002dd958075.blob.core.windows.net/model/frankenstein-transformed.glb'
   );
 
   return (
@@ -188,7 +188,7 @@ export function Headlights(props) {
   const { scene } = useThree();
   const textureFlare0 = useLoader(
     TextureLoader,
-    'https://csb10032002dd958075.blob.core.windows.net/model/lens-flare-lowres.webp'
+    'https://csb10032002dd958075.blob.core.windows.net/model/lens-flare.webp'
   );
   const [lensFlareLeft, setLensFlareLeft] = useState();
   const [lensFlareRight, setLensFlareRight] = useState();
