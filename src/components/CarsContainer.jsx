@@ -121,7 +121,7 @@ export default function CarsContainer() {
             <Card index={index} interactive {...car} />
           </div>
         ))}
-      {/* TODO: broken, gettingProducts is set to true right after theyve been fetched */}
+      {/* TODO: broken, gettingProducts is set to true right after they've been fetched */}
       <div className='fixed left-0 right-0 z-50 w-full h-24 bottom-16 '>
         {gettingProducts ? <LoadingSpinner /> : null}
       </div>

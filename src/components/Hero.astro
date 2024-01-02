@@ -6,7 +6,7 @@ import './styles/hero.css';
 import './styles/inne-just-nu.css';
 ---
 
-<section class="hero-container relative h-screen flex flex-col items-center">
+<section class="relative flex flex-col items-center h-screen hero-container">
     <header class="hero-header">
       <div>
         <ScrollTransitionWrapper client:only xRate={0.6} opacityRate={0.1} xDistance={-300}>
@@ -21,7 +21,7 @@ import './styles/inne-just-nu.css';
         </ScrollTransitionWrapper>
       </div>
     </header>
-    <ScrollTransitionWrapper client:only xRate={0.1} opacityRate={0.05} xDistance={-2000}>
+    <ScrollTransitionWrapper client:only xRate={0.1} opacityRate={0.075} xDistance={-1000}>
       <CTA slot="child" client:load/>
     </ScrollTransitionWrapper>
     <ModelContainer />
