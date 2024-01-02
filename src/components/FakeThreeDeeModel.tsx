@@ -1,5 +1,5 @@
 import { useStore } from '@nanostores/react';
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CTAHovered } from '../nanoStores/uiStore';
 
 export default function FakeThreeDeeModel() {
@@ -11,27 +11,21 @@ export default function FakeThreeDeeModel() {
     else setSrc('headlights-off.webm');
   }, [$CTAHovered]);
 
-  const handleEnded = (evt) => {
-    // if (!videoRef || !videoRef.current) return;
-    // if (src == 'headlights-on.webm') setSrc('engine-on.webm');
-    // console.log(evt.target.src);
-    // evt.target.currentTime = 0.03;
-    // evt.target.pause();
-  };
-
   return (
-    <div className='relative'>
+    <div className='relative my-auto flex flex-col justify-center items-center h-min'>
       <div
-        className={`transition-opacity ${
-          src == 'headlights-off.webm' ? 'opacity-0' : 'opacity-100'
-        }`}
+        className={`flex justify-center items-center flex-shrink-0 fake-model-size overflow-hidden
+          transition-opacity ${
+            src == 'headlights-off.webm' ? 'opacity-0' : 'opacity-100'
+          }
+        `}
       >
         <video autoPlay muted playsInline loop id='video'>
           <source src='engine-on.webm' type='video/webm' />
         </video>
       </div>
       <div
-        className={`absolute top-0 left-0 transition-opacity ${
+        className={`flex justify-center items-center flex-shrink-0 overflow-hidden absolute top-0 left-0 right-0 bottom-0 transition-opacity ${
           src == 'headlights-off.webm' ? 'opacity-100' : 'opacity-0'
         }`}
       >
@@ -39,15 +33,17 @@ export default function FakeThreeDeeModel() {
           <source src='headlights-off.webm' type='video/webm' />
         </video>
       </div>
-      <video
-        autoPlay
-        muted
-        playsInline
-        id='video-shine'
-        className='mix-blend-lighten opacity-55 absolute top-0 left-0'
-      >
-        <source src='shine.webm' type='video/webm' />
-      </video>
+      <div className='absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center flex-shrink-0 fake-model-size overflow-hidden'>
+        <video
+          autoPlay
+          muted
+          playsInline
+          id='video-shine'
+          className='mix-blend-lighten opacity-55  '
+        >
+          <source src='shine.webm' type='video/webm' />
+        </video>
+      </div>
     </div>
   );
 }
