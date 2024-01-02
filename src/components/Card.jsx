@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useStore } from '@nanostores/react';
 import { cart } from '../nanoStores/productStore.ts';
+import './styles/cards.css';
 
 export default function Card(props) {
   const {

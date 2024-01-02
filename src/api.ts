@@ -28,7 +28,22 @@ import type { StorageReference } from 'firebase/storage';
 import type Car from './Models/Car';
 import type { ResultFilters } from './nanoStores/resultStore';
 
+const placesUrl = 'https://places.googleapis.com/v1/places/';
+
 const productCollection = collection(db, 'products');
+const companyInfoRef = doc(db, 'company', 'companyInfo');
+
+export const getCompanyInfo = async () => {
+  try {
+    const data = await getDoc(companyInfoRef);
+    const companyInfo = data.data();
+    if (!companyInfo) return;
+
+    return companyInfo;
+  } catch (err) {
+    console.log(`Error fetching company info: ${err}`);
+  }
+};
 
 export async function getProductCount() {
   const snapshot = await getCountFromServer(productCollection);
@@ -137,6 +152,62 @@ export async function getProductFiles(id: string) {
   );
   return fileURLs;
 }
+
+export async function getCompanyFiles() {
+  const storage = getStorage();
+  let storageRef = ref(storage, 'Company');
+
+  const res = await listAll(storageRef);
+
+  const fileURLs = await Promise.all(
+    res.items.map(async (item: StorageReference) => {
+      const fileUrl = await getDownloadURL(item);
+
+      return { name: item.name, url: fileUrl };
+    })
+  );
+  return fileURLs;
+}
+
+export const getGoogleCompanyInfo = async (mapLocation = '') => {
+  const headers = new Headers({
+    'Content-Type': 'application/json',
+    'X-Goog-Api-Key': import.meta.env.PUBLIC_PLACES_API_KEY,
+    'X-Goog-FieldMask': 'places.id',
+  });
+
+  const data = {
+    textQuery: `${import.meta.env.PUBLIC_COMPANY_NAME}, ${mapLocation}`,
+    languageCode: 'sv',
+  };
+
+  const options = {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify(data),
+  };
+
+  try {
+    const searchRes = await fetch(`${placesUrl}:searchText`, options);
+    const searchResData = await searchRes.json();
+
+    if (!searchResData.places[0]?.id) return;
+    const detailsRes = await fetch(
+      `${placesUrl}${
+        searchResData.places[0]?.id
+      }?fields=location,currentOpeningHours,regularOpeningHours,regularSecondaryOpeningHours,userRatingCount,reviews,rating&languageCode=sv&key=${
+        import.meta.env.PUBLIC_PLACES_API_KEY
+      }`
+    );
+    const detailsData = await detailsRes.json();
+
+    detailsData.placeId = searchResData.places[0].id;
+
+    return detailsData;
+  } catch (err) {
+    console.error('Failed to get company info from google: ', err);
+  }
+};
 
 // for (let i = 0; i < 96; i++) {
 //   const car: Car = generateDummyCarData();

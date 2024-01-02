@@ -46,7 +46,7 @@ export default function Dropdown({
         <div className='overflow-y-auto h-min-content rounded-xl'>
           {options?.map((option: string, index: number) => (
             <div key={option}>
-              <Checkbox
+              <OptionItem
                 option={option}
                 index={index}
                 filterProperty={filterProperty}
@@ -59,7 +59,7 @@ export default function Dropdown({
   );
 }
 
-function Checkbox({
+function OptionItem({
   filterProperty,
   index,
   option,

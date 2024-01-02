@@ -3,7 +3,12 @@ import "../../global.css";
 
 import { ViewTransitions } from 'astro:transitions';
 import Navbar from '../components/Navbar.astro';
+import Footer from '../components/Footer.tsx';
 import { GoogleFontsOptimizer } from "astro-google-fonts-optimizer";
+import { getCompanyInfo, getGoogleCompanyInfo } from '../api';
+
+const companyInfo = await getCompanyInfo();
+const googleInfo = await getGoogleCompanyInfo(companyInfo?.address);
 
 const {title} = Astro.props;
 ---
@@ -15,7 +20,6 @@ const {title} = Astro.props;
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
-		<!-- <ViewTransitions /> -->
         <GoogleFontsOptimizer url="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap"/>
         <GoogleFontsOptimizer url="https://fonts.googleapis.com/css2?family=Fjalla+One&display=swap"/>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Sharp:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -26,7 +30,11 @@ const {title} = Astro.props;
 		<main id="app">
 			<Navbar/>
 			<slot/>
-			
 		</main>
+		<Footer
+			client:idle
+			{companyInfo}
+			{googleInfo}
+		/>
 	</body>
 </html>

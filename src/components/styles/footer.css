@@ -1,0 +1,6 @@
+.footer-anchor {
+  @apply flex;
+  @apply flex-row;
+  @apply items-center;
+  @apply gap-4;
+}
