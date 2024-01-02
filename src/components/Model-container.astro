@@ -7,7 +7,7 @@ import {ScrollTransitionWrapper} from './MotionComponents';
 
 <div id="fake-model-container">
     <ScrollTransitionWrapper client:only opacityRate={0.05} xRate={0.15} xDistance={-1000}>
-        <FakeThreeDeeModel slot="child" transition:name="model" transition:persist client:load/>
+        <FakeThreeDeeModel slot="child" transition:persist client:load/>
     </ScrollTransitionWrapper>
     <!-- <ThreeDeeModel transition:name="model" transition:persist client:only/> -->
 </div>

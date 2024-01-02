@@ -113,7 +113,7 @@ export default function CarsContainer() {
         cars.length > 0 &&
         cars.map((car, index) => (
           <div
-            className='card-container flex-grow'
+            className='card-container flex-grow w-full md:w-[calc(50%-1.5rem)] lg:w-[calc(33.33%-1.5rem)]'
             key={car.id}
             id={`car-${car.id}`}
           >
@@ -130,7 +130,7 @@ export default function CarsContainer() {
           </div>
         ))}
       {/* TODO: broken, gettingProducts is set to true right after theyve been fetched */}
-      <div className='fixed left-0 right-0 bottom-16 z-50 h-24 w-full '>
+      <div className='fixed left-0 right-0 z-50 w-full h-24 bottom-16 '>
         {gettingProducts ? <LoadingSpinner /> : null}
       </div>
     </div>

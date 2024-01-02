@@ -50,8 +50,6 @@ hr {
   width: 100%;
 }
 .card {
-  margin: 0;
-  width: 100%;
 }
 
 @media (min-width: 768px) {

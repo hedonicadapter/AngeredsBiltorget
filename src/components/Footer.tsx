@@ -100,7 +100,7 @@ const Info = () => {
 const SocialMedia = (props) => {
   return (
     <section className='footer-section'>
-      <h4 className='text-sm text-on-bg-lightest mb-2'>Social media</h4>
+      <h4 className='mb-2 text-sm text-on-bg-lightest'>Social media</h4>
       <div className='flex flex-row gap-5 list-none child:flex child:flex-row child:items-center child:gap-4'>
         <a
           target='_blank'
@@ -165,11 +165,11 @@ export default function Footer({
   placesApiKey?: string;
 }) {
   return (
-    <footer className='z-40 relative bottom-0 flex flex-col justify-between mb-0 mt-auto text-on-bg bg-bg pt-7'>
+    <footer className='relative bottom-0 z-[-1] flex flex-col justify-between mt-auto text-on-bg bg-bg pt-7 pb-4'>
       <WhileInViewTransitionWrapper>
-        <div className='flex flex-row justify-center md:w-full lg:w-grp-half-7 md:mx-auto md:block pt-6 pb-8'>
+        <div className='flex flex-row justify-center pt-6 pb-8 md:w-full lg:w-grp-half-7 md:mx-auto md:block'>
           <div
-            className={`flex flex-row justify-evenly items-start child:mx-4`}
+            className={`hidden md:flex flex-row justify-evenly items-start child:mx-4`}
           >
             <Logo />
             <div className='flex flex-col gap-4'>
@@ -193,13 +193,7 @@ export default function Footer({
                 className='w-fit h-fit rounded-[100%] md:rounded-none overflow-hidden relative shrink-0'
               >
                 <img
-                  src={`https://maps.googleapis.com/maps/api/staticmap?center=${
-                    googleInfo?.location.latitude
-                  },${
-                    googleInfo?.location.longitude
-                  }&zoom=15&size=220x220&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=${
-                    import.meta.env.PUBLIC_PLACES_API_KEY
-                  }&map_id=footer_map_pastel`}
+                  src={`https://maps.googleapis.com/maps/api/staticmap?center=${googleInfo?.location.latitude},${googleInfo?.location.longitude}&zoom=18&size=220x220&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=${placesApiKey}&map_id=footer_map_pastel`}
                   className='m-auto md:w-[90%] md:h-[90%] md:squircle-sm '
                 />
               </SCMotionDiv>
@@ -209,9 +203,9 @@ export default function Footer({
           <div
             className={`flex md:hidden flex-col gap-8 child:flex child:flex-row child:items-center child:shrink-0 child:xs:gap-4`}
           >
-            <div className='gap-6 justify-end px-8'>
+            <div className='justify-end gap-6 px-8'>
               <div>
-                <div className='flex flex-col mr-0 ml-auto w-fit'>
+                <div className='flex flex-col ml-auto mr-0 w-fit'>
                   <HittaHit companyInfo={companyInfo} />
                   <OppetTider googleInfo={googleInfo} />
                 </div>
@@ -232,7 +226,7 @@ export default function Footer({
                   className='w-fit h-fit rounded-[100%] overflow-hidden aspect-square'
                 >
                   <img
-                    src={`https://maps.googleapis.com/maps/api/staticmap?center=${googleInfo?.location.latitude},${googleInfo?.location.longitude}&zoom=15&size=220x220&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=${placesApiKey}&map_id=footer_map_pastel`}
+                    src={`https://maps.googleapis.com/maps/api/staticmap?center=${googleInfo?.location.latitude},${googleInfo?.location.longitude}&zoom=18&size=220x220&maptype=roadmap&markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318&markers=color:red%7Clabel:C%7C40.718217,-73.998284&key=${placesApiKey}&map_id=footer_map_pastel`}
                     width='184'
                     height='184'
                     className='object-cover min-w-[184px] min-h-[184px]'
@@ -240,7 +234,7 @@ export default function Footer({
                 </SCMotionDiv>
               </div>
             </div>
-            <div className='gap-8 px-8 justify-center shrink-0'>
+            <div className='justify-center gap-8 px-8 shrink-0'>
               <div className='flex flex-row justify-end'>
                 <Logo companyInfo={companyInfo} />
               </div>
@@ -255,7 +249,7 @@ export default function Footer({
 
       <div className='flex flex-col h-9 justify-evenly mt-7 '>
         <hr className='border-surface-variant' />
-        <div className='text-sm text-on-bg-light flex flex-col-reverse justify-between gap-2 px-7 lg:sides md:sides sm:flex-row md:flex-row lg:flex-row'>
+        <div className='flex flex-col-reverse justify-between gap-2 text-sm text-on-bg-light px-7 lg:sides md:sides sm:flex-row md:flex-row lg:flex-row'>
           <div>
             © {new Date().getFullYear()}&nbsp;{companyInfo?.name}
           </div>
