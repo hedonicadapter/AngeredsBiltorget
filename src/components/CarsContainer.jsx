@@ -46,9 +46,10 @@ export default function CarsContainer() {
   //   currentResultCount.set($currentResultCount + 1);
   // }, (index / 16) * 50);
 
-  useEffect(() => {
-    console.log('getting products');
-  }, [gettingProducts]);
+  // TODO: this is being set after cars have been fetched instead of before, making the spinner not show up
+  // useEffect(() => {
+  //   console.log('getting products');
+  // }, [gettingProducts]);
 
   const getCars = useCallback(
     async (filter) => {
@@ -117,16 +118,7 @@ export default function CarsContainer() {
             key={car.id}
             id={`car-${car.id}`}
           >
-            <Card
-              index={index}
-              id={car?.id}
-              title={car?.title}
-              make={car?.make}
-              model={car?.model}
-              price={car?.price}
-              src={car?.src}
-              quantity={car?.quantity}
-            />
+            <Card index={index} interactive {...car} />
           </div>
         ))}
       {/* TODO: broken, gettingProducts is set to true right after theyve been fetched */}

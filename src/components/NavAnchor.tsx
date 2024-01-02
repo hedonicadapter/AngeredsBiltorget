@@ -50,7 +50,7 @@ const NavAnchor: React.FC<NavAnchorProps> = ({
   }, [anchorRef]);
 
   useEffect(() => {
-    if ($cart) setBadgeVisible(true);
+    if ($cart && $cart.length > 0) setBadgeVisible(true);
     else setBadgeVisible(false);
   }, [$cart]);
 

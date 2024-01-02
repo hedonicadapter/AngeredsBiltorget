@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useStore } from '@nanostores/react';
 import { cart } from '../nanoStores/productStore.ts';
 import './styles/cards.css';
@@ -23,21 +23,31 @@ export default function Card(props) {
     title,
     overrideClass,
     src,
+    interactive,
   } = props;
 
   const $cart = useStore(cart);
+  const [cardHovered, setCardHovered] = useState(false);
+  const [descriptionHeight, setDescriptionHeight] = useState(50);
+  const descriptionRef = useRef(null);
+
+  useEffect(() => {
+    if (!descriptionRef || !descriptionRef.current) return;
+    setDescriptionHeight(descriptionRef.current.offsetHeight - 10);
+  }, [descriptionRef]);
 
   const handleAddToCart = () => {
     let carExists = $cart?.findIndex((c) => c?.id === id);
-    console.log(carExists);
     if (carExists && carExists != -1) return;
     cart.set($cart ? [...$cart, { ...props }] : [{ ...props }]);
   };
 
-  const cardClassName = `card-container relative flex justify-center items-center mx-auto ${overrideClass}}`;
-
   return (
-    <SCMotionDiv className='card hover:outline-on-bg-lightest relative bg-surface-dark hover:bg-surface transition-colors outline outline-outline outline-1 p-8  overflow-visible flex flex-row items-start rounded-[calc(var(--golden-ratio)*0.3em)]'>
+    <SCMotionDiv
+      onMouseEnter={() => interactive && setCardHovered(true)}
+      onMouseLeave={() => interactive && setCardHovered(false)}
+      className='card relative hover:outline-on-bg-lightest bg-surface-dark hover:bg-surface transition-colors outline outline-outline outline-1 p-8  overflow-visible flex flex-col items-start rounded-[calc(var(--golden-ratio)*0.3em)]'
+    >
       <div className='absolute flex flex-col'>
         <h4 className='text-xl whitespace-nowrap '>
           {title || `${make} ${model}`}
@@ -50,8 +60,31 @@ export default function Card(props) {
         alt={`${title || 'car'}`}
         width='200'
         height='200'
-        className='origin-center object-contain aspect-video flex-1 '
+        className='flex-1 object-contain mx-auto origin-center aspect-video '
       />
+
+      <SCMotionDiv
+        ref={descriptionRef}
+        variants={{
+          expand: {
+            y: descriptionHeight,
+            opacity: 1,
+            transition: { ease: 'easeOut', duration: 0.15 },
+          },
+          contract: {
+            y: 0,
+            opacity: 0,
+            transition: { ease: 'linear', duration: 0.1 },
+          },
+        }}
+        animate={cardHovered ? 'expand' : 'contract'}
+        className={`box-border absolute bottom-0 left-0 right-0 -mx-[1px] z-50 ${
+          cardHovered ? 'pointer-events-auto' : 'pointer-events-none'
+        } bg-surface transition-colors border-b border-l border-r border-on-bg-lightest border-1 rounded-b-[calc(var(--golden-ratio)*0.3em)]
+        `}
+      >
+        <p className='p-4'>{description}</p>
+      </SCMotionDiv>
 
       {/* TODO: delete after labbinlämning */}
       <button
