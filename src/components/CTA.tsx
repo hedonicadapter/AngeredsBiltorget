@@ -6,7 +6,7 @@ export default function CTA() {
   const $CTAHovered = useStore(CTAHovered);
 
   return (
-    <div className='z-40 hover:-translate-y-2 active:opacity-75 active:scale-95 transition-transform relative top-[18vh] flex flex-col justify-center text-center gap-4 shadow-xl'>
+    <div className='z-50 hover:-translate-y-2 active:opacity-75 active:scale-95 transition-transform relative top-[18vh] flex flex-col justify-center text-center gap-4 shadow-xl'>
       <a
         className='text-2xl w-fit m-auto px-9 pt-4 pb-5 text-on-bg  font-light outline outline-on-bg-medium outline-1 backdrop-blur-md shadow-inner rounded-xl CTA'
         href='/showroom'

@@ -1,8 +1,8 @@
 .hero-container {
   /* padding-top: calc(var(--golden-ratio) * 8.5em); */
-  height: 100vh;
+  /* height: 100vh;
   position: relative;
-  align-items: center;
+  align-items: center; */
 }
 
 header {
@@ -10,7 +10,6 @@ header {
   display: flex;
   justify-content: center;
   max-width: 100vw;
-  outline: 1px solid var(--on-bg);
   word-break: break-word;
   box-sizing: border-box;
   margin-block: 30vh 0;
@@ -200,7 +199,6 @@ body {
   position: absolute;
   top: 0;
   bottom: 0;
-  outline: 1px solid red;
 }
 
 #model-container {

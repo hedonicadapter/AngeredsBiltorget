@@ -19,7 +19,6 @@ const HittaHit = (props) => {
           width='22'
           height='22'
           fill='currentColor'
-          className='bi bi-geo-alt-fill'
           viewBox='0 0 16 16'
         >
           <path d='M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10zm0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6z'></path>
@@ -166,7 +165,7 @@ export default function Footer({
   placesApiKey?: string;
 }) {
   return (
-    <footer className='z-40 relative flex flex-col justify-between mb-0 mt-auto text-on-bg bg-bg pt-7'>
+    <footer className='z-40 relative bottom-0 flex flex-col justify-between mb-0 mt-auto text-on-bg bg-bg pt-7'>
       <WhileInViewTransitionWrapper>
         <div className='flex flex-row justify-center md:w-full lg:w-grp-half-7 md:mx-auto md:block pt-6 pb-8'>
           <div

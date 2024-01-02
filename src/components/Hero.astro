@@ -1,24 +1,29 @@
 ---
 import CTA from './CTA';
 import ModelContainer from './Model-container.astro';
+import { ScrollTransitionWrapper } from './MotionComponents';
 import './styles/hero.css';
 import './styles/inne-just-nu.css';
 ---
 
-<section class="hero-container flex flex-col items-center">
+<section class="hero-container relative h-screen flex flex-col items-center">
     <header class="hero-header">
       <div>
-        <h2 class='subtitle'>Köp - Sälj - Byt</h2>
-        <h1 class="title">
-          Era bilar,<br />
-          <span style="white-space: nowrap">er marknadsplats</span>
-        </h1>
-        
-        
+        <ScrollTransitionWrapper client:only xRate={0.6} opacityRate={0.1} xDistance={-300}>
+          <h2 slot="child" class='subtitle'>Köp - Sälj - Byt</h2>
+        </ScrollTransitionWrapper>
+
+        <ScrollTransitionWrapper client:only xRate={0.4} opacityRate={0.1} xDistance={-500}>
+          <h1 slot="child" class="title">
+            Era bilar,<br />
+            <span style="white-space: nowrap">er marknadsplats</span>
+          </h1>
+        </ScrollTransitionWrapper>
       </div>
     </header>
-    <CTA client:load/>
-    
+    <ScrollTransitionWrapper client:only xRate={0.1} opacityRate={0.05} xDistance={-2000}>
+      <CTA slot="child" client:load/>
+    </ScrollTransitionWrapper>
     <ModelContainer />
 </section>
   

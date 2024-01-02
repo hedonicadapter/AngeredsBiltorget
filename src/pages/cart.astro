@@ -1,0 +1,17 @@
+---
+import Layout from '../layouts/Layout.astro';
+import CartItems from '../components/CartItems.tsx';
+import CheckoutButton from '../components/CheckoutButton.tsx';
+
+---
+
+<Layout>
+    <section class="h-screen w-screen py-60 px-16 flex flex-col items-center">
+        <div class="mx-auto w-full flex flex-col gap-9">
+            <h3>Cart</h3>
+            <CartItems client:only/>
+            <CheckoutButton client:only/>
+        </div>
+    </section>
+</Layout>
+

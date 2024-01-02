@@ -57,44 +57,33 @@ const NavAnchor: React.FC<NavAnchorProps> = ({
   // TODO: delete after labbinlämning
   return (
     <div className='z-50'>
-      {anchorHref === 'cart' ? (
-        <a
-          ref={anchorRef}
-          // href={anchorHref}
-          onClick={() => {
-            navigate(anchorHref, { history: 'auto' });
-            sidebarOpen.set(false);
-          }}
-          className='nav-anchor material-symbols-sharp'
-        >
-          <span className='material-symbols-sharp'>shopping_cart</span>
+      <a
+        // For recording the model
+        // onMouseEnter={() => {
+        //   const event = new CustomEvent('rec');
+        //   window.dispatchEvent(event);
+        // }}
+        // onMouseLeave={() => {
+        //   const event = new CustomEvent('stopRec');
+        //   window.dispatchEvent(event);
+        // }}
+        ref={anchorRef}
+        // href={anchorHref}
+        onClick={() => {
+          navigate(anchorHref, { history: 'auto' });
+          sidebarOpen.set(false);
+        }}
+        className='nav-anchor material-symbols-sharp'
+      >
+        {anchorText}
+        {anchorHref === 'cart' && (
           <div
             className={`cart-badge transition-opacity ${
               badgeVisible ? 'visible' : 'invisible'
             }`}
           ></div>
-        </a>
-      ) : (
-        <a
-          onMouseEnter={() => {
-            const event = new CustomEvent('rec');
-            window.dispatchEvent(event);
-          }}
-          onMouseLeave={() => {
-            const event = new CustomEvent('stopRec');
-            window.dispatchEvent(event);
-          }}
-          ref={anchorRef}
-          // href={anchorHref}
-          onClick={() => {
-            navigate(anchorHref, { history: 'auto' });
-            sidebarOpen.set(false);
-          }}
-          className='nav-anchor material-symbols-sharp'
-        >
-          {anchorText}
-        </a>
-      )}
+        )}
+      </a>
     </div>
   );
 };

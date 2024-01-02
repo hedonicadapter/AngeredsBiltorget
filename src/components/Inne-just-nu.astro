@@ -1,6 +1,6 @@
 ---
 import Card from './Card';
-// import FrontPageCars from './FrontPageCars';
+import FrontPageCars from './FrontPageCars';
 
 ---
 
@@ -10,12 +10,11 @@ import Card from './Card';
     <div class="sticky top-0 h-screen pt-[calc(var(--golden-ratio)*6em)]">
       <div class="flex flex-col h-full justify-evenly">
         <h3>Inne just nu</h3>
-        <div class="cards-container flex-1 overflow-y-visible">
-          <Card overrideClass="invisible" title='Yoyota' price='1.99' client:idle />
-          <Card overrideClass="invisible" title='Yoyota' price='1.99' client:idle />
-          <Card overrideClass="invisible" title='Din bil?' price='Ditt pris' client:idle />
-            <!-- <FrontPageCars client:idle/> -->
-        </div>
+        
+        
+            <FrontPageCars client:only/>
+        
+
         <div class="flex justify-center my-auto pb-32 pt-14 z-40">
           <a href="/showroom" class="active:opacity-60 font-light backdrop-blur-xl shadow-inner rounded-xl z-40 flex flex-row pointer-events-auto items-center gap-4 outline outline-on-bg-light text-on-bg-light hover:outline-on-bg hover:text-on-bg p-4 outline-1 pl-8">Visa alla <div class="material-symbols-sharp">
             chevron_right

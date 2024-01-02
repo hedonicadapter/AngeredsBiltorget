@@ -1,9 +1,6 @@
 import { useStore } from '@nanostores/react';
 import { useEffect, useState } from 'react';
 import { CTAHovered } from '../nanoStores/uiStore';
-import { motion, useScroll, useSpring, useTransform } from 'framer-motion';
-import { SCMotionDiv } from './MotionComponents';
-
 const headlightsOn =
   'https://csb10032002dd958075.blob.core.windows.net/model/headlights-on.webm';
 const headlightsOff =
@@ -14,10 +11,6 @@ const shine =
   'https://csb10032002dd958075.blob.core.windows.net/model/shine.webm';
 
 export default function FakeThreeDeeModel() {
-  const { scrollYProgress, scrollY } = useScroll();
-  const smoothX = useSpring(scrollY, { damping: 100, stiffness: 1000 });
-  const x = useTransform(smoothX, (y) => -y);
-  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
   const $CTAHovered = useStore(CTAHovered);
   const [src, setSrc] = useState(headlightsOff);
 
@@ -27,10 +20,7 @@ export default function FakeThreeDeeModel() {
   }, [$CTAHovered]);
 
   return (
-    <SCMotionDiv
-      style={{ x, opacity }}
-      className='relative my-auto flex flex-col justify-center items-center h-min'
-    >
+    <div className='relative my-auto flex flex-col justify-center items-center h-min'>
       <div
         className={`flex justify-center items-center flex-shrink-0 fake-model-size overflow-hidden
           transition-opacity ${
@@ -62,6 +52,6 @@ export default function FakeThreeDeeModel() {
           <source src={shine} type='video/webm' />
         </video>
       </div>
-    </SCMotionDiv>
+    </div>
   );
 }

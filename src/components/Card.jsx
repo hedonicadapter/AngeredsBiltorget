@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { useStore } from '@nanostores/react';
 import { cart } from '../nanoStores/productStore.ts';
 import './styles/cards.css';
+import { SCMotionDiv } from './MotionComponents.tsx';
 
 export default function Card(props) {
   const {
@@ -36,7 +37,7 @@ export default function Card(props) {
   const cardClassName = `card-container relative flex justify-center items-center mx-auto ${overrideClass}}`;
 
   return (
-    <div className='card hover:outline-on-bg-lightest relative bg-surface-dark hover:bg-surface transition-colors outline outline-outline outline-1 p-8  overflow-visible flex flex-row items-start rounded-[calc(var(--golden-ratio)*0.3em)]'>
+    <SCMotionDiv className='card hover:outline-on-bg-lightest relative bg-surface-dark hover:bg-surface transition-colors outline outline-outline outline-1 p-8  overflow-visible flex flex-row items-start rounded-[calc(var(--golden-ratio)*0.3em)]'>
       <div className='absolute flex flex-col'>
         <h4 className='text-xl whitespace-nowrap '>
           {title || `${make} ${model}`}
@@ -60,6 +61,6 @@ export default function Card(props) {
       >
         add_shopping_cart
       </button>
-    </div>
+    </SCMotionDiv>
   );
 }
