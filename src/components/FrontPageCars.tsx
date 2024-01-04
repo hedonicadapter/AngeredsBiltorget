@@ -14,26 +14,31 @@ const transition = {
 export default function FrontPageCars() {
   const isMobile = useMediaQuery('(max-width: 768px)');
   const horizontallyScrollableGuy = useRef<HTMLDivElement | null>(null);
+  const [x, setX] = React.useState(0);
+  const [direction, setDirection] = React.useState('down');
 
-  useScroll(({ xy: [, y] }) => console.log('allo'), { target: window });
+  useScroll(
+    (state) => {
+      const scrollContainer = horizontallyScrollableGuy.current;
+      if (scrollContainer) {
+        const direction = state.direction[1] == 1 ? 'down' : 'up';
+        if (window.scrollY < window.innerHeight) {
+          scrollContainer.scrollLeft = 0;
+          return;
+        }
 
-  // useEffect(() => {
-  //   const scrollContainer = horizontallyScrollableGuy.current;
-  //   if (scrollContainer) {
-  //     scrollContainer.scrollLeft = ; // or use scrollContainer.scrollBy({ left: 1000, top: 0, behavior: 'smooth' });
-  //   }
-  // }, []);
-  // useScroll((evt, direction) => {
-  //   if (horizontallyScrollableGuy.current) {
-  //     if (direction.x === 'left') {
-  //       horizontallyScrollableGuy.current.scrollLeft -= window.innerWidth;
-  //     } else if (direction.x === 'right')
-  //       horizontallyScrollableGuy.current.scrollLeft += window.innerWidth;
-  //   }
-  // });
+        if (direction == 'down') scrollContainer.scrollLeft += 20;
+        if (direction == 'up') scrollContainer.scrollLeft -= 20;
+      }
+    },
+    { target: window }
+  );
 
   return (
-    <div ref={horizontallyScrollableGuy} className='flex-1 cards-container'>
+    <div
+      ref={horizontallyScrollableGuy}
+      className='flex-1 overflow-x-scroll cards-container'
+    >
       <SCMotionDiv
         // staggerChildren and delayChildren aren't working so im going manual
         transition={isMobile ? transition : { delay: 0.25, ...transition }}
@@ -42,7 +47,11 @@ export default function FrontPageCars() {
         whileInView={'show'}
         key='1'
       >
-        <CarCard title='Yoyota' price='1.99' />
+        <div class='relative min-w-[300vw]'>
+          <div class='sticky left-0 right-0 w-screen p-[calc(var(--golden-ratio)*1.5em)]'>
+            <CarCard title='Yoyota' price='1.99' />
+          </div>
+        </div>
       </SCMotionDiv>
       <SCMotionDiv
         transition={isMobile ? transition : { delay: 0.5, ...transition }}
@@ -51,7 +60,11 @@ export default function FrontPageCars() {
         whileInView={'show'}
         key='2'
       >
-        <CarCard title='Yoyota' price='1.99' />
+        <div class='relative min-w-[300vw]'>
+          <div class='sticky left-0 right-0 w-screen p-[calc(var(--golden-ratio)*1.5em)]'>
+            <CarCard title='Yoyota' price='1.99' />
+          </div>
+        </div>
       </SCMotionDiv>
       <SCMotionDiv
         transition={isMobile ? transition : { delay: 0.75, ...transition }}
@@ -60,7 +73,11 @@ export default function FrontPageCars() {
         whileInView={'show'}
         key='3'
       >
-        <CarCard title='Din bil?' price='Ditt pris' />
+        <div class='relative min-w-[300vw]'>
+          <div class='sticky left-0 right-0 w-screen p-[calc(var(--golden-ratio)*1.5em)]'>
+            <CarCard title='Din bil?' price='Ditt pris' />
+          </div>
+        </div>
       </SCMotionDiv>
     </div>
   );
