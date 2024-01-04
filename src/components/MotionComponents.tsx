@@ -34,6 +34,14 @@ export const WhileInViewVariants = {
   hide: { opacity: 0 },
 };
 
+export const WhileInViewVariantsUp = {
+  show: {
+    opacity: 1,
+    y: 0,
+  },
+  hide: { opacity: 0, y: 100 },
+};
+
 export const WhileInViewVariantsNoTransition = {
   show: {
     opacity: 1,

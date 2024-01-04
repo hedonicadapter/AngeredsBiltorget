@@ -1,5 +1,6 @@
 ---
 import { getBrandInfo, getProducts } from '../api';
+import {SCMotionDiv, WhileInViewVariantsUp} from '../components/MotionComponents';
 import { Card } from './Cards';
 import './styles/info.css';
 
@@ -16,40 +17,57 @@ for await (const brand of brands) {
 ---
 
 <section class="relative flex flex-col items-center justify-center gap-16 mx-auto px-7">
-    <div class="bg-bg absolute w-full h-full -z-[1]"></div>
+    <div class="bg-bg absolute w-screen h-screen -z-[1]"></div>
 
-    <div class="flex flex-col gap-10">
-        <Card src="/images/carpark.png" title="Stort utbud" paragraph="Välkommen in och hitta drömbilen" client:idle/>
-        <Card src="/images/tires.png" title="Däck & Däckservice" paragraph="idk" client:idle/>
+    <div class="flex flex-col gap-10 md:flex-row md:justify-evenly md:w-[70vw]">
+        <SCMotionDiv client:only initial={'hide'} whileInView={'show'} variants={WhileInViewVariantsUp} transition={{easing:'ease-out'}}>
+            <Card src="/images/carpark.png" title="Stort utbud" paragraph="Välkommen in och hitta drömbilen" client:idle/>
+        </SCMotionDiv>
+        <SCMotionDiv client:only initial={'hide'} whileInView={'show'} variants={WhileInViewVariantsUp} transition={{easing:'ease-out',delay:0.15}}>
+            <Card src="/images/tires.png" title="Däck & Däckservice" paragraph="idk" client:idle/>
+        </SCMotionDiv>
     </div>
     
-    <div class="flex flex-col gap-4 text-center">
-        <h4>Våra märken</h4>
-        <div class="overflow-x-auto max-w-screen ">
-            <!-- class="flex flex-row flex-wrap justify-start gap-4 pt-4 pl-3 faded-blur max-h-96 w-[300vw] outline outline-red-400 outline-2" -->
+    <SCMotionDiv client:only initial={'hide'} whileInView={'show'} variants={WhileInViewVariantsUp} transition={{easing:'ease-out', delayChildren:0.25}}>
+        <div class="flex flex-col gap-4 text-center">
+            <h4>Våra märken</h4>
+            <div class="overflow-x-auto max-w-screen ">
+                <!-- class="flex flex-row flex-wrap justify-start gap-4 pt-4 pl-3 faded-blur max-h-96 w-[300vw] outline outline-red-400 outline-2" -->
 
-            <!-- TODO: fix faded-blur -->
-            <div class="pr-8 col-wrap bg-bg"
-            >
- 
-                {!!brandsWithInfo.length && brandsWithInfo.map((brand)=> brand.logo && (
-                    <div class="flex flex-row items-center wrap-item grayscale"><img width="86" height="86" class="z-[-1]" alt={`Logo of ${brand.name}`} src={brand.logo}/><div class="hidden gap-3 md:block">{brand.name}</div></div>
-                ))}
+                <!-- TODO: fix faded-blur -->
+                <div class="pr-8 col-wrap bg-bg"
+                >
+                    {!!brandsWithInfo.length && brandsWithInfo.map((brand, i)=> brand.logo && (
+                        <SCMotionDiv client:only initial={{opacity:0}} animate={{opacity:1}} transition={{delay: 0.15*(i+1)}} class="flex flex-row items-center wrap-item grayscale"><img width="86" height="86" class="z-[-1]" alt={`Logo of ${brand.name}`} src={brand.logo}/><div class="hidden gap-3 md:block">{brand.name}</div></SCMotionDiv>
+                    ))}
+                </div>
+
             </div>
 
         </div>
+    </SCMotionDiv>
+    
+    
+    <div class="flex flex-row mx-auto items-center w-full md:w-[40vw] lg:[w-10vw] justify-evenly">
+        <SCMotionDiv client:only initial={'hide'} whileInView={'show'} variants={WhileInViewVariantsUp} transition={{easing:'ease-out'}}>
+            <div class="flex flex-col items-center gap-5">
+                <div class="text-xl material-symbols-sharp text-on-bg-light">sell</div>
+                <h4 class="text-sm">Sälj</h4>
+            </div>
+        </SCMotionDiv>
 
-    </div>
+        <SCMotionDiv client:only initial={'hide'} whileInView={'show'} variants={WhileInViewVariantsUp} transition={{easing:'ease-out', delay:0.15}}>
+            <div class="flex flex-col items-center gap-5">
+                <div class="text-xl material-symbols-sharp text-on-bg-light">credit_card_heart</div>
+                <h4 class="text-sm">Köp</h4>
+            </div>
+        </SCMotionDiv>
 
-    <div class="flex flex-row items-center w-full md:w-[40vw] lg:[w-10vw] justify-evenly">
-        <div class="flex flex-col items-center gap-5"> <div class="text-xl material-symbols-sharp text-on-bg-light">sell</div>
-        <h4 class="text-sm">Sälj</h4>
-    </div>
-        <div class="flex flex-col items-center gap-5"> <div class="text-xl material-symbols-sharp text-on-bg-light">credit_card_heart</div>
-        <h4 class="text-sm">Köp</h4>
-    </div>
-        <div class="flex flex-col items-center gap-5"> <div class="text-xl material-symbols-sharp text-on-bg-light">swap_driving_apps</div>
-        <h4 class="text-sm">Byt</h4>
-    </div>
+        <SCMotionDiv client:only initial={'hide'} whileInView={'show'} variants={WhileInViewVariantsUp} transition={{easing:'ease-out', delay:0.25}}>
+            <div class="flex flex-col items-center gap-5">
+                <div class="text-xl material-symbols-sharp text-on-bg-light">swap_driving_apps</div>
+                <h4 class="text-sm">Byt</h4>
+            </div>
+        </SCMotionDiv>
     </div>
 </section>
