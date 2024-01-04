@@ -1,5 +1,6 @@
 ---
 import FrontPageCars from './FrontPageCars';
+import ShowAllButton from './ShowAllButton';
 
 ---
 
@@ -11,10 +12,7 @@ import FrontPageCars from './FrontPageCars';
         <h3>Inne just nu</h3>
             <FrontPageCars client:only/>
         <div class="z-40 flex justify-center pb-32 my-auto pt-14">
-          <a href="/showroom" class="z-40 flex flex-row items-center gap-4 p-4 pl-8 font-light shadow-inner pointer-events-auto active:opacity-60 backdrop-blur-xl rounded-xl outline outline-on-bg-light text-on-bg-light hover:outline-on-bg hover:text-on-bg outline-1">Visa alla <div class="material-symbols-sharp">
-            chevron_right
-            </div>
-          </a>
+          <ShowAllButton client:load/>
         </div>
       </div>
     </div>

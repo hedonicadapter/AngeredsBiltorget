@@ -3,8 +3,6 @@ import { useStore } from '@nanostores/react';
 import { CTAHovered } from '../nanoStores/uiStore.ts';
 
 export default function CTA() {
-  const $CTAHovered = useStore(CTAHovered);
-
   return (
     <div className='z-50 hover:-translate-y-2 active:opacity-75 active:scale-95 transition-transform relative top-[22vh] flex flex-col justify-center text-center gap-4 shadow-xl'>
       <a

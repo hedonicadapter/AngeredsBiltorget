@@ -6,6 +6,18 @@
   filter: saturate(0.6) brightness(1.4) hue-rotate(35deg);
 }
 
+/* TODO: figure out a good design */
+/* .navbar-top-bg:before {
+  content: ' ';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  margin: 0;
+  height: calc(var(--golden-ratio) * 5em);
+  background-color: var(--bg);
+  z-index: -1;
+} */
 .navbar-top {
   position: fixed;
   left: 0;
