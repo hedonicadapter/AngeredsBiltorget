@@ -6,6 +6,7 @@ import { CarCard } from './Cards.jsx';
 import { useStore } from '@nanostores/react';
 import { resultFilters } from '../nanoStores/resultStore.ts';
 import { LoadingSpinner } from './spinners.tsx';
+import { currentResultCount } from '../nanoStores/resultStore.ts';
 
 export default function CarsContainer() {
   const oldScrollY = useRef(0);
@@ -13,6 +14,7 @@ export default function CarsContainer() {
   const [gettingProducts, setGettingProducts] = useState(false); // Prevents multiple requests from being sent at once
   const [page, setPage] = useState(0);
   const $resultFilters = useStore(resultFilters);
+  const $currentResultCount = useStore(currentResultCount);
   //   const [index, setIndex] = useState(0);
   //   const [repeatingIndex, _setRepeatingIndex] = useState(0);
 
@@ -33,12 +35,9 @@ export default function CarsContainer() {
   //     }, index * 50);
   //   };
 
-  //   useEffect(() => {
-  //     if (!cars[index]) return;
-  //     console.log(index);
-  //     console.log(cars[index]);
-  //     fadeCarIn(repeatingIndex, cars[index].id);
-  //   }, [index, cars]);
+  useEffect(() => {
+    currentResultCount.set(cars.length);
+  }, [cars]);
 
   // // This shouldn't be here but idk what else to do
   // // TODO: broken, tween instead?
