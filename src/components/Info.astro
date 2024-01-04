@@ -38,7 +38,7 @@ for await (const brand of brands) {
                 <div class="pr-8 col-wrap bg-bg"
                 >
                     {!!brandsWithInfo.length && brandsWithInfo.map((brand, i)=> brand.logo && (
-                        <SCMotionDiv client:only initial={{opacity:0}} animate={{opacity:1}} transition={{delay: 0.15*(i+1)}} class="flex flex-row items-center wrap-item grayscale"><img width="86" height="86" class="z-[-1]" alt={`Logo of ${brand.name}`} src={brand.logo}/><div class="hidden gap-3 md:block">{brand.name}</div></SCMotionDiv>
+                        <SCMotionDiv client:only initial={{opacity:0}} animate={{opacity:1}} transition={{delay: 0.15*(i+1)}} className="flex flex-row items-center wrap-item grayscale"><img width="86" height="86" class="z-[-1]" alt={`Logo of ${brand.name}`} src={brand.logo}/><div class="hidden gap-3 md:block">{brand.name}</div></SCMotionDiv>
                     ))}
                 </div>
 
