@@ -24,6 +24,7 @@
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",
     "@types/three": "^0.160.0",
+    "@use-gesture/react": "^10.3.0",
     "astro": "^4.0.7",
     "astro-google-fonts-optimizer": "^0.2.2",
     "ccapture.js": "^1.1.0",

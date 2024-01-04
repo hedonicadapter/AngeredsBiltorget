@@ -1,10 +1,11 @@
-import React from 'react';
-import Card from './Card.jsx';
+import React, { useEffect, useRef } from 'react';
+import { CarCard } from './Cards.jsx';
 import {
   SCMotionDiv,
   WhileInViewVariantsNoTransition,
 } from './MotionComponents.jsx';
 import { useMediaQuery } from '../util/helpers.js';
+import { useScroll } from '@use-gesture/react';
 
 const transition = {
   duration: 0.55,
@@ -12,9 +13,27 @@ const transition = {
 
 export default function FrontPageCars() {
   const isMobile = useMediaQuery('(max-width: 768px)');
+  const horizontallyScrollableGuy = useRef<HTMLDivElement | null>(null);
+
+  useScroll(({ xy: [, y] }) => console.log('allo'), { target: window });
+
+  // useEffect(() => {
+  //   const scrollContainer = horizontallyScrollableGuy.current;
+  //   if (scrollContainer) {
+  //     scrollContainer.scrollLeft = ; // or use scrollContainer.scrollBy({ left: 1000, top: 0, behavior: 'smooth' });
+  //   }
+  // }, []);
+  // useScroll((evt, direction) => {
+  //   if (horizontallyScrollableGuy.current) {
+  //     if (direction.x === 'left') {
+  //       horizontallyScrollableGuy.current.scrollLeft -= window.innerWidth;
+  //     } else if (direction.x === 'right')
+  //       horizontallyScrollableGuy.current.scrollLeft += window.innerWidth;
+  //   }
+  // });
 
   return (
-    <div className='cards-container flex-1 overflow-y-visible'>
+    <div ref={horizontallyScrollableGuy} className='flex-1 cards-container'>
       <SCMotionDiv
         // staggerChildren and delayChildren aren't working so im going manual
         transition={isMobile ? transition : { delay: 0.25, ...transition }}
@@ -23,7 +42,7 @@ export default function FrontPageCars() {
         whileInView={'show'}
         key='1'
       >
-        <Card title='Yoyota' price='1.99' />
+        <CarCard title='Yoyota' price='1.99' />
       </SCMotionDiv>
       <SCMotionDiv
         transition={isMobile ? transition : { delay: 0.5, ...transition }}
@@ -32,7 +51,7 @@ export default function FrontPageCars() {
         whileInView={'show'}
         key='2'
       >
-        <Card title='Yoyota' price='1.99' />
+        <CarCard title='Yoyota' price='1.99' />
       </SCMotionDiv>
       <SCMotionDiv
         transition={isMobile ? transition : { delay: 0.75, ...transition }}
@@ -41,7 +60,7 @@ export default function FrontPageCars() {
         whileInView={'show'}
         key='3'
       >
-        <Card title='Din bil?' price='Ditt pris' />
+        <CarCard title='Din bil?' price='Ditt pris' />
       </SCMotionDiv>
     </div>
   );

@@ -29,6 +29,7 @@ import type Car from './Models/Car';
 import type { ResultFilters } from './nanoStores/resultStore';
 
 const placesUrl = 'https://places.googleapis.com/v1/places/';
+const brandFetchUrl = 'https://api.brandfetch.com/v2/brands/'; // brandfetch.com is a free param for testing
 
 const productCollection = collection(db, 'products');
 const companyInfoRef = doc(db, 'company', 'companyInfo');

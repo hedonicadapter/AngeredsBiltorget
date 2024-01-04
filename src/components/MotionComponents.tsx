@@ -11,6 +11,7 @@ import { type ReactNode } from 'react';
 
 export const SCMotionDiv = motion.div;
 export const SCMotionSection = motion.section;
+export const SCMotionP = motion.p;
 
 export const SCMotionOl = motion.ol;
 export const SCMotionLi = motion.li;

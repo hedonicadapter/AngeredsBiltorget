@@ -1,0 +1,36 @@
+---
+import { Card } from './Cards';
+import './styles/info.css';
+
+---
+
+<section class="relative flex flex-col items-center justify-center gap-16 mx-auto px-7">
+    <div class="bg-bg absolute w-full h-full -z-[1]"></div>
+
+    <div class="flex flex-col gap-10">
+        <Card client:idle/>
+        <Card client:idle/>
+    </div>
+    <div>
+        <h4>Våra märken</h4>
+
+        <div class="faded-blur">
+            <div class="flex flex-row flex-wrap justify-start w-full pt-4 pl-3 h-96 outline outline-1 outline-red-700">
+    
+            </div>
+
+        </div>
+    </div>
+
+    <div class="flex flex-row items-center w-full justify-evenly">
+        <div class="flex flex-col items-center gap-5"> <div class="text-xl material-symbols-sharp text-on-bg-light">sell</div>
+        <h4 class="text-sm">Sälj</h4>
+    </div>
+        <div class="flex flex-col items-center gap-5"> <div class="text-xl material-symbols-sharp text-on-bg-light">credit_card_heart</div>
+        <h4 class="text-sm">Köp</h4>
+    </div>
+        <div class="flex flex-col items-center gap-5"> <div class="text-xl material-symbols-sharp text-on-bg-light">swap_driving_apps</div>
+        <h4 class="text-sm">Byt</h4>
+    </div>
+    </div>
+</section>

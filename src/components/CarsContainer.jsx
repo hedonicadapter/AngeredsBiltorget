@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import _ from 'lodash-es';
 
 import { getProducts, getProductFiles } from '../api.ts';
-import Card from './Card.jsx';
+import { CarCard } from './Cards.jsx';
 import { useStore } from '@nanostores/react';
 import { resultFilters } from '../nanoStores/resultStore.ts';
 import { LoadingSpinner } from './spinners.tsx';
@@ -118,7 +118,7 @@ export default function CarsContainer() {
             key={car.id}
             id={`car-${car.id}`}
           >
-            <Card index={index} interactive {...car} />
+            <CarCard index={index} interactive {...car} />
           </div>
         ))}
       {/* TODO: broken, gettingProducts is set to true right after they've been fetched */}

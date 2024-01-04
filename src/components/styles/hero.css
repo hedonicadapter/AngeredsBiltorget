@@ -35,13 +35,13 @@ header {
 
 .subtitle {
   color: var(--on-bg-lightest);
-  font-size: calc(var(--golden-ratio) * 3vw);
+  font-size: calc(var(--golden-ratio) * 1.8vw);
+  letter-spacing: calc(var(--golden-ratio) * 0.12em);
+  text-transform: uppercase;
   font-style: normal;
   font-weight: 400;
   line-height: 7vw;
-  padding-inline: calc(var(--golden-ratio) * 1em);
-
-  text-transform: capitalize;
+  padding-inline: calc(var(--golden-ratio) * 1.7em);
 }
 
 body {
@@ -273,9 +273,9 @@ canvas {
     font-size: calc(var(--golden-ratio) * 3em);
   }
   .subtitle {
-    font-size: calc(var(--golden-ratio) * 0.9em);
-    padding-inline: calc(var(--golden-ratio) * 1.8em);
-    line-height: calc(var(--golden-ratio) * 0.9em);
+    font-size: calc(var(--golden-ratio) * 0.7em);
+    padding-inline: calc(var(--golden-ratio) * 2.3em);
+    line-height: calc(var(--golden-ratio) * 0.8em);
   }
 
   /* TODO: Not responsive height wise... */

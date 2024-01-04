@@ -1,0 +1,13 @@
+.faded-blur {
+  position: relative;
+}
+.faded-blur:after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+
+  background: red;
+  mask: linear-gradient(to right, transparent 85%, black 110%);
+  backdrop-filter: blur(2px);
+}

@@ -2,9 +2,9 @@ import { useEffect, useRef, useState } from 'react';
 import { useStore } from '@nanostores/react';
 import { cart } from '../nanoStores/productStore.ts';
 import './styles/cards.css';
-import { SCMotionDiv } from './MotionComponents.tsx';
+import { SCMotionDiv, SCMotionP } from './MotionComponents.tsx';
 
-export default function Card(props) {
+export function CarCard(props) {
   const {
     index,
     id,
@@ -46,7 +46,7 @@ export default function Card(props) {
     <SCMotionDiv
       onMouseEnter={() => interactive && setCardHovered(true)}
       onMouseLeave={() => interactive && setCardHovered(false)}
-      className='card relative hover:outline-on-bg-lightest bg-surface-dark hover:bg-surface transition-colors outline outline-outline outline-1 p-8  overflow-visible flex flex-col items-start rounded-[calc(var(--golden-ratio)*0.3em)]'
+      className={`car-card relative hover:outline-on-bg-lightest bg-surface-dark hover:bg-surface transition-colors outline outline-outline outline-1 p-8  overflow-visible flex flex-col items-start rounded-[calc(var(--golden-ratio)*0.3em)] ${overrideClass}`}
     >
       <div className='absolute flex flex-col'>
         <h4 className='text-xl whitespace-nowrap '>
@@ -83,7 +83,7 @@ export default function Card(props) {
         } bg-surface transition-colors border-b border-l border-r border-on-bg-lightest border-1 rounded-b-[calc(var(--golden-ratio)*0.3em)]
         `}
       >
-        <p className='p-4'>{description}</p>
+        <p className='p-4 text-on-bg-light'>{description}</p>
       </SCMotionDiv>
 
       {/* TODO: delete after labbinlämning */}
@@ -97,3 +97,44 @@ export default function Card(props) {
     </SCMotionDiv>
   );
 }
+
+export const Card = () => {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <a
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      className='flex flex-col overflow-hidden transition-opacity outline-none rounded-2xl outline outline-1 active:opacity-40'
+    >
+      <img class='inline m-0 object-cover' src='/images/carpark.png' />
+      <SCMotionDiv
+        animate={
+          hovered
+            ? { borderBottomColor: 'var(--primary)' }
+            : { borderBottomColor: 'var(--outline)' }
+        }
+        className='flex flex-row justify-between px-5 py-6 border border-1 border-outline rounded-b-2xl'
+      >
+        <div className='flex flex-col'>
+          <h4 className='mb-2'>Stort utbud</h4>
+          <SCMotionP
+            animate={
+              hovered
+                ? { color: 'var(--on-bg)' }
+                : { color: 'var(--on-bg-lightest)' }
+            }
+            className='text-[calc(var(--golden-ratio)*0.5em)]'
+          >
+            Välkommen in och hitta drömbilen.
+          </SCMotionP>
+        </div>
+        <SCMotionDiv
+          animate={hovered ? { opacity: 1, x: 5 } : { opacity: 0.8, x: 0 }}
+          className='my-auto material-symbols-sharp'
+        >
+          chevron_right
+        </SCMotionDiv>
+      </SCMotionDiv>
+    </a>
+  );
+};

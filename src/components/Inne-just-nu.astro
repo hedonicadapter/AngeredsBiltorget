@@ -1,5 +1,4 @@
 ---
-import Card from './Card';
 import FrontPageCars from './FrontPageCars';
 
 ---
@@ -10,17 +9,13 @@ import FrontPageCars from './FrontPageCars';
     <div class="sticky top-0 h-screen pt-[calc(var(--golden-ratio)*6em)]">
       <div class="flex flex-col h-full justify-evenly">
         <h3>Inne just nu</h3>
-        
-        
             <FrontPageCars client:only/>
-        
-
-        <div class="flex justify-center my-auto pb-32 pt-14 z-40">
-          <a href="/showroom" class="active:opacity-60 font-light backdrop-blur-xl shadow-inner rounded-xl z-40 flex flex-row pointer-events-auto items-center gap-4 outline outline-on-bg-light text-on-bg-light hover:outline-on-bg hover:text-on-bg p-4 outline-1 pl-8">Visa alla <div class="material-symbols-sharp">
+        <div class="z-40 flex justify-center pb-32 my-auto pt-14">
+          <a href="/showroom" class="z-40 flex flex-row items-center gap-4 p-4 pl-8 font-light shadow-inner pointer-events-auto active:opacity-60 backdrop-blur-xl rounded-xl outline outline-on-bg-light text-on-bg-light hover:outline-on-bg hover:text-on-bg outline-1">Visa alla <div class="material-symbols-sharp">
             chevron_right
-            </div></a>
+            </div>
+          </a>
         </div>
-        
       </div>
     </div>
   </div>

@@ -1,12 +1,12 @@
-.card-container {
+.car-card-container {
   transition: opacity 0.5s ease-out;
 }
 
-.card-container:hover img {
+.car-card-container:hover img {
   scale: 1.075;
 }
 
-.card img {
+.car-card img {
   transition: scale 0.15s ease-out;
 }
 
@@ -32,6 +32,6 @@
   color: var(--on-bg);
 }
 
-.card-container:hover .addToCartButton {
+.car-card-container:hover .addToCartButton {
   opacity: 1;
 }
