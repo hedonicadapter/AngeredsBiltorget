@@ -91,6 +91,7 @@ html {
 }
 
 body {
+  overscroll-behavior: none;
   overflow-y: scroll;
 
   -webkit-font-smoothing: antialiased;
