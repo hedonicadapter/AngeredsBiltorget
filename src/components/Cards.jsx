@@ -129,7 +129,7 @@ export const Card = ({ title, paragraph, src }) => {
           </SCMotionP>
         </div>
         <SCMotionDiv
-          animate={hovered ? { opacity: 1, x: 5 } : { opacity: 0.8, x: 0 }}
+          animate={hovered ? { opacity: 1, x: 2 } : { opacity: 0.8, x: -2 }}
           className='my-auto material-symbols-sharp'
         >
           chevron_right

@@ -114,7 +114,7 @@ export default function CarsContainer() {
         cars.length > 0 &&
         cars.map((car, index) => (
           <div
-            className='card-container flex-grow w-full md:w-[calc(50%-1.5rem)] lg:w-[calc(33.33%-1.5rem)]'
+            className='car-card-container flex-grow w-full md:w-[calc(50%-1.5rem)] lg:w-[calc(33.33%-1.5rem)]'
             key={car.id}
             id={`car-${car.id}`}
           >

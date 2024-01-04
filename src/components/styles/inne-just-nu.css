@@ -30,29 +30,12 @@
 }
 
 @media (min-width: 768px) {
-  .cards-container {
-    /* justify-content: center;
-    gap: 0;
-    padding: calc(var(--golden-ratio) * 2em); */
-  }
-  .cards-container > div {
-    /* flex: 1;
-    height: min-content; */
-  }
-  .card {
-    flex-direction: column-reverse;
-    height: auto;
-    width: auto;
-  }
   .car-card img {
     width: 60vh;
     height: 60vh;
   }
 }
 @media (min-width: 1024px) {
-  .cards-container {
-    /* padding: calc(var(--golden-ratio) * 4em); */
-  }
 }
 @media (min-width: 1460px) {
 }
