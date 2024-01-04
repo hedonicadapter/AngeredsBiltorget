@@ -1,6 +1,17 @@
 ---
+import { getBrandInfo, getProducts } from '../api';
 import { Card } from './Cards';
 import './styles/info.css';
+
+const products = await getProducts(0, 30);
+const brands = new Set();
+products.forEach(product => brands.add(product.data()?.make));
+
+let brandsWithInfo = [];
+for await (const brand of brands) {
+    const brandInfo = await getBrandInfo(brand as string);
+    brandsWithInfo.push(brandInfo);
+}
 
 ---
 
@@ -8,21 +19,29 @@ import './styles/info.css';
     <div class="bg-bg absolute w-full h-full -z-[1]"></div>
 
     <div class="flex flex-col gap-10">
-        <Card client:idle/>
-        <Card client:idle/>
+        <Card src="/images/carpark.png" title="Stort utbud" paragraph="Välkommen in och hitta drömbilen" client:idle/>
+        <Card src="/images/tires.png" title="Däck & Däckservice" paragraph="idk" client:idle/>
     </div>
-    <div>
-        <h4>Våra märken</h4>
-
-        <div class="faded-blur">
-            <div class="flex flex-row flex-wrap justify-start w-full pt-4 pl-3 h-96 outline outline-1 outline-red-700">
     
+    <div class="flex flex-col gap-4 text-center">
+        <h4>Våra märken</h4>
+        <div class="overflow-x-auto max-w-screen ">
+            <!-- class="flex flex-row flex-wrap justify-start gap-4 pt-4 pl-3 faded-blur max-h-96 w-[300vw] outline outline-red-400 outline-2" -->
+
+            <!-- TODO: fix faded-blur -->
+            <div class="pr-8 col-wrap bg-bg"
+            >
+ 
+                {!!brandsWithInfo.length && brandsWithInfo.map((brand)=> brand.logo && (
+                    <div class="flex flex-row items-center wrap-item grayscale"><img width="86" height="86" class="z-[-1]" alt={`Logo of ${brand.name}`} src={brand.logo}/><div class="hidden gap-3 md:block">{brand.name}</div></div>
+                ))}
             </div>
 
         </div>
+
     </div>
 
-    <div class="flex flex-row items-center w-full justify-evenly">
+    <div class="flex flex-row items-center w-full md:w-[40vw] lg:[w-10vw] justify-evenly">
         <div class="flex flex-col items-center gap-5"> <div class="text-xl material-symbols-sharp text-on-bg-light">sell</div>
         <h4 class="text-sm">Sälj</h4>
     </div>

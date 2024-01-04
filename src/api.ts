@@ -29,7 +29,6 @@ import type Car from './Models/Car';
 import type { ResultFilters } from './nanoStores/resultStore';
 
 const placesUrl = 'https://places.googleapis.com/v1/places/';
-const brandFetchUrl = 'https://api.brandfetch.com/v2/brands/'; // brandfetch.com is a free param for testing
 
 const productCollection = collection(db, 'products');
 const companyInfoRef = doc(db, 'company', 'companyInfo');
@@ -207,6 +206,24 @@ export const getGoogleCompanyInfo = async (mapLocation = '') => {
     return detailsData;
   } catch (err) {
     console.error('Failed to get company info from google: ', err);
+  }
+};
+
+export const getBrandInfo = async (brand: string) => {
+  try {
+    const res = await fetch(
+      'https://company.clearbit.com/v1/domains/find?name=' + brand,
+      {
+        headers: {
+          Authorization: 'Bearer ' + import.meta.env.CLEARBIT_API_KEY,
+        },
+      }
+    );
+    const data = await res.json();
+
+    return data;
+  } catch (err) {
+    console.error('Failed to get brand info: ', err);
   }
 };
 

@@ -4,3 +4,7 @@
   @apply items-center;
   @apply gap-4;
 }
+
+#map img {
+  @apply rounded-xl;
+}

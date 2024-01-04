@@ -1,13 +1,35 @@
 .faded-blur {
   position: relative;
+
+  max-width: 80vw;
 }
 .faded-blur:after {
   content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  pointer-events: none;
 
-  background: red;
-  mask: linear-gradient(to right, transparent 85%, black 110%);
-  backdrop-filter: blur(2px);
+  mask: linear-gradient(to left, var(--bg) 20%, transparent);
+  background: linear-gradient(to left, var(--bg), transparent 70%);
+  backdrop-filter: blur(8px);
+}
+
+.col-wrap {
+  display: grid;
+  gap: 5px;
+  grid-auto-flow: column;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-auto-columns: 28%;
+  width: 85vw;
+  overflow-x: auto;
+}
+
+.wrap-item {
+  border: 1px solid black;
+  padding: 10px;
+  margin-bottom: 5px;
 }

@@ -98,7 +98,7 @@ export function CarCard(props) {
   );
 }
 
-export const Card = () => {
+export const Card = ({ title, paragraph, src }) => {
   const [hovered, setHovered] = useState(false);
   return (
     <a
@@ -106,7 +106,7 @@ export const Card = () => {
       onMouseLeave={() => setHovered(false)}
       className='flex flex-col overflow-hidden transition-opacity outline-none rounded-2xl outline outline-1 active:opacity-40'
     >
-      <img class='inline m-0 object-cover' src='/images/carpark.png' />
+      <img class='inline m-0 object-cover' src={src} />
       <SCMotionDiv
         animate={
           hovered
@@ -116,7 +116,7 @@ export const Card = () => {
         className='flex flex-row justify-between px-5 py-6 border border-1 border-outline rounded-b-2xl'
       >
         <div className='flex flex-col'>
-          <h4 className='mb-2'>Stort utbud</h4>
+          <h4 className='mb-2'>{title}</h4>
           <SCMotionP
             animate={
               hovered
@@ -125,7 +125,7 @@ export const Card = () => {
             }
             className='text-[calc(var(--golden-ratio)*0.5em)]'
           >
-            Välkommen in och hitta drömbilen.
+            {paragraph}
           </SCMotionP>
         </div>
         <SCMotionDiv
