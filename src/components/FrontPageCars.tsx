@@ -8,7 +8,8 @@ import { useMediaQuery } from '../util/helpers.js';
 import { useScroll } from '@use-gesture/react';
 
 const transition = {
-  duration: 0.55,
+  duration: 0.75,
+  easing: 'ease-out',
 };
 
 export default function FrontPageCars() {
@@ -41,7 +42,7 @@ export default function FrontPageCars() {
     >
       <SCMotionDiv
         // staggerChildren and delayChildren aren't working so im going manual
-        transition={isMobile ? transition : { delay: 0.25, ...transition }}
+        transition={transition}
         variants={WhileInViewVariantsNoTransition}
         initial={'hide'}
         whileInView={'show'}
@@ -54,7 +55,7 @@ export default function FrontPageCars() {
         </div>
       </SCMotionDiv>
       <SCMotionDiv
-        transition={isMobile ? transition : { delay: 0.5, ...transition }}
+        transition={transition}
         variants={WhileInViewVariantsNoTransition}
         initial={'hide'}
         whileInView={'show'}
@@ -67,7 +68,7 @@ export default function FrontPageCars() {
         </div>
       </SCMotionDiv>
       <SCMotionDiv
-        transition={isMobile ? transition : { delay: 0.75, ...transition }}
+        transition={transition}
         variants={WhileInViewVariantsNoTransition}
         initial={'hide'}
         whileInView={'show'}

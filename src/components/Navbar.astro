@@ -16,10 +16,10 @@ import Sidebar from './Sidebar.tsx';
             </a>
         </div>
         <div class="flex-row items-center nav-container nav-container-right">
-            <NavAnchor client:load anchorText="Showroom" anchorHref="showroom" />
-			<NavAnchor client:load anchorText="Om oss" anchorHref="about"/>
-            <NavAnchor client:load anchorText="Kontakt" anchorHref="contact" />
-            <NavAnchor client:load anchorText="Kundvagn" anchorHref="cart" />
+            <NavAnchor client:load anchorText="Showroom" anchorHref="/showroom" />
+			<NavAnchor client:load anchorText="Om oss" anchorHref="/about"/>
+            <NavAnchor client:load anchorText="Kontakt" anchorHref="/contact" />
+            <NavAnchor client:load anchorText="Kundvagn" anchorHref="/cart" />
             <div class="nav-anchor-highlighter"></div>
         </div>
         <Borger client:load/>
@@ -33,11 +33,11 @@ import Sidebar from './Sidebar.tsx';
 			  	client:load
 				closeOnClick
 				anchorText='Showroom'
-				anchorHref='showroom'
+				anchorHref='/showroom'
 			  />
-			  <NavAnchor client:load closeOnClick client:load anchorText="Om oss" anchorHref="about"/>
-			  <NavAnchor client:load closeOnClick anchorText='Kontakt' anchorHref='contact' />
-			  <NavAnchor client:load closeOnClick anchorText='Cart' anchorHref='cart' />
+			  <NavAnchor client:load closeOnClick client:load anchorText="Om oss" anchorHref="/about"/>
+			  <NavAnchor client:load closeOnClick anchorText='Kontakt' anchorHref='/contact' />
+			  <NavAnchor client:load closeOnClick anchorText='Cart' anchorHref='/cart' />
 			</div>
 		</Sidebar>
     </nav>

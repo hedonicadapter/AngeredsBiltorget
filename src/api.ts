@@ -57,12 +57,19 @@ export async function getProducts(
   filter?: ResultFilters
 ): Promise<DocumentSnapshot<DocumentData, DocumentData>[]> {
   // TODO: Filtering needs a search provider
-  let q = query(
-    productCollection,
-    orderBy(order),
-    startAfter(start),
-    limit(perPage)
-  );
+
+  let q;
+
+  if (perPage == -1) {
+    q = query(productCollection, orderBy(order));
+  } else {
+    q = query(
+      productCollection,
+      orderBy(order),
+      startAfter(start),
+      limit(perPage)
+    );
+  }
 
   const snapshot = await getDocs(q);
   return snapshot.docs;

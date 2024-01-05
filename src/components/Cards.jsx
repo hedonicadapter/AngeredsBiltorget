@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useStore } from '@nanostores/react';
 import { cart } from '../nanoStores/productStore.ts';
 import './styles/cards.css';
-import { SCMotionDiv, SCMotionP } from './MotionComponents.tsx';
+import { SCMotionAnchor, SCMotionDiv, SCMotionP } from './MotionComponents.tsx';
 
 export function CarCard(props) {
   const {
@@ -43,7 +43,8 @@ export function CarCard(props) {
   };
 
   return (
-    <SCMotionDiv
+    <SCMotionAnchor
+      href={`/products/${id}`}
       onMouseEnter={() => interactive && setCardHovered(true)}
       onMouseLeave={() => interactive && setCardHovered(false)}
       className={`car-card relative hover:outline-on-bg-lightest bg-surface-dark hover:bg-surface transition-colors outline outline-outline outline-1 p-8  overflow-visible flex flex-col items-start rounded-[calc(var(--golden-ratio)*0.3em)] ${overrideClass}`}
@@ -94,7 +95,7 @@ export function CarCard(props) {
       >
         add_shopping_cart
       </button>
-    </SCMotionDiv>
+    </SCMotionAnchor>
   );
 }
 

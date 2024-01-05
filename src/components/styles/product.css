@@ -1,0 +1,14 @@
+#background-overlay {
+  all: unset !important;
+}
+#background-overlay:before {
+  all: unset !important;
+}
+#background-overlay:after {
+  all: unset !important;
+}
+
+/* TODO: make a scrollbar that goes with a black background */
+::-webkit-scrollbar {
+  display: none;
+}

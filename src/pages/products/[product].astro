@@ -1,0 +1,72 @@
+---
+import {getProductFiles, getProducts} from '../../api';
+import '../../components/styles/product.css'
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths(){
+    const products = await getProducts(0, -1);
+
+    return await Promise.all(products.map(async product => {
+        const files = await getProductFiles(product.id);
+        const productData = product.data();
+
+        return {
+            params: {product: product.id},
+            props: {
+                product: productData,
+                files
+            }
+        }
+    }));
+}
+
+const {product, files} = Astro.props;
+if(!product) return Astro.redirect('/404');
+console.log(product);
+
+const mainImage = files.find(file => file.name.startsWith('thumbnail'));
+---
+
+<Layout>
+    <section class="flex flex-col w-screen h-screen gap-5 p-16 justify-items-center text-on-bg-medium">
+        <img transition:name="thumbnail" src={mainImage?.url || '/images/placeholder-car.webp'} alt={`${product.title || product.make + ' ' + product.model} (car)`}/>
+        <div class="flex flex-row w-screen overflow-x-auto h-36">{files.map(file=>(
+            <div class="w-auto h-full overflow-hidden aspect-square"><img class="object-cover w-full h-full" src={file.url} alt={`${product.title || product.make + ' ' + product.model} (car)`}/></div>
+        ))}</div>
+        <div class="flex flex-row items-baseline justify-between pb-7">
+            <div class="flex flex-col">
+                <h4>{product.title || product.make + ' ' + product.model}</h4>
+                <p class="text-sm text-on-bg-light">{product.price} SEK</p>
+            </div>
+            <p>{product.year}</p>
+        </div>
+
+        <p class="text-base font-light text-on-bg-medium">{product.description}</p>
+
+        <div class="flex flex-col gap-6 px-5 py-4 -mx-5 rounded-lg bg-surface-dark text-on-bg-medium outline outline-outline outline-1">
+            <div class="flex flex-row items-center justify-between">
+                <div class="flex flex-row gap-2"><div class="material-symbols-sharp text-on-bg-light">ev_charger</div><p class="my-auto text-xs uppercase text-on-bg-lightest">Drivmedel</p></div>
+                <p class="text-lg font-light">{product.fuelType}</p>
+            </div>
+            <div class="flex flex-row items-center justify-between">
+                <div class="flex flex-row gap-2"><div class="material-symbols-sharp text-on-bg-light">swap_driving_apps_wheel</div><p class="my-auto text-xs uppercase text-on-bg-lightest">Miltal</p></div>
+                <p class="text-lg font-light">{product.mileage}</p>
+            </div>
+            <div class="flex flex-row items-center justify-between">
+                <div class="flex flex-row gap-2"><div class="material-symbols-sharp text-on-bg-light">pin</div><p class="my-auto text-xs uppercase text-on-bg-lightest">Registreringsnummer</p></div>
+                <p class="text-lg font-light">{product.registrationNumber}</p>
+            </div>
+        </div>
+        <div class="mt-7 ">
+            <h4 class="text-on-bg-lightest">Annat fint</h4>
+            <div class="flex flex-row flex-wrap gap-6 mt-2 text-on-bg-light">
+                {!!product.extraFeatures && product.extraFeatures.length > 0 && 
+                    product.extraFeatures?.map((feature:string)=>(
+                        <div>{feature}</div>
+                    ))
+                }
+            </div>
+        </div>
+    </section>
+
+</Layout>

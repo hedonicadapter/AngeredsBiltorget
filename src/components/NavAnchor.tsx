@@ -76,7 +76,7 @@ const NavAnchor: React.FC<NavAnchorProps> = ({
         className='nav-anchor material-symbols-sharp'
       >
         {anchorText}
-        {anchorHref === 'cart' && (
+        {anchorHref === '/cart' && (
           <div
             className={`cart-badge transition-opacity ${
               badgeVisible ? 'visible' : 'invisible'
