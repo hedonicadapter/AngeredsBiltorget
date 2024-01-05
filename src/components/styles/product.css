@@ -12,3 +12,38 @@
 ::-webkit-scrollbar {
   display: none;
 }
+
+section {
+}
+
+@media (min-width: 428px) {
+  section {
+  }
+}
+
+@media (min-width: 724px) {
+  section {
+    background-position-y: 0;
+    background-size: 100% 100%;
+  }
+}
+@media (min-width: 768px) {
+  section {
+    background: radial-gradient(
+      at center top,
+      var(--surface) 10%,
+      var(--bg) 100%
+    );
+  }
+}
+@media (min-width: 1024px) {
+  section {
+    background-attachment: fixed;
+    overscroll-behavior: none;
+    background: radial-gradient(
+      at center top,
+      var(--surface) 10%,
+      var(--bg) 100%
+    );
+  }
+}
