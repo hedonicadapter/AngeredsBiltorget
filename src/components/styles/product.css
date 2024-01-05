@@ -13,22 +13,14 @@
   display: none;
 }
 
-section {
-}
-
-@media (min-width: 428px) {
-  section {
-  }
-}
-
 @media (min-width: 724px) {
-  section {
+  product-container {
     background-position-y: 0;
     background-size: 100% 100%;
   }
 }
 @media (min-width: 768px) {
-  section {
+  product-container {
     background: radial-gradient(
       at center top,
       var(--surface) 10%,
@@ -37,7 +29,7 @@ section {
   }
 }
 @media (min-width: 1024px) {
-  section {
+  product-container {
     background-attachment: fixed;
     overscroll-behavior: none;
     background: radial-gradient(
