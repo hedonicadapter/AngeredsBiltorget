@@ -47,7 +47,7 @@ export function CarCard(props) {
       href={`/products/${id}`}
       onMouseEnter={() => interactive && setCardHovered(true)}
       onMouseLeave={() => interactive && setCardHovered(false)}
-      className={`car-card relative hover:outline-on-bg-lightest bg-surface-dark hover:bg-surface transition-colors outline outline-outline outline-1 p-8  overflow-visible flex flex-col items-start rounded-[calc(var(--golden-ratio)*0.3em)] ${overrideClass}`}
+      className={`car-card relative  bg-surface-dark hover:bg-surface transition-colors outline outline-transparent outline-1 p-8  overflow-visible flex flex-col items-start rounded-[calc(var(--golden-ratio)*0.3em)] ${overrideClass}`}
     >
       <div className='absolute flex flex-col'>
         <h4 className='text-xl whitespace-nowrap '>
@@ -82,7 +82,7 @@ export function CarCard(props) {
         animate={cardHovered ? 'expand' : 'contract'}
         className={`box-border absolute bottom-0 left-0 right-0 -mx-[1px] z-50 ${
           cardHovered ? 'pointer-events-auto' : 'pointer-events-none'
-        } bg-surface transition-colors border-b border-l border-r border-on-bg-lightest border-1 rounded-b-[calc(var(--golden-ratio)*0.3em)]
+        } bg-surface transition-colors rounded-b-[calc(var(--golden-ratio)*0.3em)]
         `}
       >
         <p className='p-4 text-on-bg-light'>{description}</p>
