@@ -40,9 +40,9 @@ const mainImage = files.find(file => file.name.startsWith('thumbnail'));
                 <ImageSlider {files} product={product as Car} /> 
             </div>
         </div>
-        <div class=" h-full md:mt-[65vh] px-16 md:px-[16vw] lg:px-[20vw] xl:px-[24vw] w-full lg:[34rem] bg-surface-dark ">
+        <div class=" h-full md:mt-[65vh] px-16 md:px-[16vw] lg:px-[20vw] xl:px-[24vw] w-full lg:[34rem] bg-bg-transparent backdrop-blur-md ">
             <div class="pb-3 overflow-x-visible md:relative md:pt-6 md:pb-0 md:z-10 md:w-full md:flex md:flex-row md:justify-between md:gap-10 md:items-start">
-                <div class="hidden md:block absolute left-0 top-0 right-0 ml-[calc(-50vw+50%)] mr-[calc(-50vw+50%)] h-1 bg-outline"></div>
+                <div class="hidden md:block absolute left-0 top-0 right-0 ml-[calc(-50vw+50%)] mr-[calc(-50vw+50%)] h-[1px] bg-outline"></div>
                 <div class="flex flex-row items-baseline justify-between gap-1 md:justify-start pb-7">
                     <div class="flex flex-col">
                         <h4 class="text-3xl md:text-5xl md:pb-1 whitespace-nowrap">{product.title || product.make + ' ' + product.model}</h4>
