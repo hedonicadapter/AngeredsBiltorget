@@ -19,6 +19,10 @@ p {
   @apply text-on-bg-medium;
 }
 
+* {
+  /* outline: 1px solid red; */
+}
+
 @media (min-width: 724px) {
   product-container {
     background-position-y: 0;

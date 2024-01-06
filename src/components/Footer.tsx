@@ -165,7 +165,7 @@ export default function Footer({
   placesApiKey?: string;
 }) {
   return (
-    <footer className='relative bottom-0 z-[-1] flex flex-col justify-between mt-auto text-on-bg bg-bg pt-7 pb-4'>
+    <footer className='relative bottom-0 z-[-1] flex flex-col justify-between mt-auto text-on-bg bg-bg pt-96 pb-4'>
       <WhileInViewTransitionWrapper>
         <div className='flex flex-row justify-center pt-6 pb-8 md:w-full lg:w-grp-half-7 md:mx-auto md:block'>
           <div
