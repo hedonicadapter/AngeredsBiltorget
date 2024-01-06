@@ -85,7 +85,22 @@ export function CarCard(props) {
         } bg-surface transition-colors rounded-b-[calc(var(--golden-ratio)*0.3em)]
         `}
       >
-        <p className='p-4 text-on-bg-light'>{description}</p>
+        <div className='flex flex-row flex-wrap items-center gap-6 p-4'>
+          <div className='flex flex-row items-center gap-2 text-on-bg-light'>
+            <div class='text-xs material-symbols-sharp'>ev_charger</div>
+            {fuelType}
+          </div>
+          <div className='flex flex-row items-center gap-2 text-on-bg-light'>
+            <div class='text-xs material-symbols-sharp'>
+              swap_driving_apps_wheel
+            </div>
+            {mileage}
+          </div>
+          <div className='flex flex-row items-center gap-2 text-on-bg-light'>
+            <div class='text-xs material-symbols-sharp'>pin</div>
+            {registrationNumber}
+          </div>
+        </div>
       </SCMotionDiv>
 
       {/* TODO: delete after labbinlämning */}
