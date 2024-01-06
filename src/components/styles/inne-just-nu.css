@@ -18,8 +18,12 @@
   background: none;
   cursor: pointer;
   margin-inline: auto;
-
   padding: 0;
+  transition: transform 0.15s ease-out;
+}
+.car-card:hover {
+  transform: scale(1.02);
+  background: transparent;
 }
 .car-card > div {
   position: relative;
