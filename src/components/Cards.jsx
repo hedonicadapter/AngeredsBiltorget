@@ -56,6 +56,7 @@ export function CarCard(props) {
         <p className='text-sm text-on-bg-lightest'>{price} SEK</p>
       </div>
       <img
+        style={{ transitionName: `thumbnail-${id}` }}
         // style={{ filter: src ? 'drop-shadow(0px 7px 6px #000000)' : '' }}
         src={src && src.length > 0 ? src : '/images/volvo.webp'}
         alt={`${title || 'car'}`}

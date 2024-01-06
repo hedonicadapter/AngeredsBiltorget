@@ -113,6 +113,7 @@ body {
 
 main {
   position: relative;
+  @apply mb-96;
 }
 
 #app {

@@ -1,0 +1,28 @@
+---
+
+import sharp from 'sharp';
+import fetch from 'node-fetch';
+
+export async function get({ query }:{query:{path:string}}) {
+  const { path } = query;
+
+  try {
+    const response = await fetch(path);
+    const inputBuffer = await response.arrayBuffer();
+    const outputBuffer = await sharp(Buffer.from(inputBuffer)).trim().toBuffer();
+
+    return {
+      statusCode: 200,
+      headers: { 'Content-Type': 'image/png' },
+      body: Uint8Array.from(outputBuffer),
+    };
+  } catch (err: any) {
+    return {
+      statusCode: 500,
+      headers: { 'Content-Type': 'text/plain' },
+      body: Buffer.from(err.message),
+    };
+  }
+}
+
+---
