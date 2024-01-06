@@ -20,6 +20,7 @@
 
   --bg: #070505;
   --bg-transparent: rgba(7, 5, 5, 0.2);
+  --bg-transparent-medium: rgba(7, 5, 5, 0.9);
   --on-bg: rgba(255, 255, 255, 0.9);
   --on-bg-medium: rgba(255, 255, 255, 0.82);
   --on-bg-light: rgba(255, 255, 255, 0.74);

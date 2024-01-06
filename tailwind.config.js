@@ -8,6 +8,7 @@ export default {
         // All defined in root
         bg: 'var(--bg)',
         'bg-transparent': 'var(--bg-transparent)',
+        'bg-transparent-medium': 'var(--bg-transparent-medium)',
         'on-bg': 'var(--on-bg)',
         'on-bg-medium': 'var(--on-bg-medium)',
         'on-bg-light': 'var(--on-bg-light)',
