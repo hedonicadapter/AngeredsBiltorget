@@ -6,6 +6,7 @@ import {
   filterPropsSwedish,
 } from '../nanoStores/resultStore';
 import { filterContainerExpanded } from '../nanoStores/uiStore';
+import { SCMotionDiv } from './MotionComponents';
 
 // TODO: hovering past a certain point closes the dropdown...
 export default function Dropdown({
@@ -96,11 +97,15 @@ function OptionItem({
   }, [$resultFilters, inputRef]);
 
   return (
-    <div className='drop-down-input-label-container'>
+    <SCMotionDiv
+      whileTap={{ scale: 0.99, opacity: 0.4 }}
+      transition={{ duration: 0.1, easing: 'easeOut' }}
+      className='drop-down-input-label-container'
+    >
       <input
         ref={inputRef}
         onChange={handleCheckboxChange}
-        className='custom-dropdown-checkbox'
+        className='custom-dropdown-checkbox accent-tertiary'
         type='checkbox'
         name={filterProperty}
         id={`${filterProperty}-${index}`}
@@ -109,11 +114,11 @@ function OptionItem({
       />
       <label
         onClick={() => inputRef.current?.click()}
-        className='label-and-input flex flex-row items-center justify-between font-light'
+        className='flex flex-row items-center justify-between font-light label-and-input'
         htmlFor={filterProperty}
       >
         {option}
       </label>
-    </div>
+    </SCMotionDiv>
   );
 }

@@ -55,6 +55,43 @@ input[type='search']::placeholder {
   transition: color 0.15s ease-out;
 }
 
+input[type='checkbox'] {
+  display: none;
+}
+
+input[type='checkbox'] + label {
+  position: relative;
+  padding-left: 31px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+input[type='checkbox'] + label:before {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 4px;
+  @apply w-6 h-6;
+  @apply rounded-sm;
+  @apply bg-bg-transparent-medium;
+}
+
+/* Style the custom checkbox when checked */
+input[type='checkbox']:checked + label:before {
+  @apply bg-primary;
+}
+
+/* Add a checkmark when checked */
+input[type='checkbox']:checked + label:after {
+  content: '';
+  position: absolute;
+  left: 9px;
+  top: 10px;
+  @apply w-2 h-2;
+  @apply bg-on-bg-lightest;
+  @apply rounded-full;
+}
+
 .dropdown {
   transition: max-height 0.15s ease-in-out, color 0.15s ease-out,
     border-color 0.15s ease-out;
@@ -74,9 +111,6 @@ input[type='search']::placeholder {
 
   transition: transform 0.45s ease-out;
 }
-.dropdown label {
-  gap: calc(var(--golden-ratio) * 0.4em);
-}
 
 .dropdown:hover {
   overflow-y: auto;
@@ -84,9 +118,8 @@ input[type='search']::placeholder {
   max-height: calc(
     var(--golden-ratio) * 10em
   ); /* Set an appropriate value to allow for expansion */
-  @apply bg-bg;
+  @apply bg-surface;
   @apply rounded-xl;
-  outline: 1px solid var(--outline);
 }
 .dropdown:hover:after {
   transform: rotate(-180deg);
@@ -98,8 +131,8 @@ input[type='search']::placeholder {
 .drop-down-input-label-container {
   display: flex;
   align-items: center;
-  gap: calc(var(--golden-ratio) * 0.25em);
   padding-right: calc(var(--golden-ratio) * 1.3em);
+  @apply py-1;
 }
 .drop-down-input-label-container label {
   flex: 1;

@@ -16,6 +16,7 @@ export const SCMotionP = motion.p;
 export const SCMotionOl = motion.ol;
 export const SCMotionLi = motion.li;
 
+export const SCMotionLabel = motion.label;
 export const SCMotionAnchor = motion.a;
 export const SCMotionButton = motion.button;
 
