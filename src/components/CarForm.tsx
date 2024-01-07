@@ -10,7 +10,7 @@ import {
   getProductFiles,
   deleteProductFile,
 } from '../api.ts';
-import { useForm } from 'react-hook-form';
+import { useForm, useFieldArray } from 'react-hook-form';
 import './styles/car-form.css';
 import { motion } from 'framer-motion';
 import type Car from '../Models/Car.ts';
@@ -19,6 +19,7 @@ import Dropdown from './Dropdown.tsx';
 export default function CarForm() {
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
     watch,
@@ -26,6 +27,13 @@ export default function CarForm() {
     setValue,
     getValues,
   } = useForm<Car & { files: File[] | { name: string; url: string } }>();
+
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: 'extraFeatures',
+  });
+
+  console.log(errors);
 
   const makeModelOnChange = watch(['make', 'model']);
   const idOnChange = watch(['id']);
@@ -96,9 +104,10 @@ export default function CarForm() {
       onSubmit={handleSubmit((data) => console.log(data))}
     >
       <div
-        className='tooltip'
+        className='tooltip label-input-error'
         data-tooltip='Lämna tom så autogenereras ett ID. Använd ett existerande ID för att redigera en bil.'
       >
+        <label htmlFor='id'>ID</label>
         <input
           className='w-full btn'
           placeholder={'Id'}
@@ -106,21 +115,31 @@ export default function CarForm() {
           onBlur={handleIdBlur}
         />
       </div>
-      <input
-        className='btn'
-        placeholder={'Fabrikat/bilmärke'}
-        {...register('make', { required: true })}
-      />
-      {errors.make && <p>Fabrikatet/bilmärket saknas.</p>}
-      <input
-        className='btn'
-        placeholder={'Modell'}
-        {...register('model', { required: true })}
-      />
-      {errors.make && <p>Modell saknas.</p>}
+      <div className='label-input-error'>
+        <label htmlFor='make'>Fabrikat/bilmärke</label>
+        <input
+          className='btn'
+          placeholder={'Hyundai'}
+          {...register('make', { required: true })}
+        />
+
+        {errors.make && (
+          <p className='errorMessage'>Fabrikatet/bilmärket saknas.</p>
+        )}
+      </div>
+
+      <div class='label-input-error'>
+        <label htmlFor='model'>Modell</label>
+        <input
+          className='btn'
+          placeholder={'Grandeur Heritage Series'}
+          {...register('model', { required: true })}
+        />
+        {errors.make && <p className='errorMessage'>Modell saknas.</p>}
+      </div>
 
       <div
-        className='tooltip'
+        className='tooltip label-input-error'
         data-tooltip={
           makeModelOnChange?.some((x) => x)
             ? `Lämna tom så blir titeln ${
@@ -129,59 +148,116 @@ export default function CarForm() {
             : ''
         }
       >
+        <label htmlFor='title'>Titel</label>
         <input
           className='w-full btn'
           placeholder={'Titel'}
           {...register('title')}
         />
       </div>
-      <input className='btn' placeholder={'Pris'} {...register('price')} />
 
-      <input className='btn' placeholder={'År'} {...register('year')} />
-      <input className='btn' placeholder={'Miltal'} {...register('mileage')} />
-      <input
-        className='btn'
-        placeholder={'Registreringsnummer'}
-        {...register('registrationNumber')}
-      />
-
-      <div className='flex flex-row items-center gap-2'>
-        <input
-          {...register('gearbox', { required: true })}
-          value='automat'
-          id='automat'
-          type='radio'
-        />
-        <label htmlFor='automat'>Automat</label>
-      </div>
-      <div className='flex flex-row items-center gap-2'>
-        <input
-          {...register('gearbox')}
-          value='manuell'
-          id='manuell'
-          type='radio'
-        />
-        <label htmlFor='manuell'>Manuell</label>
+      <div
+        className='tooltip label-input-error'
+        data-tooltip='Bara siffror, inget annat.'
+      >
+        <label htmlFor='price'>Pris</label>
+        <input className='btn' placeholder={'Pris'} {...register('price')} />
       </div>
 
-      <input
-        className='btn'
-        placeholder={'Drivmedel'}
-        {...register('fuelType')}
-      />
-      <input
-        className='btn'
-        placeholder={'Fordonstyp'}
-        {...register('vehicleType')}
-      />
+      <div className='label-input-error'>
+        <label htmlFor='year'>År</label>
+        <input className='btn' placeholder={'2021'} {...register('year')} />
+      </div>
+      <div className='label-input-error'>
+        <label htmlFor='mileage'>Miltal</label>
+        <input
+          className='btn'
+          placeholder={'Miltal'}
+          {...register('mileage')}
+        />
+      </div>
+
+      <div className='label-input-error'>
+        <label htmlFor='registrationNumber'>Registreringsnummer</label>
+        <input
+          className='btn'
+          placeholder={'ABC-123'}
+          {...register('registrationNumber')}
+        />
+      </div>
+
+      <div>
+        <div className='flex flex-row items-center gap-2'>
+          <input
+            {...register('gearbox', { required: true })}
+            value='automat'
+            id='automat'
+            type='radio'
+          />
+          <label htmlFor='automat'>Automat</label>
+        </div>
+        <div className='flex flex-row items-center gap-2'>
+          <input
+            {...register('gearbox')}
+            value='manuell'
+            id='manuell'
+            type='radio'
+          />
+          <label htmlFor='manuell'>Manuell</label>
+        </div>
+        {errors.gearbox && <p className='errorMessage'>Växellåda saknas.</p>}
+      </div>
+
+      <div className='label-input-error'>
+        <label htmlFor='fuelType'>Drivmedel</label>
+        <input
+          className='btn'
+          placeholder={'Drivmedel'}
+          {...register('fuelType')}
+        />
+      </div>
+
+      <div className='label-input-error'>
+        <label htmlFor='vehicleType'>Fordonstyp</label>
+        <input
+          className='btn'
+          placeholder={'Fordonstyp'}
+          {...register('vehicleType')}
+        />
+      </div>
       <input className='btn' placeholder={'Färg'} {...register('color')} />
 
-      <textarea
-        className='btn'
-        placeholder={'Beskrivning'}
-        {...register('description')}
-      />
-      {/* <input className='btn' {...register('extraFeatures')} /> */}
+      <div className='label-input-error'>
+        <label htmlFor='description'>Beskrivning</label>
+        <textarea
+          className='btn'
+          placeholder={
+            'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa doloremque optio quibusdam, tempora voluptatem ea minima odit repudiandae deleniti similique porro placeat autem numquam consequuntur consectetur soluta deserunt possimus delectus?'
+          }
+          {...register('description')}
+        />
+      </div>
+
+      <div className='label-input-error'>
+        <label htmlFor='extraFeatures'>Extrafunktioner</label>
+        {fields.map((field, index) => (
+          <div className='flex flex-row gap-4' key={field.id}>
+            <input
+              className='flex-1'
+              {...register(`extraFeatures.${index}`)}
+              defaultValue={''}
+            />
+
+            <button type='button' onClick={() => remove(index)}>
+              Ta bort
+            </button>
+          </div>
+        ))}
+      </div>
+
+      <button type='button' onClick={() => append('')}>
+        Lägg till
+      </button>
 
       {idOnChange[0] && (
         <>

@@ -4,6 +4,28 @@ textarea {
   @apply py-2 px-3 !important;
   @apply rounded-sm;
 }
+input:not(type='checkbox'):not(type='radio'),
+textarea {
+  @apply w-full;
+}
+
+::placeholder {
+  @apply text-on-bg-lightest !important;
+  @apply text-base;
+  @apply font-normal;
+  @apply italic;
+}
+
+.label-input-error {
+  @apply flex flex-col;
+  @apply gap-2;
+}
+label {
+  @apply pl-2;
+  @apply text-lg;
+  @apply text-on-bg;
+  @apply font-light;
+}
 
 .tooltip {
   @apply relative;
@@ -33,4 +55,8 @@ textarea {
 .tooltip:not([data-tooltip='']):active:before,
 .tooltip:not([data-tooltip='']):hover:before {
   @apply opacity-100;
+}
+
+.errorMessage {
+  @apply text-error;
 }
