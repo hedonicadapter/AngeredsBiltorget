@@ -1,4 +1,4 @@
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, type RefObject } from 'react';
 import { useStore } from '@nanostores/react';
 import {
   resultFilters,
@@ -15,6 +15,8 @@ export default function Dropdown({
   disabled = false,
   multiple = false,
   selected = null,
+  onInputMount,
+  handleCheckboxChange,
 }: {
   title: string;
   options?: string[];
@@ -23,6 +25,8 @@ export default function Dropdown({
   disabled?: boolean;
   multiple?: boolean;
   selected?: string | null;
+  handleCheckboxChange?: (evt: React.ChangeEvent<HTMLInputElement>) => void;
+  onInputMount?: (ref: RefObject<HTMLInputElement>) => void;
 }) {
   const filterProperty = title.toLowerCase() as keyof typeof filterPropsSwedish;
 
@@ -59,16 +63,20 @@ export default function Dropdown({
           {disabled && selected ? selected : title}
         </div>
         <div className='overflow-y-auto h-min-content rounded-xl'>
-          {options?.map((option: string, index: number) => (
-            <div key={option}>
-              <OptionItem
-                selected={selected}
-                option={option}
-                index={index}
-                filterProperty={filterProperty}
-              />
-            </div>
-          ))}
+          {options?.map((option: string, index: number) => {
+            return (
+              <div key={option}>
+                <OptionItem
+                  checked={selected == option}
+                  option={option}
+                  index={index}
+                  filterProperty={filterProperty}
+                  handleCheckboxChange={handleCheckboxChange}
+                  onMount={onInputMount}
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
@@ -79,37 +87,28 @@ function OptionItem({
   filterProperty,
   index,
   option,
+  onMount,
+  handleCheckboxChange,
+  checked = false,
 }: {
   filterProperty: keyof typeof filterPropsSwedish;
   index: number;
   option: string;
+  onMount?: (ref: RefObject<HTMLInputElement>) => void;
+  handleCheckboxChange?: (evt: React.ChangeEvent<HTMLInputElement>) => void;
+  checked?: boolean;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const english = filterPropsSwedish[filterProperty];
-  const $resultFilters = useStore(resultFilters);
-
-  const handleCheckboxChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
-    const checkedValue = evt.target.nextSibling?.textContent;
-    const oldValues = $resultFilters[english as keyof ResultFilters];
-
-    const filters = new Set(
-      oldValues ? [...oldValues, checkedValue] : [checkedValue]
-    );
-
-    if (filters.has(checkedValue) && !evt.target.checked) {
-      filters.delete(checkedValue);
-    }
-    resultFilters.set({ ...$resultFilters, [english]: filters });
-  };
+  const english =
+    filterPropsSwedish[
+      filterProperty.toLowerCase() as keyof typeof filterPropsSwedish
+    ];
 
   useEffect(() => {
     if (!inputRef || !inputRef.current) return;
-    const value = inputRef.current.nextSibling?.textContent;
-    const exists = $resultFilters[english as keyof ResultFilters]?.has(value);
-
-    if (!exists) inputRef.current.checked = false;
-  }, [$resultFilters, inputRef]);
+    if (onMount) onMount(inputRef);
+  }, [inputRef]);
 
   return (
     <SCMotionDiv
@@ -126,6 +125,7 @@ function OptionItem({
         id={`${filterProperty}-${index}`}
         // keyof typeof? typescript moment
         value={english?.slice(0, 1).toUpperCase() + english?.slice(1)}
+        checked={checked}
       />
       <label
         onClick={() => inputRef.current?.click()}

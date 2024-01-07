@@ -212,7 +212,7 @@ export default function CarForm() {
         <label htmlFor='fuelType'>Drivmedel</label>
         <input
           className='btn'
-          placeholder={'Drivmedel'}
+          placeholder={'El, bensin, diesel, etanol, gas, hybrid'}
           {...register('fuelType')}
         />
       </div>
@@ -255,7 +255,7 @@ export default function CarForm() {
         ))}
       </div>
 
-      <button type='button' onClick={() => append('')}>
+      <button className='btn' type='button' onClick={() => append('')}>
         Lägg till
       </button>
 
