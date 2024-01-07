@@ -22,6 +22,7 @@ import {
   uploadBytes,
   listAll,
   getDownloadURL,
+  deleteObject,
 } from 'firebase/storage';
 import type { StorageReference } from 'firebase/storage';
 
@@ -122,7 +123,7 @@ export async function removeImageBackground(imageFile: File): Promise<Blob> {
   return imageBlob;
 }
 
-export async function postProductImage(
+export async function postProductFile(
   id: string,
   file: File,
   overwrite: boolean = true
@@ -158,6 +159,19 @@ export async function getProductFiles(id: string) {
     })
   );
   return fileURLs;
+}
+
+export async function deleteProductFile(fileName: string, productId: string) {
+  const storage = getStorage();
+  const fileRef = ref(storage, `products/${productId}/${fileName}`);
+
+  try {
+    await deleteObject(fileRef);
+
+    return true;
+  } catch (err) {
+    return false;
+  }
 }
 
 export async function getCompanyFiles() {

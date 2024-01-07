@@ -12,9 +12,17 @@ import { SCMotionDiv } from './MotionComponents';
 export default function Dropdown({
   title,
   options,
+  disabled = false,
+  multiple = false,
+  selected = null,
 }: {
   title: string;
   options?: string[];
+
+  // TODO: implement these
+  disabled?: boolean;
+  multiple?: boolean;
+  selected?: string | null;
 }) {
   const filterProperty = title.toLowerCase() as keyof typeof filterPropsSwedish;
 
@@ -35,7 +43,11 @@ export default function Dropdown({
       onBlur={() => filterContainerExpanded.set(false)}
       onMouseLeave={() => filterContainerExpanded.set(false)}
       ref={containerRef}
-      className='relative min-h-[calc(var(--golden-ratio)*1.4em)] z-[100]'
+      className={`relative min-h-[calc(var(--golden-ratio)*1.4em)] z-[100] ${
+        disabled
+          ? 'pointer-events-none opacity-40'
+          : 'pointer-events-auto opacity-100'
+      }`}
     >
       <div
         // TODO: funkar ej
@@ -43,11 +55,14 @@ export default function Dropdown({
         ref={dropdownRef}
         className=' btn dropdown absolute top-0 left-0 px-[calc(var(--golden-ratio)*0.3em)] max-h-[calc(var(--golden-ratio)*1.4em)] overflow-hidden flex flex-col gap-4'
       >
-        <div className='sticky top-[0.6px]  font-light'>{title}</div>
+        <div className='sticky top-[0.6px]  font-light'>
+          {disabled && selected ? selected : title}
+        </div>
         <div className='overflow-y-auto h-min-content rounded-xl'>
           {options?.map((option: string, index: number) => (
             <div key={option}>
               <OptionItem
+                selected={selected}
                 option={option}
                 index={index}
                 filterProperty={filterProperty}

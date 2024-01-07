@@ -1,0 +1,36 @@
+input,
+textarea {
+  @apply bg-surface !important;
+  @apply py-2 px-3 !important;
+  @apply rounded-sm;
+}
+
+.tooltip {
+  @apply relative;
+}
+
+.tooltip:before {
+  @apply absolute;
+  @apply text-base;
+  @apply bg-surface-dark;
+  @apply text-on-bg;
+  @apply px-2;
+  @apply py-1;
+  @apply rounded;
+  @apply opacity-0;
+  @apply transition-opacity;
+  @apply duration-300;
+  @apply ease-in-out;
+  @apply right-2;
+  @apply top-2;
+  @apply h-max;
+  @apply w-max;
+
+  @apply pointer-events-none;
+  content: attr(data-tooltip);
+}
+
+.tooltip:not([data-tooltip='']):active:before,
+.tooltip:not([data-tooltip='']):hover:before {
+  @apply opacity-100;
+}

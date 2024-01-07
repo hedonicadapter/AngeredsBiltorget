@@ -15,7 +15,7 @@ export default function Sidebar({ anchors }: { anchors?: any }) {
     >
       <div
         onClick={() => $sidebarOpen && sidebarOpen.set(false)}
-        className={`w-screen h-screen pointer-events-auto ${
+        className={`w-screen h-screen ${
           $sidebarOpen
             ? 'pointer-events-auto bg-bg-transparent backdrop-blur-md'
             : 'pointer-events-none bg-[#00000000]'
