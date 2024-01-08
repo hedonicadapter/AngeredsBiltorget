@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import type Car from '../../Models/Car';
 import {getProductFiles, getProducts} from '../../api';
 import ImageSlider from '../../components/ImageSlider.tsx';
+import DisplayImage from '../../components/DisplayImage.tsx';
 import '../../components/styles/product.css'
 import Layout from '../../layouts/Layout.astro';
 import {formatter} from '../../util/helpers'
@@ -36,10 +37,10 @@ const mainImage = files.find(file => file.name.startsWith('thumbnail'));
     <section id="product-container" class="flex flex-col w-screen h-screen gap-5 pt-32 md:p-0 md:gap-7 md:justify-center md:items-center justify-items-center text-on-bg-medium">
         <div class="flex flex-col w-full gap-4 mt-12 overflow-visible">
             <div class="md:relative md:max-w-[50vh] px-16">
-                <img class="md:fixed aspect-square md:top-0 md:left-0 md:bottom-0 md:right-0 object-cover w-[70vw] mx-auto h-auto md:w-[50vh] md:h-[50vh] md:m-auto overflow-visible md:z-[-20]" transition:name={`thumbnail-${product.id}`} src={(mainImage?.url || '/images/volvo.webp')} alt={`${product.title || product.make + ' ' + product.model} (car)`}/>
+                <DisplayImage {product} {mainImage} client:load/>
             </div>
             <div class="box-border flex flex-row w-screen gap-3 pt-4 pl-16 overflow-x-auto md:pt-0 h-36 md:hidden">
-                <ImageSlider {files} product={product as Car} /> 
+                <ImageSlider client:load {files} product={product as Car} /> 
             </div>
         </div>
         <div class=" h-full md:mt-[65vh] px-16 md:px-[16vw] lg:px-[20vw] xl:px-[24vw] w-full lg:[34rem] bg-bg-transparent-medium ">
@@ -54,7 +55,7 @@ const mainImage = files.find(file => file.name.startsWith('thumbnail'));
                 </div>
 
                 <div class="flex-row hidden max-w-full gap-3 overflow-x-auto md:flex md:h-20">
-                    <ImageSlider {files} product={product as Car} />
+                    <ImageSlider client:load {files} product={product as Car} />
                 </div>
 
                 <p class="pb-3 md:hidden">{product.description}</p>
