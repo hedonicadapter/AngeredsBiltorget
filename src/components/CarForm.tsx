@@ -9,6 +9,7 @@ import {
   getProductById,
   getProductFiles,
   deleteProductFile,
+  upsertProductFiles,
 } from '../api.ts';
 import { useForm, useFieldArray } from 'react-hook-form';
 import './styles/car-form.css';
@@ -26,14 +27,14 @@ export default function CarForm() {
     reset,
     setValue,
     getValues,
-  } = useForm<Car & { files: File[] | { name: string; url: string } }>();
+  } = useForm<Car & { files: File[] | { name: string; url: string }[] }>({
+    shouldUnregister: false,
+  });
 
   const { fields, append, remove } = useFieldArray({
     control,
     name: 'extraFeatures',
   });
-
-  console.log(errors);
 
   const makeModelOnChange = watch(['make', 'model']);
   const idOnChange = watch(['id']);
@@ -41,7 +42,7 @@ export default function CarForm() {
 
   const [isExistingProduct, setIsExistingProduct] = useState(false);
 
-  const registerFiles = register('files');
+  const { onChange, ref } = register('files');
 
   const handleIdBlur = async () => {
     const id = getValues('id');
@@ -52,7 +53,7 @@ export default function CarForm() {
         setIsExistingProduct(false);
         return;
       }
-
+      console.log('resetting');
       reset(res);
       setValue('id', id);
       setValue('gearbox', res.gearbox.toLowerCase());
@@ -60,17 +61,16 @@ export default function CarForm() {
     });
   };
 
-  const handleFilesOnChange = (evt: SyntheticEvent) => {
+  const handleFilesOnChange = (evt: any) => {
     const oldFiles = filesOnChange[0] ? Object.values(filesOnChange[0]) : null;
 
-    registerFiles.onChange(evt);
-
     const newFiles = Array.from(evt.target.files);
-    const allFiles = [...oldFiles, ...newFiles];
+    const allFiles = oldFiles ? [...oldFiles, ...newFiles] : newFiles;
 
     setValue('files', allFiles);
 
     evt.target.value = '';
+    onChange(evt);
   };
 
   const handleRemoveButtonClick = (fileName: string) => {
@@ -79,7 +79,7 @@ export default function CarForm() {
       : null;
     const newFiles = currentFiles?.filter((f) => f.name != fileName);
 
-    setValue('files', newFiles);
+    newFiles && setValue('files', newFiles);
 
     if (!isExistingProduct) return;
     const id = getValues('id');
@@ -88,12 +88,24 @@ export default function CarForm() {
     deleteProductFile(fileName, id);
   };
 
+  const handleRadioButtonChange = (
+    evt: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const checkedValue = evt.target.nextSibling?.textContent;
+    const currentFiles = filesOnChange[0]
+      ? Object.values(Object.values(filesOnChange[0]))
+      : null;
+  };
+
   useEffect(() => {
     if (!isExistingProduct) return;
 
-    const files = getProductFiles(getValues('id')).then((res) => {
-      if (!res) return;
+    const id = getValues('id');
+    if (!id) return;
 
+    getProductFiles(id).then((res) => {
+      if (!res) return;
+      console.log('setting files');
       setValue('files', res);
     });
   }, [isExistingProduct]);
@@ -101,7 +113,14 @@ export default function CarForm() {
   return (
     <form
       className='flex flex-col w-full mx-auto gap-6 p-6 rounded-md md:w-[60vw] bg-surface-dark'
-      onSubmit={handleSubmit((data) => console.log(data))}
+      onSubmit={handleSubmit((data) => {
+        const id = getValues('id');
+
+        if (!id) return;
+        console.log(data);
+
+        upsertProductFiles(id, data.files);
+      })}
     >
       <div
         className='tooltip label-input-error'
@@ -259,16 +278,15 @@ export default function CarForm() {
         Lägg till
       </button>
 
+      <input
+        className='btn'
+        type='file'
+        multiple
+        ref={ref}
+        onChange={handleFilesOnChange}
+      />
       {idOnChange[0] && (
         <>
-          <input
-            className='btn'
-            type='file'
-            multiple
-            {...registerFiles}
-            onChange={handleFilesOnChange}
-          />
-
           {filesOnChange[0] &&
             Object.values(filesOnChange[0])?.map((file) => {
               const isImage = file.url || file.type?.startsWith('image/');
@@ -296,6 +314,7 @@ export default function CarForm() {
                       multiple={false}
                       selected={isImage ? fileNameCapitalized : 'Annat'}
                       options={['Thumbnail', 'Huvudbild', 'Annat']}
+                      handleCheckboxChange={handleRadioButtonChange}
                     />
                     <button
                       type='button'

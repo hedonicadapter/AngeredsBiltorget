@@ -67,6 +67,7 @@ export default function Dropdown({
             return (
               <div key={option}>
                 <OptionItem
+                  multiple={multiple}
                   checked={selected == option}
                   option={option}
                   index={index}
@@ -84,6 +85,7 @@ export default function Dropdown({
 }
 
 function OptionItem({
+  multiple,
   filterProperty,
   index,
   option,
@@ -91,6 +93,7 @@ function OptionItem({
   handleCheckboxChange,
   checked = false,
 }: {
+  multiple?: boolean;
   filterProperty: keyof typeof filterPropsSwedish;
   index: number;
   option: string;
@@ -120,8 +123,8 @@ function OptionItem({
         ref={inputRef}
         onChange={handleCheckboxChange}
         className='custom-dropdown-checkbox accent-tertiary'
-        type='checkbox'
-        name={filterProperty}
+        type={multiple ? 'checkbox' : 'radio'}
+        name={multiple ? filterProperty : 'idk'}
         id={`${filterProperty}-${index}`}
         // keyof typeof? typescript moment
         value={english?.slice(0, 1).toUpperCase() + english?.slice(1)}

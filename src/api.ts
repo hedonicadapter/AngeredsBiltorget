@@ -15,6 +15,8 @@ import {
 } from 'firebase/firestore';
 import type { DocumentSnapshot, DocumentData } from 'firebase/firestore';
 
+import { ImageTypes } from './Models/UI';
+
 import {
   getStorage,
   ref,
@@ -131,18 +133,18 @@ export async function postProductFile(
   const storage = getStorage();
   let storageRef = ref(storage, `products/${id}/${file.name}`);
 
-  if (!overwrite) {
-    try {
-      await getMetadata(storageRef);
-    } catch (err) {
-      storageRef = ref(storage, `products/${id}/${file.name} (duplicate)`);
+  try {
+    if (!overwrite) {
+      const exists = await getMetadata(storageRef);
+      if (exists)
+        storageRef = ref(storage, `products/${id}/${file.name} (duplicate)`);
     }
+    await uploadBytes(storageRef, file);
+
+    return await getDownloadURL(storageRef);
+  } catch (err) {
+    console.error(err);
   }
-
-  //   TODO: error handling
-  await uploadBytes(storageRef, file);
-
-  return await getDownloadURL(storageRef);
 }
 
 export async function getProductFiles(id: string) {
@@ -154,11 +156,51 @@ export async function getProductFiles(id: string) {
   const fileURLs = await Promise.all(
     res.items.map(async (item: StorageReference) => {
       const fileUrl = await getDownloadURL(item);
+      const metadata = await getMetadata(item);
 
-      return { name: item.name, url: fileUrl };
+      return { name: item.name, url: fileUrl, md5hash: metadata.md5Hash };
     })
   );
   return fileURLs;
+}
+
+export async function upsertProductFiles(
+  id: string,
+  files: (
+    | (File & { md5Hash?: string })
+    | { name: string; url: string; md5Hash?: string }
+  )[]
+) {
+  const storage = getStorage();
+  const storageRef = ref(storage, `products/${id}`);
+
+  const filesArray = Object.values(files);
+  const filesToUpload = filesArray.filter((file) => !file.md5Hash);
+
+  const res = await listAll(storageRef);
+  res.items.forEach(async (item) => {
+    const metadata = await getMetadata(item);
+
+    const fileNameWithoutExtension = metadata.name.split('.')[0];
+
+    if (ImageTypes.includes(fileNameWithoutExtension)) {
+      if (
+        !filesToUpload.find(
+          (file) => file.name.split('.')[0] === fileNameWithoutExtension
+        )
+      ) {
+        await deleteObject(item);
+      }
+    }
+  });
+
+  await Promise.all(
+    filesToUpload.map(async (file) => {
+      if (file instanceof File) {
+        postProductFile(id, file, true);
+      }
+    })
+  );
 }
 
 export async function deleteProductFile(fileName: string, productId: string) {

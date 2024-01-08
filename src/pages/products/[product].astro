@@ -38,7 +38,7 @@ const mainImage = files.find(file => file.name.startsWith('thumbnail'));
             <div class="md:relative md:max-w-[50vh] px-16">
                 <img class="md:fixed aspect-square md:top-0 md:left-0 md:bottom-0 md:right-0 object-cover w-[70vw] mx-auto h-auto md:w-[50vh] md:h-[50vh] md:m-auto overflow-visible md:z-[-20]" transition:name={`thumbnail-${product.id}`} src={(mainImage?.url || '/images/volvo.webp')} alt={`${product.title || product.make + ' ' + product.model} (car)`}/>
             </div>
-            <div class="box-border flex flex-row w-screen pl-16 overflow-x-auto h-36 md:hidden">
+            <div class="box-border flex flex-row w-screen gap-3 pt-4 pl-16 overflow-x-auto md:pt-0 h-36 md:hidden">
                 <ImageSlider {files} product={product as Car} /> 
             </div>
         </div>
@@ -53,7 +53,7 @@ const mainImage = files.find(file => file.name.startsWith('thumbnail'));
                     <p class="text-2xl font-normal md:text-3xl text-on-bg-light">{product.year}</p>
                 </div>
 
-                <div class="hidden md:block md:h-20">
+                <div class="flex-row hidden max-w-full gap-3 overflow-x-auto md:flex md:h-20">
                     <ImageSlider {files} product={product as Car} />
                 </div>
 
