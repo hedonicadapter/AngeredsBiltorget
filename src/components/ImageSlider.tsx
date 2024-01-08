@@ -3,13 +3,26 @@ import type Car from '../Models/Car';
 import { SCMotionDiv } from './MotionComponents';
 
 export default function ImageSlider(props: { files: any; product: Car }) {
-  const [selected, setSelected] = useState(0);
+  const initialImageIndex = props.files?.findIndex(
+    (f) => f.name.startsWith('main') || f.name.startsWith('thumbnail')
+  );
+  const [selected, setSelected] = useState(
+    initialImageIndex != -1 ? initialImageIndex : 0
+  );
 
   useEffect(() => {
     const imageSelectionEvent = new CustomEvent('image-selection', {
-      detail: { src: props.files[selected].url },
+      detail: { src: props.files[selected]?.url },
     });
     document.dispatchEvent(imageSelectionEvent);
+
+    console.log(document.querySelector(`#image-${selected}`));
+
+    document.querySelector(`#image-${selected}`)?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+      inline: 'center',
+    });
   }, [selected]);
 
   return props.files?.map((file: any, index: number) => (
@@ -19,6 +32,7 @@ export default function ImageSlider(props: { files: any; product: Car }) {
       className={`z-50 w-auto h-full rounded-sm aspect-video outline outline-3 ${
         selected == index ? 'outline-outline' : ' outline-transparent'
       }`}
+      id={'image-' + index}
       key={index}
       onClick={() => setSelected(index)}
     >
