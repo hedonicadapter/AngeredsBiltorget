@@ -14,6 +14,7 @@ import {
   getCountFromServer,
 } from 'firebase/firestore';
 import type { DocumentSnapshot, DocumentData } from 'firebase/firestore';
+import { splitByCondition } from './util/helpers';
 
 import { ImageTypes } from './Models/UI';
 
@@ -171,36 +172,44 @@ export async function upsertProductFiles(
     | { name: string; url: string; md5Hash?: string }
   )[]
 ) {
-  const storage = getStorage();
-  const storageRef = ref(storage, `products/${id}`);
-
-  const filesArray = Object.values(files);
-  const filesToUpload = filesArray.filter((file) => !file.md5Hash);
-
-  const res = await listAll(storageRef);
-  res.items.forEach(async (item) => {
-    const metadata = await getMetadata(item);
-
-    const fileNameWithoutExtension = metadata.name.split('.')[0];
-
-    if (ImageTypes.includes(fileNameWithoutExtension)) {
-      if (
-        !filesToUpload.find(
-          (file) => file.name.split('.')[0] === fileNameWithoutExtension
-        )
-      ) {
-        await deleteObject(item);
-      }
-    }
-  });
-
-  await Promise.all(
-    filesToUpload.map(async (file) => {
-      if (file instanceof File) {
-        postProductFile(id, file, true);
-      }
-    })
-  );
+  // const storage = getStorage();
+  // const storageRef = ref(storage, `products/${id}`);
+  // const filesArray = Object.values(files);
+  // const uploadedAndUnuploaded = splitByCondition(
+  //   filesArray,
+  //   (file) => !file.md5Hash
+  // ); // if a file has an md5hash its been added by firebase storage, so no need to reupload
+  // const uploadedFiles = uploadedAndUnuploaded[0];
+  // const unuploadedFiles = uploadedAndUnuploaded[1];
+  // const res = await listAll(storageRef);
+  // res.items.forEach(async (item) => {
+  //   const metadata = await getMetadata(item);
+  //   const fileNameWithoutExtension = metadata.name.split('.')[0];
+  //   if (ImageTypes.includes(fileNameWithoutExtension)) {
+  //     if (
+  //       !unuploadedFiles.find(
+  //         (file) => file.name.split('.')[0] === fileNameWithoutExtension
+  //       )
+  //     ) {
+  //       await deleteObject(item);
+  //     }
+  //     uploadedFiles.forEach(async (file) => {
+  //       const uploadedNameWithoutExtension = file.name.split('.')[0];
+  //       if (uploadedNameWithoutExtension === fileNameWithoutExtension) {
+  //         if (file.md5Hash !== metadata.name) {
+  //           await deleteObject(item);
+  //         }
+  //       }
+  //     });
+  //   }
+  // });
+  // await Promise.all(
+  //   filesToUpload.map(async (file) => {
+  //     if (file instanceof File) {
+  //       postProductFile(id, file, true);
+  //     }
+  //   })
+  // );
 }
 
 export async function deleteProductFile(fileName: string, productId: string) {

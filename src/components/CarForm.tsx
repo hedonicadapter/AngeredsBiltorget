@@ -53,7 +53,7 @@ export default function CarForm() {
         setIsExistingProduct(false);
         return;
       }
-      console.log('resetting');
+
       reset(res);
       setValue('id', id);
       setValue('gearbox', res.gearbox.toLowerCase());
@@ -91,10 +91,24 @@ export default function CarForm() {
   const handleRadioButtonChange = (
     evt: React.ChangeEvent<HTMLInputElement>
   ) => {
+    const { file } = evt.detail;
+
     const checkedValue = evt.target.nextSibling?.textContent;
     const currentFiles = filesOnChange[0]
       ? Object.values(Object.values(filesOnChange[0]))
       : null;
+
+    const newFiles = currentFiles?.map((f) => {
+      if (f.name == file) {
+        const extension = f.name.split('.')[1];
+
+        if (checkedValue == 'Huvudbild') f.name = 'main.' + extension;
+        else if (checkedValue == 'Thumbnail') f.name = 'thumbnail.' + extension;
+      }
+      return f;
+    });
+
+    setValue('files', newFiles);
   };
 
   useEffect(() => {
@@ -117,7 +131,6 @@ export default function CarForm() {
         const id = getValues('id');
 
         if (!id) return;
-        console.log(data);
 
         upsertProductFiles(id, data.files);
       })}
@@ -278,17 +291,19 @@ export default function CarForm() {
         Lägg till
       </button>
 
-      <input
-        className='btn'
-        type='file'
-        multiple
-        ref={ref}
-        onChange={handleFilesOnChange}
-      />
       {idOnChange[0] && (
         <>
+          <input
+            className='btn'
+            type='file'
+            multiple
+            ref={ref}
+            onChange={handleFilesOnChange}
+          />
           {filesOnChange[0] &&
             Object.values(filesOnChange[0])?.map((file) => {
+              if (!file) return;
+
               const isImage = file.url || file.type?.startsWith('image/');
               const fileNameWithoutExtension = file.name?.split('.')[0];
               const fileNameCapitalized = // storage files are named by their type e.g. 'thumbnail'
@@ -305,7 +320,7 @@ export default function CarForm() {
                         src={file.url ?? URL.createObjectURL(file)}
                       />
                     )}
-                    <p>{file.name}</p>
+                    <p className='text-nowrap'>{file.name}</p>
                   </div>
                   <div>
                     <Dropdown
@@ -314,7 +329,10 @@ export default function CarForm() {
                       multiple={false}
                       selected={isImage ? fileNameCapitalized : 'Annat'}
                       options={['Thumbnail', 'Huvudbild', 'Annat']}
-                      handleCheckboxChange={handleRadioButtonChange}
+                      handleOnChange={(evt) => {
+                        evt.detail = { file: file.name };
+                        handleRadioButtonChange(evt);
+                      }}
                     />
                     <button
                       type='button'

@@ -1,4 +1,4 @@
-import { useRef, useEffect, type RefObject } from 'react';
+import { useRef, useEffect, type RefObject, useState } from 'react';
 import { useStore } from '@nanostores/react';
 import {
   resultFilters,
@@ -16,19 +16,18 @@ export default function Dropdown({
   multiple = false,
   selected = null,
   onInputMount,
-  handleCheckboxChange,
+  handleOnChange,
 }: {
   title: string;
   options?: string[];
 
-  // TODO: implement these
   disabled?: boolean;
   multiple?: boolean;
   selected?: string | null;
-  handleCheckboxChange?: (evt: React.ChangeEvent<HTMLInputElement>) => void;
+  handleOnChange?: (evt: React.ChangeEvent<HTMLInputElement>) => void;
   onInputMount?: (ref: RefObject<HTMLInputElement>) => void;
 }) {
-  const filterProperty = title.toLowerCase() as keyof typeof filterPropsSwedish;
+  const [dropdownHovered, setDropdownHovered] = useState(false);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -42,12 +41,12 @@ export default function Dropdown({
 
   return (
     <div
-      onFocus={() => filterContainerExpanded.set(true)}
-      onMouseEnter={() => filterContainerExpanded.set(true)}
-      onBlur={() => filterContainerExpanded.set(false)}
-      onMouseLeave={() => filterContainerExpanded.set(false)}
+      onClick={(evt) => {
+        evt.stopPropagation();
+        setDropdownHovered(!dropdownHovered);
+      }}
       ref={containerRef}
-      className={`relative min-h-[calc(var(--golden-ratio)*1.4em)] z-[100] ${
+      className={`relative min-h-[calc(var(--golden-ratio)*1.4em)] ${
         disabled
           ? 'pointer-events-none opacity-40'
           : 'pointer-events-auto opacity-100'
@@ -57,7 +56,9 @@ export default function Dropdown({
         // TODO: funkar ej
         onScroll={(evt) => evt.stopPropagation()}
         ref={dropdownRef}
-        className=' btn dropdown absolute top-0 left-0 px-[calc(var(--golden-ratio)*0.3em)] max-h-[calc(var(--golden-ratio)*1.4em)] overflow-hidden flex flex-col gap-4'
+        className={`btn dropdown ${
+          dropdownHovered ? 'dropdown-hovered' : ''
+        } absolute top-0 left-0 px-[calc(var(--golden-ratio)*0.3em)] max-h-[calc(var(--golden-ratio)*1.4em)] overflow-hidden flex flex-col gap-4`}
       >
         <div className='sticky top-[0.6px]  font-light'>
           {disabled && selected ? selected : title}
@@ -71,8 +72,8 @@ export default function Dropdown({
                   checked={selected == option}
                   option={option}
                   index={index}
-                  filterProperty={filterProperty}
-                  handleCheckboxChange={handleCheckboxChange}
+                  dropdownTitle={title}
+                  handleOnChange={handleOnChange}
                   onMount={onInputMount}
                 />
               </div>
@@ -86,27 +87,22 @@ export default function Dropdown({
 
 function OptionItem({
   multiple,
-  filterProperty,
+  dropdownTitle,
   index,
   option,
   onMount,
-  handleCheckboxChange,
+  handleOnChange,
   checked = false,
 }: {
   multiple?: boolean;
-  filterProperty: keyof typeof filterPropsSwedish;
+  dropdownTitle: string;
   index: number;
   option: string;
   onMount?: (ref: RefObject<HTMLInputElement>) => void;
-  handleCheckboxChange?: (evt: React.ChangeEvent<HTMLInputElement>) => void;
+  handleOnChange?: (evt: React.ChangeEvent<HTMLInputElement>) => void;
   checked?: boolean;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const english =
-    filterPropsSwedish[
-      filterProperty.toLowerCase() as keyof typeof filterPropsSwedish
-    ];
 
   useEffect(() => {
     if (!inputRef || !inputRef.current) return;
@@ -121,19 +117,18 @@ function OptionItem({
     >
       <input
         ref={inputRef}
-        onChange={handleCheckboxChange}
+        onChange={handleOnChange}
         className='custom-dropdown-checkbox accent-tertiary'
         type={multiple ? 'checkbox' : 'radio'}
-        name={multiple ? filterProperty : 'idk'}
-        id={`${filterProperty}-${index}`}
-        // keyof typeof? typescript moment
-        value={english?.slice(0, 1).toUpperCase() + english?.slice(1)}
+        name={multiple ? dropdownTitle : 'singularity'}
+        id={`${dropdownTitle}-${index}`}
+        value={dropdownTitle}
         checked={checked}
       />
       <label
         onClick={() => inputRef.current?.click()}
         className='flex flex-row items-center justify-between font-light label-and-input'
-        htmlFor={filterProperty}
+        htmlFor={dropdownTitle}
       >
         {option}
       </label>

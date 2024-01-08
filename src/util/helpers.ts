@@ -75,3 +75,18 @@ export const formatter = new Intl.NumberFormat('sv-SE', {
   style: 'currency',
   currency: 'SEK',
 });
+
+export const splitByCondition = (
+  array: any[],
+  conditionFn: (item: any) => boolean
+) => {
+  const pass: any[] = [];
+  const fail: any[] = [];
+
+  array.forEach((item) => {
+    if (conditionFn(item)) pass.push(item);
+    else fail.push(item);
+  });
+
+  return [pass, fail];
+};

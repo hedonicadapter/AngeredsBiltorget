@@ -54,14 +54,14 @@ export default function ButtonsContainer(props: { child?: any }) {
       <Dropdown
         title='Årsmodell'
         options={['2019', '2020', '2021', '2022']}
-        handleCheckboxChange={handleCheckboxChange}
+        handleOnChange={handleCheckboxChange}
         onInputMount={onInputMount}
         multiple
       ></Dropdown>
       <Dropdown
         title='Märke'
         options={['Volvo', 'Saab', 'Mercedes', 'Audi']}
-        handleCheckboxChange={handleCheckboxChange}
+        handleOnChange={handleCheckboxChange}
         onInputMount={onInputMount}
         multiple
       ></Dropdown>

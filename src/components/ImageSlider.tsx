@@ -16,8 +16,6 @@ export default function ImageSlider(props: { files: any; product: Car }) {
     });
     document.dispatchEvent(imageSelectionEvent);
 
-    console.log(document.querySelector(`#image-${selected}`));
-
     document.querySelector(`#image-${selected}`)?.scrollIntoView({
       behavior: 'smooth',
       block: 'nearest',
