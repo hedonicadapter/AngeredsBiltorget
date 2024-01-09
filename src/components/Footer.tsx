@@ -75,7 +75,7 @@ const Logo = () => {
         alt={`Company logo`}
         width='80'
         height='80'
-        className='min-w-fit min-h-fit'
+        className='logo min-w-fit min-h-fit'
       />
     </SCMotionDiv>
   );
@@ -165,7 +165,7 @@ export default function Footer({
   placesApiKey?: string;
 }) {
   return (
-    <footer className='relative bottom-0 z-[-1] flex flex-col justify-between mt-auto text-on-bg bg-bg pt-96 pb-4'>
+    <footer className='relative bottom-0 z-[-1] flex flex-col justify-between mt-auto text-on-bg pt-96 pb-4'>
       <WhileInViewTransitionWrapper>
         <div className='flex flex-row justify-center pt-6 pb-8 md:w-full lg:w-grp-half-7 md:mx-auto md:block'>
           <div
@@ -248,7 +248,7 @@ export default function Footer({
       </WhileInViewTransitionWrapper>
 
       <div className='flex flex-col h-9 justify-evenly mt-7 '>
-        <hr className='border-surface-variant' />
+        <hr className='border-surface-dark' />
         <div className='flex flex-col-reverse justify-between gap-2 text-sm text-on-bg-light px-7 lg:sides md:sides sm:flex-row md:flex-row lg:flex-row'>
           <div>
             © {new Date().getFullYear()}&nbsp;{companyInfo?.name}

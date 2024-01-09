@@ -54,6 +54,16 @@ body {
   background-size: 100% 150vh;
 }
 
+footer {
+  background: radial-gradient(
+    at top,
+    var(--bg) 30%,
+    var(--surface-variant) 100%
+  );
+  background-position: center;
+  background-size: 200% 100%;
+}
+
 /* Cut-out text effect */
 /* svg {
   width: 100%;

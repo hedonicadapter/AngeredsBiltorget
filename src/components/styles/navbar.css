@@ -3,7 +3,6 @@
   height: calc(var(--golden-ratio) * 1.1em);
   max-width: calc(var(--golden-ratio) * 50px);
   max-height: calc(var(--golden-ratio) * 50px);
-  filter: saturate(0.6) brightness(1.4) hue-rotate(35deg);
 }
 
 /* TODO: figure out a good design */

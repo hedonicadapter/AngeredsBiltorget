@@ -27,7 +27,7 @@
       <hr />
       <!-- TODO: not entirely responsive -->
       <div
-        class="tags-and-result-count-container flex flex-row justify-between items-start"
+        class="flex flex-row items-start justify-between tags-and-result-count-container"
       >
         <TagsContainer client:only/>
         <div class="results-count">
@@ -36,7 +36,7 @@
         </div>
       </div>
     </search>
-    <div class="w-full mt-[calc(var(--navbar-height)-4em)]">
+    <div class="w-full mt-[calc(var(--navbar-height)-4em)] pb-72">
       <CarsContainer client:load/>
     </div>
   </section>

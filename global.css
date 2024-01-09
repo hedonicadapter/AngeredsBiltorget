@@ -91,6 +91,10 @@ html {
   text-edge: cap;
 }
 
+.logo {
+  filter: saturate(0.6) brightness(1.4) hue-rotate(35deg);
+}
+
 body {
   overscroll-behavior: none;
   overflow-y: scroll;

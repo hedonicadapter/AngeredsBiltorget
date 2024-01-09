@@ -10,6 +10,7 @@ import {
   getProductFiles,
   deleteProductFile,
   upsertProductFiles,
+  upsertProduct,
 } from '../api.ts';
 import { useForm, useFieldArray } from 'react-hook-form';
 import './styles/car-form.css';
@@ -109,6 +110,14 @@ export default function CarForm() {
     setValue('files', newFiles);
   };
 
+  const submitHandler = async (data) => {
+    const id = getValues('id');
+    if (!id) return;
+
+    await upsertProduct(data);
+    await upsertProductFiles(id, data.files);
+  };
+
   useEffect(() => {
     if (!isExistingProduct) return;
 
@@ -124,13 +133,7 @@ export default function CarForm() {
   return (
     <form
       className='flex flex-col w-full mx-auto gap-6 p-6 rounded-md md:w-[60vw] bg-surface-dark'
-      onSubmit={handleSubmit((data) => {
-        const id = getValues('id');
-
-        if (!id) return;
-
-        upsertProductFiles(id, data.files);
-      })}
+      onSubmit={handleSubmit(submitHandler)}
     >
       <div
         className='tooltip label-input-error'

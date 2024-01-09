@@ -1,3 +1,13 @@
+footer {
+  background: radial-gradient(
+    at top,
+    transparent 30%,
+    var(--surface-variant) 100%
+  );
+  background-position: center;
+  background-size: 200% 100%;
+}
+
 .footer-anchor {
   @apply flex;
   @apply flex-row;

@@ -166,6 +166,7 @@ export async function getProductFiles(id: string) {
   return fileURLs;
 }
 
+// TODO: make more readable
 export async function upsertProductFiles(
   id: string,
   files: (
@@ -191,6 +192,7 @@ export async function upsertProductFiles(
 
       const fileNameWithoutExtension = metadata.name.split('.')[0];
       if (ImageTypes.includes(fileNameWithoutExtension)) {
+        // if the file is a "thumbnail" or "main" image
         if (
           !unuploadedFiles.find(
             (file) => file.name.split('.')[0] === fileNameWithoutExtension
@@ -201,6 +203,8 @@ export async function upsertProductFiles(
 
         for (const file of uploadedFiles) {
           const uploadedNameWithoutExtension = file.name.split('.')[0];
+
+          // replace file with same name but different content
           if (uploadedNameWithoutExtension === fileNameWithoutExtension) {
             if (file.md5Hash !== metadata.md5Hash) {
               const previouslyUploadedFileBlob = await fetch(file.url).then(
