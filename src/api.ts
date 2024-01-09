@@ -26,6 +26,7 @@ import {
   listAll,
   getDownloadURL,
   deleteObject,
+  getBlob,
 } from 'firebase/storage';
 import type { StorageReference } from 'firebase/storage';
 
@@ -172,44 +173,58 @@ export async function upsertProductFiles(
     | { name: string; url: string; md5Hash?: string }
   )[]
 ) {
-  // const storage = getStorage();
-  // const storageRef = ref(storage, `products/${id}`);
-  // const filesArray = Object.values(files);
-  // const uploadedAndUnuploaded = splitByCondition(
-  //   filesArray,
-  //   (file) => !file.md5Hash
-  // ); // if a file has an md5hash its been added by firebase storage, so no need to reupload
-  // const uploadedFiles = uploadedAndUnuploaded[0];
-  // const unuploadedFiles = uploadedAndUnuploaded[1];
-  // const res = await listAll(storageRef);
-  // res.items.forEach(async (item) => {
-  //   const metadata = await getMetadata(item);
-  //   const fileNameWithoutExtension = metadata.name.split('.')[0];
-  //   if (ImageTypes.includes(fileNameWithoutExtension)) {
-  //     if (
-  //       !unuploadedFiles.find(
-  //         (file) => file.name.split('.')[0] === fileNameWithoutExtension
-  //       )
-  //     ) {
-  //       await deleteObject(item);
-  //     }
-  //     uploadedFiles.forEach(async (file) => {
-  //       const uploadedNameWithoutExtension = file.name.split('.')[0];
-  //       if (uploadedNameWithoutExtension === fileNameWithoutExtension) {
-  //         if (file.md5Hash !== metadata.name) {
-  //           await deleteObject(item);
-  //         }
-  //       }
-  //     });
-  //   }
-  // });
-  // await Promise.all(
-  //   filesToUpload.map(async (file) => {
-  //     if (file instanceof File) {
-  //       postProductFile(id, file, true);
-  //     }
-  //   })
-  // );
+  const storage = getStorage();
+  const storageRef = ref(storage, `products/${id}`);
+  const filesArray = Object.values(files);
+  const uploadedAndUnuploaded = splitByCondition(
+    filesArray,
+    (file) => !file.md5Hash
+  ); // if a file has an md5hash its been added by firebase storage, so no need to reupload
+  const uploadedFiles = uploadedAndUnuploaded[0];
+  const unuploadedFiles = uploadedAndUnuploaded[1];
+
+  const res = await listAll(storageRef);
+
+  if (res.items?.length > 0) {
+    for (const item of res.items) {
+      const metadata = await getMetadata(item);
+
+      const fileNameWithoutExtension = metadata.name.split('.')[0];
+      if (ImageTypes.includes(fileNameWithoutExtension)) {
+        if (
+          !unuploadedFiles.find(
+            (file) => file.name.split('.')[0] === fileNameWithoutExtension
+          )
+        ) {
+          await deleteObject(item);
+        }
+
+        for (const file of uploadedFiles) {
+          const uploadedNameWithoutExtension = file.name.split('.')[0];
+          if (uploadedNameWithoutExtension === fileNameWithoutExtension) {
+            if (file.md5Hash !== metadata.md5Hash) {
+              const previouslyUploadedFileBlob = await fetch(file.url).then(
+                (r) => r.blob()
+              );
+              const previouslyUploadedFile = new File(
+                [previouslyUploadedFileBlob],
+                file.name
+              );
+
+              await deleteObject(item);
+              await uploadBytes(storageRef, previouslyUploadedFile);
+            }
+          }
+        }
+      }
+    }
+  }
+
+  for (const file of unuploadedFiles) {
+    if (file instanceof File) {
+      await postProductFile(id, file, true);
+    }
+  }
 }
 
 export async function deleteProductFile(fileName: string, productId: string) {

@@ -27,9 +27,7 @@ export default function CarForm() {
     reset,
     setValue,
     getValues,
-  } = useForm<Car & { files: File[] | { name: string; url: string }[] }>({
-    shouldUnregister: false,
-  });
+  } = useForm<Car & { files: File[] | { name: string; url: string }[] }>();
 
   const { fields, append, remove } = useFieldArray({
     control,
@@ -119,7 +117,6 @@ export default function CarForm() {
 
     getProductFiles(id).then((res) => {
       if (!res) return;
-      console.log('setting files');
       setValue('files', res);
     });
   }, [isExistingProduct]);
