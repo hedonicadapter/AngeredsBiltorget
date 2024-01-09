@@ -31,11 +31,13 @@ import {
 import type { StorageReference } from 'firebase/storage';
 
 import type Car from './Models/Car';
+import type Appraisal from './Models/Appraisal';
 import type { ResultFilters } from './nanoStores/resultStore';
 
 const placesUrl = 'https://places.googleapis.com/v1/places/';
 
 const productCollection = collection(db, 'products');
+const appraisalCollection = collection(db, 'appraisals');
 const companyInfoRef = doc(db, 'company', 'companyInfo');
 
 export const getCompanyInfo = async () => {
@@ -98,6 +100,21 @@ export async function upsertProduct(product: Car) {
   } else {
     await addDoc(productCollection, product);
   }
+}
+
+// TODO: user facing error messages
+export async function addAppraisal(appraisal: Appraisal) {
+  await addDoc(appraisalCollection, appraisal);
+}
+
+export async function getAppraisals() {
+  const snapshot = await getDocs(appraisalCollection);
+  const appraisals: (DocumentData | undefined)[] = [];
+  snapshot.forEach((doc: DocumentSnapshot) => {
+    appraisals.push(doc.data());
+  });
+
+  return appraisals;
 }
 
 export async function deleteProduct(id: string) {

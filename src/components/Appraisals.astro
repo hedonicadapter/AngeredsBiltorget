@@ -1,0 +1,27 @@
+---
+const appraisals = getAppraisals();
+---
+
+
+        {appraisals?.map(appraisal=>{
+            return (
+                <div className="appraisal">
+                    <div className="appraisal__header">
+                        <div className="appraisal__header__title">
+                            <h3>{appraisal.title}</h3>
+                        </div>
+                        <div className="appraisal__header__date">
+                            <p>{appraisal.date}</p>
+                        </div>
+                    </div>
+                    <div className="appraisal__body">
+                        <div className="appraisal__body__content">
+                            <p>{appraisal.content}</p>
+                        </div>
+                        <div className="appraisal__body__signature">
+                            <p>{appraisal.signature}</p>
+                        </div>
+                    </div>
+                </div>
+            )
+        })}

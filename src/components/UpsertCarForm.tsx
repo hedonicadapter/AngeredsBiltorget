@@ -13,12 +13,13 @@ import {
   upsertProduct,
 } from '../api.ts';
 import { useForm, useFieldArray } from 'react-hook-form';
-import './styles/car-form.css';
+import './styles/forms.css';
 import { motion } from 'framer-motion';
 import type Car from '../Models/Car.ts';
 import Dropdown from './Dropdown.tsx';
+import { InputLabelAndError } from './FormComponents.tsx';
 
-export default function CarForm() {
+export default function UpsertCarForm() {
   const {
     register,
     control,
@@ -132,7 +133,7 @@ export default function CarForm() {
 
   return (
     <form
-      className='flex flex-col w-full mx-auto gap-6 p-6 rounded-md md:w-[60vw] bg-surface-dark'
+      className=' w-full mx-auto   md:w-[60vw] '
       onSubmit={handleSubmit(submitHandler)}
     >
       <div
@@ -147,116 +148,108 @@ export default function CarForm() {
           onBlur={handleIdBlur}
         />
       </div>
-      <div className='label-input-error'>
-        <label htmlFor='make'>Fabrikat/bilmärke</label>
-        <input
-          className='btn'
-          placeholder={'Hyundai'}
-          {...register('make', { required: true })}
-        />
 
-        {errors.make && (
-          <p className='errorMessage'>Fabrikatet/bilmärket saknas.</p>
-        )}
-      </div>
+      <InputLabelAndError
+        register={register}
+        svenska='Fabrikat/bilmärke'
+        engelska='make'
+        registerOptions={{ required: true }}
+        error={errors.make}
+        placeholder='Hyundai'
+      />
 
-      <div class='label-input-error'>
-        <label htmlFor='model'>Modell</label>
-        <input
-          className='btn'
-          placeholder={'Grandeur Heritage Series'}
-          {...register('model', { required: true })}
-        />
-        {errors.make && <p className='errorMessage'>Modell saknas.</p>}
-      </div>
+      <InputLabelAndError
+        register={register}
+        svenska='Modell'
+        engelska='model'
+        registerOptions={{ required: true }}
+        error={errors.model}
+        placeholder='Grandeur Heritage Series'
+      />
 
-      <div
-        className='tooltip label-input-error'
-        data-tooltip={
+      <InputLabelAndError
+        register={register}
+        svenska='Titel'
+        engelska='title'
+        tooltipText={
           makeModelOnChange?.some((x) => x)
             ? `Lämna tom så blir titeln ${
                 makeModelOnChange[0] + ' ' + makeModelOnChange[1]
               }`
             : ''
         }
-      >
-        <label htmlFor='title'>Titel</label>
-        <input
-          className='w-full btn'
-          placeholder={'Titel'}
-          {...register('title')}
-        />
-      </div>
+      />
 
-      <div
-        className='tooltip label-input-error'
-        data-tooltip='Bara siffror, inget annat.'
-      >
-        <label htmlFor='price'>Pris</label>
-        <input className='btn' placeholder={'Pris'} {...register('price')} />
-      </div>
+      <InputLabelAndError
+        register={register}
+        svenska='Pris'
+        engelska='price'
+        placeholder='123456789'
+        tooltipText='Bara siffror, inget annat.'
+      />
 
-      <div className='label-input-error'>
-        <label htmlFor='year'>År</label>
-        <input className='btn' placeholder={'2021'} {...register('year')} />
-      </div>
-      <div className='label-input-error'>
-        <label htmlFor='mileage'>Miltal</label>
-        <input
-          className='btn'
-          placeholder={'Miltal'}
-          {...register('mileage')}
-        />
-      </div>
+      <InputLabelAndError
+        register={register}
+        svenska='År'
+        engelska='year'
+        placeholder='2021'
+      />
 
-      <div className='label-input-error'>
-        <label htmlFor='registrationNumber'>Registreringsnummer</label>
-        <input
-          className='btn'
-          placeholder={'ABC-123'}
-          {...register('registrationNumber')}
-        />
-      </div>
+      <InputLabelAndError
+        register={register}
+        svenska='Miltal'
+        engelska='mileage'
+        placeholder='12345'
+      />
+
+      <InputLabelAndError
+        register={register}
+        svenska='Registreringsnummer'
+        engelska='registrationNumber'
+        placeholder='ABC-123'
+      />
 
       <div>
-        <div className='flex flex-row items-center gap-2'>
-          <input
-            {...register('gearbox', { required: true })}
-            value='automat'
-            id='automat'
-            type='radio'
-          />
-          <label htmlFor='automat'>Automat</label>
+        <div className='flex flex-row flex-wrap items-center justify-between'>
+          <div>
+            <div className='flex flex-row items-center gap-2'>
+              <input
+                {...register('gearbox', { required: true })}
+                value='automat'
+                id='automat'
+                type='radio'
+              />
+              <label htmlFor='automat'>Automat</label>
+            </div>
+            <div className='flex flex-row items-center gap-2'>
+              <input
+                {...register('gearbox')}
+                value='manuell'
+                id='manuell'
+                type='radio'
+              />
+              <label htmlFor='manuell'>Manuell</label>
+            </div>
+          </div>
+
+          {errors.gearbox && <p className='errorMessage'>Växellåda saknas.</p>}
         </div>
-        <div className='flex flex-row items-center gap-2'>
-          <input
-            {...register('gearbox')}
-            value='manuell'
-            id='manuell'
-            type='radio'
-          />
-          <label htmlFor='manuell'>Manuell</label>
-        </div>
-        {errors.gearbox && <p className='errorMessage'>Växellåda saknas.</p>}
       </div>
 
-      <div className='label-input-error'>
-        <label htmlFor='fuelType'>Drivmedel</label>
-        <input
-          className='btn'
-          placeholder={'El, bensin, diesel, etanol, gas, hybrid'}
-          {...register('fuelType')}
-        />
-      </div>
+      <InputLabelAndError
+        register={register}
+        svenska='Drivmedel'
+        engelska='fuelType'
+        placeholder='El, bensin, diesel, etanol, gas, hybrid'
+      />
 
-      <div className='label-input-error'>
-        <label htmlFor='vehicleType'>Fordonstyp</label>
-        <input
-          className='btn'
-          placeholder={'Fordonstyp'}
-          {...register('vehicleType')}
-        />
-      </div>
+      <InputLabelAndError
+        register={register}
+        svenska='Fordonstyp'
+        engelska='vehicleType'
+        placeholder='El, bensin, diesel, etanol, gas, hybrid'
+      />
+
       <input className='btn' placeholder={'Färg'} {...register('color')} />
 
       <div className='label-input-error'>

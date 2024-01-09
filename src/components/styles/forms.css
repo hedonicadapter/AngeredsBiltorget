@@ -1,3 +1,11 @@
+form {
+  @apply flex flex-col gap-6;
+  @apply p-6;
+
+  @apply rounded-md;
+  @apply bg-surface-dark;
+}
+
 input,
 textarea {
   @apply bg-surface !important;
