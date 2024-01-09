@@ -51,21 +51,21 @@ for await (const brand of brands) {
     <div class="flex flex-row mx-auto items-center w-full md:w-[40vw] lg:[w-10vw] justify-evenly h-[40vh]">
         <SCMotionDiv client:only initial={'hide'} whileInView={'show'} variants={WhileInViewVariantsUp} transition={{easing:'ease-out'}}>
             <div class="flex flex-col items-center gap-5">
-                <div class="text-xl material-symbols-sharp text-on-bg-light">sell</div>
+                <div class="text-xl material-symbols-rounded text-on-bg-light">sell</div>
                 <h4 class="text-sm">Sälj</h4>
             </div>
         </SCMotionDiv>
 
         <SCMotionDiv client:only initial={'hide'} whileInView={'show'} variants={WhileInViewVariantsUp} transition={{easing:'ease-out', delay:0.15}}>
             <div class="flex flex-col items-center gap-5">
-                <div class="text-xl material-symbols-sharp text-on-bg-light">credit_card_heart</div>
+                <div class="text-xl material-symbols-rounded text-on-bg-light">credit_card_heart</div>
                 <h4 class="text-sm">Köp</h4>
             </div>
         </SCMotionDiv>
 
         <SCMotionDiv client:only initial={'hide'} whileInView={'show'} variants={WhileInViewVariantsUp} transition={{easing:'ease-out', delay:0.25}}>
             <div class="flex flex-col items-center gap-5">
-                <div class="text-xl material-symbols-sharp text-on-bg-light">swap_driving_apps</div>
+                <div class="text-xl material-symbols-rounded text-on-bg-light">swap_driving_apps</div>
                 <h4 class="text-sm">Byt</h4>
             </div>
         </SCMotionDiv>

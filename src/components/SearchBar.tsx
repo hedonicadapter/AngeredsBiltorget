@@ -32,7 +32,7 @@ export default function SearchBar() {
         type='search'
         name='search-bilar'
       />
-      <div id='search-bar-symbol' className='material-symbols-sharp'>
+      <div id='search-bar-symbol' className='material-symbols-rounded'>
         search
       </div>
     </div>

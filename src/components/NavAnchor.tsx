@@ -73,7 +73,7 @@ const NavAnchor: React.FC<NavAnchorProps> = ({
           navigate(anchorHref, { history: 'auto' });
           sidebarOpen.set(false);
         }}
-        className='nav-anchor material-symbols-sharp'
+        className='nav-anchor material-symbols-rounded'
       >
         {anchorText}
         {anchorHref === '/cart' && (

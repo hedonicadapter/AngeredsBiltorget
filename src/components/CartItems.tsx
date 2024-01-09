@@ -25,7 +25,9 @@ export default function CartItems() {
           </div>
           <div className='flex flex-row gap-4'>
             <p>{formatter.format(item.price)}</p>
-            <div className='material-symbols-sharp tag-cross'>close_small</div>
+            <div className='material-symbols-rounded tag-cross'>
+              close_small
+            </div>
           </div>
         </motion.div>
       ))}

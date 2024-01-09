@@ -22,8 +22,9 @@ export default function FrontPageCars() {
   const lastCarRef = useRef<HTMLDivElement | null>(null);
   const isInView = useInView(lastCarRef);
 
+  // TODO: hämta 3 favoritbilar från db
+
   useEffect(() => {
-    console.log(isInView);
     if (isInView) {
       lastCarInView.set(true);
     } else {
@@ -61,8 +62,8 @@ export default function FrontPageCars() {
         whileInView={'show'}
         key='1'
       >
-        <div class='relative min-w-[300vw]'>
-          <div class='sticky left-0 right-0 w-screen p-[calc(var(--golden-ratio)*1.5em)]'>
+        <div className='relative min-w-[300vw]'>
+          <div className='sticky left-0 right-0 w-screen p-[calc(var(--golden-ratio)*1.5em)]'>
             <CarCard title='Yoyota' price='1.99' />
           </div>
         </div>
@@ -74,8 +75,8 @@ export default function FrontPageCars() {
         whileInView={'show'}
         key='2'
       >
-        <div class='relative min-w-[300vw]'>
-          <div class='sticky left-0 right-0 w-screen p-[calc(var(--golden-ratio)*1.5em)]'>
+        <div className='relative min-w-[300vw]'>
+          <div className='sticky left-0 right-0 w-screen p-[calc(var(--golden-ratio)*1.5em)]'>
             <CarCard title='Yoyota' price='1.99' />
           </div>
         </div>
@@ -88,9 +89,13 @@ export default function FrontPageCars() {
         ref={lastCarRef}
         key='3'
       >
-        <div class='relative min-w-[300vw]'>
-          <div class='sticky left-0 right-0 w-screen p-[calc(var(--golden-ratio)*1.5em)]'>
-            <CarCard title='Din bil?' price='Ditt pris' />
+        <div className='relative min-w-[300vw]'>
+          <div className='sticky left-0 right-0 w-screen p-[calc(var(--golden-ratio)*1.5em)]'>
+            <CarCard
+              href={isInView ? '/sell' : undefined}
+              title='Din bil?'
+              price='Ditt pris'
+            />
           </div>
         </div>
       </SCMotionDiv>

@@ -24,7 +24,7 @@ export default function ShowAllButton() {
 
         <SCMotionDiv
           animate={hovered ? { x: 3 } : { x: -1 }}
-          className={`material-symbols-sharp transition-colors`}
+          className={`material-symbols-rounded transition-colors`}
         >
           chevron_right
         </SCMotionDiv>

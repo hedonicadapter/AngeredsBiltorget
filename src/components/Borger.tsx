@@ -13,7 +13,7 @@ export default function Borger(props: { anchors?: any }) {
         className='flex items-center z-[1001]'
       >
         {/* TODO: fix z-index */}
-        <div id='borger-icon' className='material-symbols-sharp inline'>
+        <div id='borger-icon' className='inline material-symbols-rounded'>
           more_vert
         </div>
       </button>

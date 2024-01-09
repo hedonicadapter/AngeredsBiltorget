@@ -45,7 +45,7 @@ export function CarCard(props) {
 
   return (
     <SCMotionAnchor
-      href={`/products/${id}`}
+      href={props.href || `/products/${id}`}
       onMouseEnter={() => interactive && setCardHovered(true)}
       onMouseLeave={() => interactive && setCardHovered(false)}
       className={`car-card relative  bg-surface-dark hover:bg-surface transition-colors outline outline-transparent outline-1 p-8  overflow-visible flex flex-col items-start rounded-[calc(var(--golden-ratio)*0.3em)] ${overrideClass}`}
@@ -90,17 +90,17 @@ export function CarCard(props) {
       >
         <div className='flex flex-row flex-wrap items-center gap-6 p-4'>
           <div className='flex flex-row items-center gap-2 text-on-bg-light'>
-            <div className='text-xs material-symbols-sharp'>ev_charger</div>
+            <div className='text-xs material-symbols-rounded'>ev_charger</div>
             {fuelType}
           </div>
           <div className='flex flex-row items-center gap-2 text-on-bg-light'>
-            <div className='text-xs material-symbols-sharp'>
+            <div className='text-xs material-symbols-rounded'>
               swap_driving_apps_wheel
             </div>
             {mileage}
           </div>
           <div className='flex flex-row items-center gap-2 text-on-bg-light'>
-            <div className='text-xs material-symbols-sharp'>pin</div>
+            <div className='text-xs material-symbols-rounded'>pin</div>
             {registrationNumber}
           </div>
         </div>
@@ -109,7 +109,7 @@ export function CarCard(props) {
       {/* TODO: delete after labbinlämning */}
       <button
         type='button'
-        className='material-symbols-sharp addToCartButton'
+        className='material-symbols-rounded addToCartButton'
         onClick={handleAddToCart}
       >
         add_shopping_cart
@@ -150,7 +150,7 @@ export const Card = ({ title, paragraph, src }) => {
         </div>
         <SCMotionDiv
           animate={hovered ? { opacity: 1, x: 2 } : { opacity: 0.8, x: -2 }}
-          className='my-auto material-symbols-sharp'
+          className='my-auto material-symbols-rounded'
         >
           chevron_right
         </SCMotionDiv>

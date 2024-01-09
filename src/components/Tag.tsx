@@ -79,12 +79,12 @@ const Tag: React.FC<TagProps> = ({ text }) => {
     >
       <div
         ref={tagRef}
-        className='btn tag flex flex-row items-center justify-between'
+        className='flex flex-row items-center justify-between btn tag'
       >
         <div ref={textRef} className='tag-text'>
           {text}
         </div>
-        <div ref={crossRef} className='material-symbols-sharp tag-cross'>
+        <div ref={crossRef} className='material-symbols-rounded tag-cross'>
           close_small
         </div>
       </div>
