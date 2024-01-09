@@ -90,17 +90,17 @@ export function CarCard(props) {
       >
         <div className='flex flex-row flex-wrap items-center gap-6 p-4'>
           <div className='flex flex-row items-center gap-2 text-on-bg-light'>
-            <div class='text-xs material-symbols-sharp'>ev_charger</div>
+            <div className='text-xs material-symbols-sharp'>ev_charger</div>
             {fuelType}
           </div>
           <div className='flex flex-row items-center gap-2 text-on-bg-light'>
-            <div class='text-xs material-symbols-sharp'>
+            <div className='text-xs material-symbols-sharp'>
               swap_driving_apps_wheel
             </div>
             {mileage}
           </div>
           <div className='flex flex-row items-center gap-2 text-on-bg-light'>
-            <div class='text-xs material-symbols-sharp'>pin</div>
+            <div className='text-xs material-symbols-sharp'>pin</div>
             {registrationNumber}
           </div>
         </div>
@@ -126,7 +126,7 @@ export const Card = ({ title, paragraph, src }) => {
       onMouseLeave={() => setHovered(false)}
       className='flex flex-col overflow-hidden transition-opacity outline-none rounded-2xl outline outline-1 active:opacity-40'
     >
-      <img class='inline m-0 object-cover' src={src} />
+      <img className='inline object-cover m-0' src={src} />
       <SCMotionDiv
         animate={
           hovered

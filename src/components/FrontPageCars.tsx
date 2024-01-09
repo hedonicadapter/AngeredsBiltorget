@@ -6,6 +6,8 @@ import {
 } from './MotionComponents.jsx';
 import { useMediaQuery } from '../util/helpers.js';
 import { useScroll } from '@use-gesture/react';
+import { useInView } from 'framer-motion';
+import { lastCarInView } from '../nanoStores/uiStore.js';
 
 const transition = {
   duration: 0.75,
@@ -17,6 +19,17 @@ export default function FrontPageCars() {
   const horizontallyScrollableGuy = useRef<HTMLDivElement | null>(null);
   const [x, setX] = React.useState(0);
   const [direction, setDirection] = React.useState('down');
+  const lastCarRef = useRef<HTMLDivElement | null>(null);
+  const isInView = useInView(lastCarRef);
+
+  useEffect(() => {
+    console.log(isInView);
+    if (isInView) {
+      lastCarInView.set(true);
+    } else {
+      lastCarInView.set(false);
+    }
+  }, [isInView]);
 
   useScroll(
     (state) => {
@@ -72,6 +85,7 @@ export default function FrontPageCars() {
         variants={WhileInViewVariantsNoTransition}
         initial={'hide'}
         whileInView={'show'}
+        ref={lastCarRef}
         key='3'
       >
         <div class='relative min-w-[300vw]'>
