@@ -3,7 +3,7 @@ import { useStore } from '@nanostores/react';
 import { cart } from '../nanoStores/productStore.ts';
 import './styles/cards.css';
 import { SCMotionAnchor, SCMotionDiv, SCMotionP } from './MotionComponents.tsx';
-import { formatter } from '../util/helpers.ts';
+import { currencyFormatter } from '../util/helpers.ts';
 
 export function CarCard(props) {
   const {
@@ -55,7 +55,7 @@ export function CarCard(props) {
           {title || `${make} ${model}`}
         </h4>
         <p className='text-sm text-on-bg-lightest'>
-          {price === 'Ditt pris' ? price : formatter.format(price)}
+          {price === 'Ditt pris' ? price : currencyFormatter.format(price)}
         </p>
       </div>
       <img

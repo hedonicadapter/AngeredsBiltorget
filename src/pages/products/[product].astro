@@ -6,7 +6,7 @@ import ImageSlider from '../../components/ImageSlider.tsx';
 import DisplayImage from '../../components/DisplayImage.tsx';
 import '../../components/styles/product.css'
 import Layout from '../../layouts/Layout.astro';
-import {formatter} from '../../util/helpers'
+import {currencyFormatter} from '../../util/helpers'
 
 
 export async function getStaticPaths(){
@@ -49,7 +49,7 @@ const mainImage = files.find(file => file.name.startsWith('thumbnail'));
                 <div class="flex flex-row items-baseline justify-between gap-1 md:gap-3 md:justify-start pb-9">
                     <div class="flex flex-col">
                         <h1 class="text-4xl md:text-5xl md:pb-2 whitespace-nowrap">{product.title || product.make + ' ' + product.model}</h1>
-                        <p class="text-lg font-normal md:text-2xl text-on-bg-lightest">{formatter.format(product.price)}</p>
+                        <p class="text-lg font-normal md:text-2xl text-on-bg-lightest">{currencyFormatter.format(product.price)}</p>
                     </div>
                     <p class="text-2xl font-normal md:text-3xl text-on-bg-light">{product.year}</p>
                 </div>

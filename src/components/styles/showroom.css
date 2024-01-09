@@ -1,12 +1,12 @@
 section.container {
   overflow-y: hidden;
   --navbar-height: 127px;
-  position: relative;
+  /* position: relative; */
   /* max-height: calc(100vh - (var(--navbar-height) + var(--golden-ratio) * 3em)); */
   padding: calc(var(--golden-ratio) * 1.5em);
   /* padding-top: calc(var(--navbar-height) + var(--golden-ratio) * 4em); */
-  min-height: 100vh;
-  max-height: calc(100vh - (var(--navbar-height) + var(--golden-ratio) * 3em));
+  /* min-height: 100vh; */
+  /* max-height: calc(100vh - (var(--navbar-height) + var(--golden-ratio) * 3em)); */
   /* width: 100%; */
   /* padding-inline: calc(var(--golden-ratio) * 1em); */
 }

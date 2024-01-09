@@ -4,7 +4,7 @@ import type Car from '../Models/Car';
 import { useStore } from '@nanostores/react';
 import { SCMotionButton, SCMotionDiv } from './MotionComponents';
 import { motion } from 'framer-motion';
-import { formatter } from '../util/helpers';
+import { currencyFormatter } from '../util/helpers';
 
 export default function CartItems() {
   const $cart = useStore(cart);
@@ -24,7 +24,7 @@ export default function CartItems() {
             <h5>{item.title || `${item.make} ${item.model}`}</h5>
           </div>
           <div className='flex flex-row gap-4'>
-            <p>{formatter.format(item.price)}</p>
+            <p>{currencyFormatter.format(item.price)}</p>
             <div className='material-symbols-rounded tag-cross'>
               close_small
             </div>

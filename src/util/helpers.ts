@@ -71,10 +71,15 @@ export const clearTimeouts = (timeouts?: NodeJS.Timeout[]) => {
   if (timeouts) timeouts.forEach((timeout) => clearTimeout(timeout));
 };
 
-export const formatter = new Intl.NumberFormat('sv-SE', {
+export const currencyFormatter = new Intl.NumberFormat('sv-SE', {
   style: 'currency',
   currency: 'SEK',
 });
+
+export const numberFormatter = (
+  num: number,
+  locale: string = 'sv-SE'
+): string => num.toLocaleString(locale);
 
 export const splitByCondition = (
   array: any[],
